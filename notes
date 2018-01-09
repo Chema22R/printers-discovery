@@ -1,0 +1,3 @@
+links:
+    https://github.com/nodejs/node-gyp#installation                         (guia de instalacion de node-gyp)
+    https://nodeaddons.com/calling-native-c-dlls-from-a-node-js-web-app/    (guia de FFI)
