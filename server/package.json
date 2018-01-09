@@ -1,0 +1,19 @@
+{
+  "name": "tfm",
+  "version": "1.0.0",
+  "description": "Gestión de Prototipos de Impresora Conectadas a Red",
+  "main": "server.js",
+  "dependencies": {
+    "express": "4.x.x"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://chemarivera.visualstudio.com/_git/Gestio%CC%81n%20de%20Prototipos%20de%20Impresora%20Conectadas%20a%20Red"
+  },
+  "author": "Jose Maria Rivera Alonso",
+  "license": ""
+}
