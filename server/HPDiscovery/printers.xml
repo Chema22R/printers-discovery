@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HPDiscovery>
+    <Printer hostname="HDR567I" modelname="HP DesignJet Z9" ip="15.23.18.1">
+		<Information status="Awake" firmwareVersion="JGR_00_17_16.1" />
+	</Printer>
+    <Printer hostname="HDR5674" modelname="HP DesignJet Z6dr" ip="15.23.17.8">
+		<Information status="Awake" firmwareVersion="JGR_00_17_16.1" />
+	</Printer>
+	<Printer hostname="HDR587I" modelname="HP PageWide 8000 PS" ip="15.23.18.2">
+		<Information status="Awake" firmwareVersion="JGR_00_17_16.4" />
+	</Printer>
+    <Printer hostname="RTR567I" modelname="HP Latex 115" ip="15.23.19.8">
+		<Information status="Awake" firmwareVersion="JGR_00_17_35.2" />
+	</Printer>
+    <Printer hostname="HD4267A" modelname="HP DesignJet T1700dr" ip="15.23.18.21">
+		<Information status="Awake" firmwareVersion="JGR_00_17_16.1" />
+	</Printer>
+    <Printer hostname="HDR5FFI" modelname="HP DesignJet T830" ip="15.23.14.8">
+		<Information status="Awake" firmwareVersion="JGR_00_17_45.1" />
+	</Printer>
+</HPDiscovery>

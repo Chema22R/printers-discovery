@@ -1,3 +1,4 @@
 links:
-    https://github.com/nodejs/node-gyp#installation                         (guia de instalacion de node-gyp)
+    https://github.com/node-ffi/node-ffi/wiki/Node-FFI-Tutorial             (Node FFI Tutorial)
+    http://tootallnate.github.io/ref/                                       (Ref API)
     https://nodeaddons.com/calling-native-c-dlls-from-a-node-js-web-app/    (guia de FFI)
