@@ -5,8 +5,10 @@
   "main": "server.js",
   "dependencies": {
     "express": "4.x.x",
+    "mongodb": "3.x.x",
     "ref": "1.x.x",
-    "ffi": "2.x.x"
+    "ffi": "2.x.x",
+    "xml-js": "1.x.x"
   },
   "devDependencies": {},
   "scripts": {
