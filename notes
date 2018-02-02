@@ -1,3 +1,7 @@
+questions:
+    eliminar una entrada (printer) de la base de datos pasado un tiempo? cuanto tiempo?
+    llamar a terminate antes de cerrar el server?
+
 links:
     https://github.com/node-ffi/node-ffi/wiki/Node-FFI-Tutorial             (Node FFI Tutorial)
     http://tootallnate.github.io/ref/                                       (Ref API)

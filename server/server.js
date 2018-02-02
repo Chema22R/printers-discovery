@@ -16,6 +16,17 @@ var Console = require('console').Console;
 var test = require('./controllers/test.js');
 
 
+/* log
+========================================================================== */
+
+if (!fs.existsSync('./log')) {fs.mkdirSync('./log');}
+
+var log = fs.createWriteStream('./log/node.log', {flags: 'a'});
+var logErr = fs.createWriteStream('./log/error.log', {flags: 'a'});
+
+app.locals.logger = new Console(log, logErr);
+
+
 /* connections
 ========================================================================== */
 
@@ -30,27 +41,16 @@ mongodb.connect(databaseURI, function (err, client) {
         app.locals.db = client.db(databaseName);
 
         console.log('Connected to database "' + databaseName + '"');
+
+        //HPDiscovery.init(app.locals);
+
+        console.log('HPDiscovery initiated and subscribed');
     }
 });
 
 app.listen(serverPort, function () {
     console.log('HPDiscovery server running on http://localhost:' + serverPort);
 });
-
-//HPDiscovery.init();
-//HPDiscovery.subscribe();
-//console.log(HPDiscovery.getPrinterInfo('15.23.18.1'));
-
-
-/* log
-========================================================================== */
-
-if (!fs.existsSync('./log')) {fs.mkdirSync('./log');}
-
-var log = fs.createWriteStream('./log/node.log', {flags: 'a'});
-var logErr = fs.createWriteStream('./log/error.log', {flags: 'a'});
-
-app.locals.logger = new Console(log, logErr);
 
 
 /* API
