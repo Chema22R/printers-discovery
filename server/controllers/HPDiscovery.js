@@ -29,17 +29,17 @@ var printerInformation = ref.alloc(cstringPtrPtr);
 var printerInformationLength = ref.alloc('size_t');
 
 var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userData, newXmlPrinter, xmlLength) {
-    var printerInfo, logEntry;
+    var printerDetails, logEntry;
 
-    printerInfo = xmljs.xml2js(newXmlPrinter.readCString(), xmlOptions).Printer._attributes;
-    logEntry = 'Subscription callback procedure (' + new Date() + ', ' + printerInfo.ip + ', ' + printerInfo.hostname + '):';
+    printerDetails = xmljs.xml2js(newXmlPrinter.readCString(), xmlOptions).Printer._attributes;
+    logEntry = 'Subscription callback procedure (' + new Date() + ', ' + printerDetails.ip + ', ' + printerDetails.hostname + '):';
 
     checkIP();
 
     function checkIP() {
         db.collection('printers').find({
-            'details.ip': printerInfo.ip,
-            'details.hostname': printerInfo.hostname
+            'details.ip': printerDetails.ip,
+            'details.hostname': printerDetails.hostname
         }).toArray(function(err, docs) {
             if (err) {
                 logger.error(logEntry + '\t\tError searching the given combination ip+hostname: ' + err);
@@ -47,7 +47,7 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
                 logger.error(logEntry + '\t\tError into database, given combination ip+hostname is duplicated');
             } else if (docs.length == 0) {
                 createPrinter();
-            } else if (JSON.stringify(docs[0].details) === JSON.stringify(printerInfo)) {
+            } else if (JSON.stringify(docs[0].details) === JSON.stringify(printerDetails)) {
                 logger.log(logEntry + '\t\tPrinter already exists and details are already up to date');
             } else {
                 updatePrinter(docs[0]._id);
@@ -59,7 +59,7 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
         metadataDefault.created = new Date().getTime();
         
         db.collection('printers').insertOne({
-            'details': printerInfo,
+            'details': printerDetails,
             'metadata': metadataDefault
         }, function (err, results) {
             if (err) {
@@ -68,7 +68,7 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
                 logger.error(logEntry + '\t\tError into database, the new printer could not be inserted: inserted count: ' + results.insertedCount);
             } else {
                 logger.log(logEntry + '\t\tNew printer successfully inserted');
-                exports.getPrinterInfo(printerInfo.ip, printerInfo.hostname);
+                exports.getPrinterInfo(printerDetails.ip, printerDetails.hostname);
             }
         });
     }
@@ -77,7 +77,7 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
         db.collection('printers').updateOne({
             '_id': id
         }, {
-            $set: {'details': printerInfo, 'metadata.lastUpdated': new Date().getTime()}
+            $set: {'details': printerDetails, 'metadata.lastUpdated': new Date().getTime()}
         }, function (err, results) {
             if (err) {
                 logger.error(logEntry + '\t\tError updating the printer details: ' + err);
@@ -85,7 +85,7 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
                 logger.error(logEntry + '\t\tError into database, the printer details could not be updated: matched count: ' + results.matchedCount + ', modified count: ' + results.modifiedCount);
             } else {
                 logger.log(logEntry + '\t\tPrinter details successfully updated');
-                exports.getPrinterInfo(printerInfo.ip, printerInfo.hostname);
+                exports.getPrinterInfo(printerDetails.ip, printerDetails.hostname);
             }
         });
     }
