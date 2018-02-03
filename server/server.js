@@ -38,12 +38,10 @@ mongodb.connect(databaseURI, function (err, client) {
         console.error('ERROR connecting to database server\n     ' + err.message);
     } else {
         app.locals.db = client.db(databaseName);
-
         console.log('Connected to database "' + databaseName + '"');
 
         //HPDiscovery.init(app.locals);
-
-        console.log('HPDiscovery initiated and subscribed');
+        console.log('HPDiscovery library initiated and subscribed');
     }
 });
 
@@ -55,4 +53,8 @@ app.listen(serverPort, function () {
 /* API
 ========================================================================== */
 
-//app.get('/test', test.test);
+/*app.get('/printer/list', test.test);
+app.get('/printer/update', test.test);
+app.get('/printer/remove', test.test);
+
+app.post('/printer/update', test.test);*/

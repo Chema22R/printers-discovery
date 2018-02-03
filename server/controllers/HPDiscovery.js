@@ -15,6 +15,7 @@ var cstringPtrPtr = ref.refType(cstringPtr);
 var intPtr = ref.refType('size_t');
 var voidPtr = ref.refType('void');
 var xmlOptions = {compact: true, ignoreDeclaration: true, ignoreInstruction: true, ignoreComment: true, ignoreCdata: true, ignoreDoctype: true};
+var metadataDefault = {alias: null, personInCharge: null, workteam: null, location: null, calendar: {}, created: null, lastUpdated: null};
 
 var libHPDiscovery = ffi.Library('./HPDiscovery/libdiscoverySimulator.so', {
     'HPDiscoveryInit': ['void', []],
@@ -31,7 +32,7 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
     var printerInfo, logEntry;
 
     printerInfo = xmljs.xml2js(newXmlPrinter.readCString(), xmlOptions).Printer._attributes;
-    logEntry = 'Subscription callback procedure (' + new Date() + ', ' + printerInfo.ip + '):';
+    logEntry = 'Subscription callback procedure (' + new Date() + ', ' + printerInfo.ip + ', ' + printerInfo.hostname + '):';
 
     checkIP();
 
@@ -41,13 +42,13 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
             'details.hostname': printerInfo.hostname
         }).toArray(function(err, docs) {
             if (err) {
-                logger.error(logEntry + '\tError searching the given combination ip+hostname: ' + err);
+                logger.error(logEntry + '\t\tError searching the given combination ip+hostname: ' + err);
             } else if (docs.length > 1) {
-                logger.error(logEntry + '\tError into database, given combination ip+hostname is duplicated');
+                logger.error(logEntry + '\t\tError into database, given combination ip+hostname is duplicated');
             } else if (docs.length == 0) {
                 createPrinter();
             } else if (JSON.stringify(docs[0].details) === JSON.stringify(printerInfo)) {
-                logger.log(logEntry + '\tPrinter already exists and details are already up to date');
+                logger.log(logEntry + '\t\tPrinter already exists and details are already up to date');
             } else {
                 updatePrinter(docs[0]._id);
             }
@@ -55,16 +56,19 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
     }
 
     function createPrinter() {
+        metadataDefault.created = new Date().getTime();
+        
         db.collection('printers').insertOne({
-            'details': printerInfo
+            'details': printerInfo,
+            'metadata': metadataDefault
         }, function (err, results) {
             if (err) {
-                logger.error(logEntry + '\tError inserting the new printer: ' + err);
+                logger.error(logEntry + '\t\tError inserting the new printer: ' + err);
             } else if (results.insertedCount != 1) {
-                logger.error(logEntry + '\tError into database, the new printer could not be inserted: inserted count: ' + results.insertedCount);
+                logger.error(logEntry + '\t\tError into database, the new printer could not be inserted: inserted count: ' + results.insertedCount);
             } else {
-                logger.log(logEntry + '\tNew printer successfully inserted');
-                exports.getPrinterInfo(printerInfo.ip);
+                logger.log(logEntry + '\t\tNew printer successfully inserted');
+                exports.getPrinterInfo(printerInfo.ip, printerInfo.hostname);
             }
         });
     }
@@ -73,15 +77,15 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
         db.collection('printers').updateOne({
             '_id': id
         }, {
-            $set: {'details': printerInfo}
+            $set: {'details': printerInfo, 'metadata.lastUpdated': new Date().getTime()}
         }, function (err, results) {
             if (err) {
-                logger.error(logEntry + '\tError updating the printer details: ' + err);
+                logger.error(logEntry + '\t\tError updating the printer details: ' + err);
             } else if (results.matchedCount != 1 || results.modifiedCount != 1) {
-                logger.error(logEntry + '\tError into database, the printer details could not be updated: matched count: ' + results.matchedCount + ', modified count: ' + results.modifiedCount);
+                logger.error(logEntry + '\t\tError into database, the printer details could not be updated: matched count: ' + results.matchedCount + ', modified count: ' + results.modifiedCount);
             } else {
-                logger.log(logEntry + '\tPrinter details successfully updated');
-                exports.getPrinterInfo(printerInfo.ip);
+                logger.log(logEntry + '\t\tPrinter details successfully updated');
+                exports.getPrinterInfo(printerInfo.ip, printerInfo.hostname);
             }
         });
     }
@@ -103,27 +107,28 @@ exports.terminate = function() {
     libHPDiscovery.HPDiscoveryTerminate();
 };
 
-exports.getPrinterInfo = function(printerIP) {
+exports.getPrinterInfo = function(printerIP, printerHostname) {
     var printerInfo, logEntry;
 
     libHPDiscovery.HPDiscoveryGetPrinterInformation(printerIP, printerInformation, printerInformationLength);
     printerInfo = xmljs.xml2js(printerInformation.deref().readCString(), xmlOptions).Information._attributes;
     libHPDiscovery.HPDiscoveryDeleteBuffer(printerInformation);
 
-    logEntry = 'Get printer information procedure (' + new Date() + ', ' + printerIP + '):';
+    logEntry = 'Get printer information procedure (' + new Date() + ', ' + printerIP + ', ' + printerHostname + '):';
 
     checkIP();
 
     function checkIP() {
         db.collection('printers').find({
-            'details.ip': printerIP
+            'details.ip': printerIP,
+            'details.hostname': printerHostname
         }).toArray(function(err, docs) {
             if (err) {
-                logger.error(logEntry + '\tError searching the given ip: ' + err);
+                logger.error(logEntry + '\tError searching the given combination ip+hostname: ' + err);
             } else if (docs.length == 0) {
-                logger.error(logEntry + '\tError into database, given ip does not exist');
+                logger.error(logEntry + '\tError into database, given combination ip+hostname does not exist');
             } else if (docs.length > 1) {
-                logger.error(logEntry + '\tError into database, given ip is duplicated');
+                logger.error(logEntry + '\tError into database, given combination ip+hostname is duplicated');
             } else if (JSON.stringify(docs[0].information) === JSON.stringify(printerInfo)) {
                 logger.log(logEntry + '\tPrinter information is already up to date');
             } else {
@@ -136,7 +141,7 @@ exports.getPrinterInfo = function(printerIP) {
         db.collection('printers').updateOne({
             '_id': id
         }, {
-            $set: {'information': printerInfo}
+            $set: {'information': printerInfo, 'metadata.lastUpdated': new Date().getTime()}
         }, function (err, results) {
             if (err) {
                 logger.error(logEntry + '\tError updating the printer information: ' + err);

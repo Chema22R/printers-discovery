@@ -3,6 +3,10 @@ questions:
     llamar a terminate antes de cerrar el server?
     comprobar flujo de subscribe y de getPrinterInfo
     si cambia la ip o el hostname, entonces es una nueva printer?
+        problema: si cambia el hostname, se crea una nueva impresora, por lo que existen dos impresoras con la misma IP, lo que dara fallos
+            sol: se busca siempre la combinacion ip+hostname, incluso en getPrinterInfo (¿que hacer con las printers viejas con misma ip?)
+    nombres de los grupos de la base de datos (details, information y metadata)?
+    metadata location es un string o una configuracion (ciudad, direccion, CP, zona, etc)? si es una configuracion, que parametros debe tener?
 
 links:
     https://github.com/node-ffi/node-ffi/wiki/Node-FFI-Tutorial             (Node FFI Tutorial)
