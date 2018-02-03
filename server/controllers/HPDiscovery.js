@@ -40,6 +40,8 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
         db.collection('printers').find({
             'details.ip': printerDetails.ip,
             'details.hostname': printerDetails.hostname
+        }, {
+            projection: {'_id': 1, 'details': 1}
         }).toArray(function(err, docs) {
             if (err) {
                 logger.error(logEntry + '\t\tError searching the given combination ip+hostname: ' + err);
@@ -92,6 +94,24 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
 });
 
 
+/* update by time
+========================================================================== */
+
+var intervalID = setInterval(function() {
+    db.collection('printers').find({}, {
+        projection: {'_id': 0, 'details.ip': 1, 'details.hostname': 1}
+    }).toArray(function(err, docs) {
+        if (err) {
+            logger.error(logEntry + '\t\tError retrieving list of printers: ' + err);
+        } else {
+            for (var i=0; i<docs.length; i++) {
+                exports.getPrinterInfo(docs[i].details.ip, docs[i].details.hostname);
+            }
+        }
+    });
+}, 300000); // 300.000 ms are 5 minutes
+
+
 /* API
 ========================================================================== */
 
@@ -122,6 +142,8 @@ exports.getPrinterInfo = function(printerIP, printerHostname) {
         db.collection('printers').find({
             'details.ip': printerIP,
             'details.hostname': printerHostname
+        }, {
+            projection: {'_id': 1, 'information': 1}
         }).toArray(function(err, docs) {
             if (err) {
                 logger.error(logEntry + '\tError searching the given combination ip+hostname: ' + err);
