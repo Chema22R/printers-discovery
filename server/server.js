@@ -13,7 +13,6 @@ var Console = require('console').Console;
 ========================================================================== */
 
 //var HPDiscovery = require('./controllers/HPDiscovery.js');
-var test = require('./controllers/test.js');
 
 
 /* log
@@ -56,5 +55,4 @@ app.listen(serverPort, function () {
 /* API
 ========================================================================== */
 
-app.get('/test1', test.test1);
-app.get('/test2', test.test2);
+//app.get('/test', test.test);

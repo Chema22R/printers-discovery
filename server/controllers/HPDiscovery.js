@@ -37,12 +37,13 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
 
     function checkIP() {
         db.collection('printers').find({
-            'details.ip': printerInfo.ip
+            'details.ip': printerInfo.ip,
+            'details.hostname': printerInfo.hostname
         }).toArray(function(err, docs) {
             if (err) {
-                logger.error(logEntry + '\tError searching the given ip: ' + err);
+                logger.error(logEntry + '\tError searching the given combination ip+hostname: ' + err);
             } else if (docs.length > 1) {
-                logger.error(logEntry + '\tError into database, given ip is duplicated');
+                logger.error(logEntry + '\tError into database, given combination ip+hostname is duplicated');
             } else if (docs.length == 0) {
                 createPrinter();
             } else if (JSON.stringify(docs[0].details) === JSON.stringify(printerInfo)) {
@@ -63,6 +64,7 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
                 logger.error(logEntry + '\tError into database, the new printer could not be inserted: inserted count: ' + results.insertedCount);
             } else {
                 logger.log(logEntry + '\tNew printer successfully inserted');
+                exports.getPrinterInfo(printerInfo.ip);
             }
         });
     }
@@ -79,6 +81,7 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
                 logger.error(logEntry + '\tError into database, the printer details could not be updated: matched count: ' + results.matchedCount + ', modified count: ' + results.modifiedCount);
             } else {
                 logger.log(logEntry + '\tPrinter details successfully updated');
+                exports.getPrinterInfo(printerInfo.ip);
             }
         });
     }

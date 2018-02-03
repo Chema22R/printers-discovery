@@ -1,6 +1,8 @@
 questions:
     eliminar una entrada (printer) de la base de datos pasado un tiempo? cuanto tiempo?
     llamar a terminate antes de cerrar el server?
+    comprobar flujo de subscribe y de getPrinterInfo
+    si cambia la ip o el hostname, entonces es una nueva printer?
 
 links:
     https://github.com/node-ffi/node-ffi/wiki/Node-FFI-Tutorial             (Node FFI Tutorial)
