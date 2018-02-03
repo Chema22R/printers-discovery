@@ -1,5 +1,5 @@
 questions:
-    eliminar una entrada (printer) de la base de datos pasado un tiempo? cuanto tiempo?
+    eliminar una entrada (printer) de la base de datos pasado un tiempo? cuanto tiempo? ingluye algun parametro mas como el estado?
     llamar a terminate antes de cerrar el server?
     comprobar flujo de subscribe y de getPrinterInfo
     si cambia la ip o el hostname, entonces es una nueva printer?
@@ -7,6 +7,13 @@ questions:
             sol: se busca siempre la combinacion ip+hostname, incluso en getPrinterInfo (¿que hacer con las printers viejas con misma ip?)
     nombres de los grupos de la base de datos (details, information y metadata)?
     metadata location es un string o una configuracion (ciudad, direccion, CP, zona, etc)? si es una configuracion, que parametros debe tener?
+    el simualdor, envia todas las printers una vez al encenderse y envia la printer tanto al pulsar el boton send como el boton change
+        (es correcto el comportamiento del boton change?) Si lo es, significa que debo hacer un getPrinterInfo cada vez que se ejecuta callback?
+    dejo el log al final o solo el de errores? problema: 100 printers y update cada minuto = 100 entradas en el log por minuto
+
+
+notes:
+    incluir body-parser en las tecnologias
 
 links:
     https://github.com/node-ffi/node-ffi/wiki/Node-FFI-Tutorial             (Node FFI Tutorial)

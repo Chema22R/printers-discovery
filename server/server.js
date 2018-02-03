@@ -3,6 +3,7 @@
 
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
 
 var mongodb = require('mongodb').MongoClient;
 var fs = require('fs');
@@ -13,6 +14,13 @@ var Console = require('console').Console;
 ========================================================================== */
 
 //var HPDiscovery = require('./controllers/HPDiscovery.js');
+var api = require('./controllers/api.js');
+
+
+/* app configuration
+========================================================================== */
+
+app.use(bodyParser.json());
 
 
 /* log
@@ -53,8 +61,7 @@ app.listen(serverPort, function () {
 /* API
 ========================================================================== */
 
-/*app.get('/printer/list', test.test);
-app.get('/printer/update', test.test);
-app.get('/printer/remove', test.test);
-
-app.post('/printer/update', test.test);*/
+app.get('/printer/update', api.forcePrinterUpdate);
+app.get('/printer/list', api.getPrintersList);
+app.put('/printer/update', api.updatePrinter);
+app.delete('/printer/delete', api.deletePrinter);
