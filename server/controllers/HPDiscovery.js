@@ -61,7 +61,7 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
         db.collection('printers').insertOne({
             'details': printerDetails,
             'metadata': metadataDefault,
-            'lastUpdate.details': new Date().getTime(),
+            'lastUpdate': {'details': new Date().getTime()},
             'creationDate': new Date().getTime()
         }, function (err, results) {
             if (err) {
@@ -105,7 +105,7 @@ var intervalID = setInterval(function() {
             logger.error('Update-by-time (' + new Date() + '):\tError retrieving the list of printers: ' + err);
         } else {
             for (var i=0; i<docs.length; i++) {
-                updatePrinterInfo(docs[i]._id, docs[i].details.ip, docs[i].information, docs[i].lastUpdate.status);
+                updatePrinterInfo(docs[i].details.ip, docs[i]._id, docs[i].information, docs[i].lastUpdate.status);
             }
         }
     });
