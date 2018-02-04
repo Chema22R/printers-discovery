@@ -1,21 +1,6 @@
 /* API
 ========================================================================== */
 
-exports.forcePrinterUpdate = function(req, res) {
-    var logEntry = 'Forced Printer Update (' + new Date() + ', ' + req.ip + ', ' + req.query.ip + ', ' + req.query.hostname + ')';
-
-    if (req.query.ip && req.query.hostname) {
-        HPDiscovery.getPrinterInfo(req.query.ip, req.query.hostname);
-
-        req.app.locals.logger.log(logEntry + '\n\tPrinter information update request successfully sended');
-        res.sendStatus(202);
-    } else {
-        req.app.locals.logger.error(logEntry + '\n\tWarning (400): bad request, param "ip" and/or "hostname" not found');
-        res.sendStatus(400);
-    }
-};
-
-
 exports.getPrintersList = function(req, res) {
     var logEntry = 'Get Printers List (' + new Date() + ', ' + req.ip + ')';
 
@@ -34,7 +19,7 @@ exports.getPrintersList = function(req, res) {
 
 
 exports.updatePrinter = function(req, res) {
-    var logEntry = 'Update Printer Information (' + new Date() + ', ' + req.ip + ', ' + req.query.ip + ', ' + req.query.hostname + ')';
+    var logEntry = 'Update Printer Metadata (' + new Date() + ', ' + req.ip + ', ' + req.query.ip + ', ' + req.query.hostname + ')';
     var db = req.app.locals.db;
 
     if (req.query.ip && req.query.hostname) {
@@ -48,6 +33,8 @@ exports.updatePrinter = function(req, res) {
         db.collection('printers').find({
             'details.ip': req.query.ip,
             'details.hostname': req.query.hostname
+        }, {
+            projection: {'_id': 1, 'metadata': 1}
         }).toArray(function(err, docs) {
             if (err) {
                 closeLog('\n\tError searching the given combination ip+hostname: ' + err, false);
@@ -58,42 +45,29 @@ exports.updatePrinter = function(req, res) {
             } else if (docs.length > 1) {
                 closeLog('\n\tError into database, given combination ip+hostname is duplicated', false);
                 res.sendStatus(500);
+            } else if (JSON.stringify(docs[0].metadata) === JSON.stringify(req.body)) {
+                closeLog('\n\tPrinter metadata is already up to date', true);
+                res.sendStatus(200);
             } else {
-                var changed = false;
-
-                for (var key in docs[0]) {
-                    if (key != '_id' && req.body[key] && JSON.stringify(req.body[key]) !== JSON.stringify(docs[0][key])) {
-                        docs[0][key] = req.body[key];
-                        changed = true;
-                    }
-                }
-
-                if (changed) {
-                    updatePrinter(docs[0]);
-                } else {
-                    closeLog('\n\tPrinter is already up to date', true);
-                    res.sendStatus(200);
-                }
+                updatePrinter(docs[0]._id);
             }
         });
     }
 
-    function updatePrinter(printer) {
-        printer.metadata.lastUpdated = new Date().getTime();
-
+    function updatePrinter(id) {
         db.collection('printers').updateOne({
-            '_id': printer._id
+            '_id': id
         }, {
-            $set: printer
+            $set: {'metadata': req.body, 'lastUpdate': new Date().getTime()}
         }, function (err, results) {
             if (err) {
-                closeLog('\n\tError updating the printer: ' + err, false);
+                closeLog('\n\tError updating the printer metadata: ' + err, false);
                 res.sendStatus(500);
             } else if (results.matchedCount != 1 || results.modifiedCount != 1) {
-                closeLog('\n\tError into database, the printer could not be updated: matched count: ' + results.matchedCount + ', modified count: ' + results.modifiedCount, false);
+                closeLog('\n\tError into database, the printer metadata could not be updated: matched count: ' + results.matchedCount + ', modified count: ' + results.modifiedCount, false);
                 res.sendStatus(500);
             } else {
-                closeLog('\n\tPrinter successfully updated', true);
+                closeLog('\n\tPrinter metadata successfully updated', true);
                 res.sendStatus(200);
             }
         });
@@ -150,7 +124,7 @@ exports.deletePrinter = function(req, res) {
                 closeLog('\n\tError deleting the printer: ' + err, false);
                 res.sendStatus(500);
             } else if (result.deletedCount != 1) {
-                closeLog('\n\tError into database, the printer could not be deleted: deletedCount: ' + result.deletedCount, false);
+                closeLog('\n\tError into database, the printer could not be deleted: deleted count: ' + result.deletedCount, false);
                 res.sendStatus(500);
             } else {
                 closeLog('\n\tPrinter successfully deleted', true);
