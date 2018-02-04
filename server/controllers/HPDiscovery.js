@@ -41,7 +41,7 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
             'details.ip': printerDetails.ip,
             'details.hostname': printerDetails.hostname
         }, {
-            projection: {'_id': 1, 'details': 1, 'information': 1, 'lastStatusUpdate': 1}
+            projection: {'_id': 1, 'details': 1, 'information': 1, 'lastUpdate.status': 1}
         }).toArray(function(err, docs) {
             if (err) {
                 logger.error(logEntry + 'Error searching the given combination ip+hostname: ' + err);
@@ -52,7 +52,7 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
             } else if (JSON.stringify(docs[0].details) === JSON.stringify(printerDetails)) {
                 logger.log(logEntry + 'Printer already exists and details are already up to date');
             } else {
-                updatePrinter(docs[0]._id, docs[0].information, docs[0].lastStatusUpdate);
+                updatePrinter(docs[0]._id, docs[0].information, docs[0].lastUpdate.status);
             }
         });
     }
@@ -61,6 +61,7 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
         db.collection('printers').insertOne({
             'details': printerDetails,
             'metadata': metadataDefault,
+            'lastUpdate.details': new Date().getTime(),
             'creationDate': new Date().getTime()
         }, function (err, results) {
             if (err) {
@@ -78,7 +79,7 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
         db.collection('printers').updateOne({
             '_id': id
         }, {
-            $set: {'details': printerDetails, 'lastUpdate': new Date().getTime()}
+            $set: {'details': printerDetails, 'lastUpdate.details': new Date().getTime()}
         }, function (err, results) {
             if (err) {
                 logger.error(logEntry + 'Error updating the printer details: ' + err);
@@ -98,13 +99,13 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
 
 var intervalID = setInterval(function() {
     db.collection('printers').find({}, {
-        projection: {'_id': 1, 'details.ip': 1, 'information': 1, 'lastStatusUpdate': 1}
+        projection: {'_id': 1, 'details.ip': 1, 'information': 1, 'lastUpdate.status': 1}
     }).toArray(function(err, docs) {
         if (err) {
             logger.error('Update-by-time (' + new Date() + '):\tError retrieving the list of printers: ' + err);
         } else {
             for (var i=0; i<docs.length; i++) {
-                updatePrinterInfo(docs[i]._id, docs[i].details.ip, docs[i].information, docs[i].lastStatusUpdate);
+                updatePrinterInfo(docs[i]._id, docs[i].details.ip, docs[i].information, docs[i].lastUpdate.status);
             }
         }
     });
@@ -141,7 +142,7 @@ exports.forcePrinterInfoUpdate = function(req, res) {
             'details.ip': req.query.ip,
             'details.hostname': req.query.hostname
         }, {
-            projection: {'_id': 1, 'information': 1, 'lastStatusUpdate': 1}
+            projection: {'_id': 1, 'information': 1, 'lastUpdate.status': 1}
         }).toArray(function(err, docs) {
             if (err) {
                 logger.error(logEntry + '\n\tError searching the given combination ip+hostname: ' + err);
@@ -153,7 +154,7 @@ exports.forcePrinterInfoUpdate = function(req, res) {
                 logger.error(logEntry + '\n\tError into database, given combination ip+hostname is duplicated');
                 res.sendStatus(500);
             } else {
-                updatePrinterInfo(req.query.ip, docs[0]._id, docs[0].information, docs[0].lastStatusUpdate);
+                updatePrinterInfo(req.query.ip, docs[0]._id, docs[0].information, docs[0].lastUpdate.status);
 
                 logger.log(logEntry + '\n\tPrinter information update request successfully sended');
                 res.sendStatus(202);
@@ -185,7 +186,7 @@ function updatePrinterInfo(printerIP, id, currentInfo, lastStatusUpdate) {
         db.collection('printers').updateOne({
             '_id': id
         }, {
-            $set: {'information': printerInfo, 'lastUpdate': new Date().getTime(), 'lastStatusUpdate': lastStatusUpdate}
+            $set: {'information': printerInfo, 'lastUpdate.information': new Date().getTime(), 'lastUpdate.status': lastStatusUpdate}
         }, function (err, results) {
             if (err) {
                 logger.error(logEntry + 'Error updating the printer information: ' + err);

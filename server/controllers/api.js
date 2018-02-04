@@ -58,7 +58,7 @@ exports.updatePrinter = function(req, res) {
         db.collection('printers').updateOne({
             '_id': id
         }, {
-            $set: {'metadata': req.body, 'lastUpdate': new Date().getTime()}
+            $set: {'metadata': req.body, 'lastUpdate.metadata': new Date().getTime()}
         }, function (err, results) {
             if (err) {
                 closeLog('\n\tError updating the printer metadata: ' + err, false);
