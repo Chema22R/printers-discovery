@@ -63,5 +63,5 @@ app.listen(serverPort, function () {
 
 //app.get('/printer/update', HPDiscovery.forcePrinterInfoUpdate);
 app.get('/printer/list', api.getPrintersList);
-app.put('/printer/update', api.updatePrinter);
+app.put('/printer/update', api.updatePrinterMetadata);
 app.delete('/printer/delete', api.deletePrinter);

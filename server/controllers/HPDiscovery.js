@@ -10,12 +10,14 @@ var xmljs = require('xml-js');
 ========================================================================== */
 
 var logger, db;
+var updateInterval = 300000;    // 300.000 ms are 5 minutes
+var xmlOptions = {compact: true, ignoreDeclaration: true, ignoreInstruction: true, ignoreComment: true, ignoreCdata: true, ignoreDoctype: true};
+var metadataDefault = {alias: null, personInCharge: null, workteam: null, location: null, calendar: []};
+
 var cstringPtr = ref.refType('CString');
 var cstringPtrPtr = ref.refType(cstringPtr);
 var intPtr = ref.refType('size_t');
 var voidPtr = ref.refType('void');
-var xmlOptions = {compact: true, ignoreDeclaration: true, ignoreInstruction: true, ignoreComment: true, ignoreCdata: true, ignoreDoctype: true};
-var metadataDefault = {alias: null, personInCharge: null, workteam: null, location: null, calendar: []};
 
 var libHPDiscovery = ffi.Library('./HPDiscovery/libdiscoverySimulator.so', {
     'HPDiscoveryInit': ['void', []],
@@ -112,7 +114,7 @@ var intervalID = setInterval(function() {
             logger.log(logEntry + '\n\tPrinter information update requests successfully sended (' + docs.length + ')');
         }
     });
-}, 300000); // 300.000 ms are 5 minutes
+}, updateInterval); // 300.000 ms are 5 minutes
 
 
 /* API & functions

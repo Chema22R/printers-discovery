@@ -18,7 +18,7 @@ exports.getPrintersList = function(req, res) {
 };
 
 
-exports.updatePrinter = function(req, res) {
+exports.updatePrinterMetadata = function(req, res) {
     var logEntry = 'Update Printer Metadata (' + new Date() + ', ' + req.ip + ', ' + req.query.ip + ', ' + req.query.hostname + ')';
     var logger = req.app.locals.logger;
     var db = req.app.locals.db;
