@@ -11,9 +11,9 @@ var xmljs = require('xml-js');
 /* init
 ========================================================================== */
 
-var logger, logLevel, logSeparator, db;
-var updateInterval = 300000;    // 300.000 ms are 5 minutes
-var printersDeadline = 7200000; // 7.200.000 ms are 2 hours
+var logger, logLevel, logSeparator, db, updatePrintersByTimeID;
+var updatePrintersByTimeInterval = 60000;    // default value, 60.000 ms is 1 minute
+var printersDeadline = 7200000; // default value, 7.200.000 ms are 2 hours
 var xmlOptions = {compact: true, ignoreDeclaration: true, ignoreInstruction: true, ignoreComment: true, ignoreCdata: true, ignoreDoctype: true};
 var metadataDefault = {alias: null, location: null, workteam: null, reservedBy: null, reservedUntil: null, calendar: []};
 
@@ -102,8 +102,10 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
 /* update by time
 ========================================================================== */
 
-var intervalID = setInterval(function() {
-    var logEntry = 'Update/delete-by-time (' + new Date() + ')';
+updatePrintersByTimeID = setInterval(updatePrintersByTime, updatePrintersByTimeInterval);
+
+function updatePrintersByTime() {
+    var logEntry = 'Update Printers By Time (' + new Date() + ')';
 
     db.collection('printers').find({}, {
         projection: {'_id': 1, 'basicInfo.ip': 1, 'detailedInfo': 1, 'lastUpdate.status': 1}
@@ -121,7 +123,7 @@ var intervalID = setInterval(function() {
             closeLog(logEntry + '\n\tPrinter detailed information update or deletion requests successfully sended (' + docs.length + ')', 3);
         }
     });
-}, updateInterval);
+}
 
 
 /* API & functions

@@ -34,8 +34,8 @@ var log = fs.createWriteStream('./log/node.log', {flags: 'a'});
 var logErr = fs.createWriteStream('./log/error.log', {flags: 'a'});
 
 app.locals.logger = new Console(log, logErr);
-app.locals.logLevel = 3;
-app.locals.logSeparator = 3;
+app.locals.logLevel = 3;    // default value, four levels (null/0, error/1, warn/2, info/3)
+app.locals.logSeparator = 3;    // default value
 
 
 /* connections
