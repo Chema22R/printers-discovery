@@ -10,25 +10,34 @@ exports.getPrintersList = function(req, res) {
         projection: {'_id': 0}
     }).toArray(function(err, docs) {
         if (err) {
-            req.app.locals.logger.error(logEntry + '\n\tError retrieving the list of printers: ' + err);
+            closeLog('\n\tError retrieving the list of printers: ' + err, 1);
             res.sendStatus(500);
         } else {
-            req.app.locals.logger.log(logEntry + '\n\tPrinters list successfully retrieved');
+            closeLog('\n\tPrinters list successfully retrieved', 3);
             res.status(200).json(docs);
         }
     });
+
+    function closeLog(msj, level) {
+        if (level >= req.app.locals.logLevel) {
+            if (level >= req.app.locals.logSeparator) {
+                req.app.locals.logger.log(logEntry + msj);
+            } else {
+                req.app.locals.logger.error(logEntry + msj);
+            }
+        }
+    }
 };
 
 
 exports.updatePrinterMetadata = function(req, res) {
     var logEntry = 'Update Printer Metadata (' + new Date() + ', ' + req.ip + ', ' + req.query.ip + ', ' + req.query.hostname + ')';
-    var logger = req.app.locals.logger;
     var db = req.app.locals.db;
 
     if (req.query.ip && req.query.hostname) {
         check();
     } else {
-        logger.error(logEntry + '\n\tWarning (400): bad request, param "ip" and/or "hostname" not found');
+        closeLog('\n\tWarning (400): bad request, param "ip" and/or "hostname" not found', 2);
         res.sendStatus(400);
     }
 
@@ -40,16 +49,16 @@ exports.updatePrinterMetadata = function(req, res) {
             projection: {'_id': 1, 'metadata': 1}
         }).toArray(function(err, docs) {
             if (err) {
-                logger.error(logEntry + '\n\tError searching the given combination ip+hostname: ' + err);
+                closeLog('\n\tError searching the given combination ip+hostname: ' + err, 1);
                 res.sendStatus(500);
             } else if (docs.length == 0) {
-                logger.error(logEntry + '\n\tWarning (404): not found, given combination ip+hostname does not exist');
+                closeLog('\n\tWarning (404): not found, given combination ip+hostname does not exist', 2);
                 res.sendStatus(404);
             } else if (docs.length > 1) {
-                logger.error(logEntry + '\n\tError into database, given combination ip+hostname is duplicated');
+                closeLog('\n\tError into database, given combination ip+hostname is duplicated', 1);
                 res.sendStatus(500);
             } else if (JSON.stringify(docs[0].metadata) === JSON.stringify(req.body)) {
-                logger.log(logEntry + '\n\tPrinter metadata is already up to date');
+                closeLog('\n\tPrinter metadata is already up to date', 3);
                 res.sendStatus(200);
             } else {
                 updatePrinter(docs[0]._id);
@@ -64,68 +73,25 @@ exports.updatePrinterMetadata = function(req, res) {
             $set: {'metadata': req.body, 'lastUpdate.metadata': new Date().getTime()}
         }, function (err, results) {
             if (err) {
-                logger.error(logEntry + '\n\tError updating the printer metadata: ' + err);
+                closeLog('\n\tError updating the printer metadata: ' + err, 1);
                 res.sendStatus(500);
             } else if (results.matchedCount != 1 || results.modifiedCount != 1) {
-                logger.error(logEntry + '\n\tError into database, the printer metadata could not be updated: matched count: ' + results.matchedCount + ', modified count: ' + results.modifiedCount);
+                closeLog('\n\tError into database, the printer metadata could not be updated: matched count: ' + results.matchedCount + ', modified count: ' + results.modifiedCount, 1);
                 res.sendStatus(500);
             } else {
-                logger.log(logEntry + '\n\tPrinter metadata successfully updated');
+                closeLog('\n\tPrinter metadata successfully updated', 3);
                 res.sendStatus(200);
             }
         });
+    }
+
+    function closeLog(msj, level) {
+        if (level >= req.app.locals.logLevel) {
+            if (level >= req.app.locals.logSeparator) {
+                req.app.locals.logger.log(logEntry + msj);
+            } else {
+                req.app.locals.logger.error(logEntry + msj);
+            }
+        }
     }
 };
-
-
-/*exports.deletePrinter = function(req, res) {
-    var logEntry = 'Delete Printer (' + new Date() + ', ' + req.ip + ', ' + req.query.ip + ', ' + req.query.hostname + ')';
-    var logger = req.app.locals.logger;
-    var db = req.app.locals.db;
-
-    if (req.query.ip && req.query.hostname) {
-        check();
-    } else {
-        logger.error(logEntry + '\n\tWarning (400): bad request, param "ip" and/or "hostname" not found');
-        res.sendStatus(400);
-    }
-
-    function check() {
-        db.collection('printers').find({
-            'basicInfo.ip': req.query.ip,
-            'basicInfo.hostname': req.query.hostname
-        }, {
-            projection: {'_id': 1}
-        }).toArray(function(err, docs) {
-            if (err) {
-                logger.error(logEntry + '\n\tError searching the given combination ip+hostname: ' + err);
-                res.sendStatus(500);
-            } else if (docs.length == 0) {
-                logger.error(logEntry + '\n\tWarning (404): not found, given combination ip+hostname does not exist');
-                res.sendStatus(404);
-            } else if (docs.length > 1) {
-                logger.error(logEntry + '\n\tError into database, given combination ip+hostname is duplicated');
-                res.sendStatus(500);
-            } else {
-                deletePrinter(docs[0]._id);
-            }
-        });
-    }
-
-    function deletePrinter(id) {
-        db.collection('printers').deleteOne({
-            '_id': id
-        }, function(err, result) {
-            if (err) {
-                logger.error(logEntry + '\n\tError deleting the printer: ' + err);
-                res.sendStatus(500);
-            } else if (result.deletedCount != 1) {
-                logger.error(logEntry + '\n\tError into database, the printer could not be deleted: deleted count: ' + result.deletedCount);
-                res.sendStatus(500);
-            } else {
-                logger.log(logEntry + '\n\tPrinter successfully deleted');
-                res.sendStatus(200);
-            }
-        });
-    }
-};*/

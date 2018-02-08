@@ -11,7 +11,7 @@ var xmljs = require('xml-js');
 /* init
 ========================================================================== */
 
-var logger, db;
+var logger, logLevel, logSeparator, db;
 var updateInterval = 300000;    // 300.000 ms are 5 minutes
 var printersDeadline = 7200000; // 7.200.000 ms are 2 hours
 var xmlOptions = {compact: true, ignoreDeclaration: true, ignoreInstruction: true, ignoreComment: true, ignoreCdata: true, ignoreDoctype: true};
@@ -49,13 +49,13 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
             projection: {'_id': 1, 'basicInfo': 1, 'detailedInfo': 1, 'lastUpdate.status': 1}
         }).toArray(function(err, docs) {
             if (err) {
-                logger.error(logEntry + '\n\tError searching the given combination ip+hostname: ' + err);
+                closeLog(logEntry + '\n\tError searching the given combination ip+hostname: ' + err, 1);
             } else if (docs.length > 1) {
-                logger.error(logEntry + '\n\tError into database, given combination ip+hostname is duplicated');
+                closeLog(logEntry + '\n\tError into database, given combination ip+hostname is duplicated', 1);
             } else if (docs.length == 0) {
                 createPrinter();
             } else if (JSON.stringify(docs[0].basicInfo) === JSON.stringify(printerBasicInfo)) {
-                logger.log(logEntry + '\n\tPrinter already exists and basic information is already up to date');
+                closeLog(logEntry + '\n\tPrinter already exists and basic information is already up to date', 3);
             } else {
                 updatePrinter(docs[0]._id, docs[0].detailedInfo, docs[0].lastUpdate.status);
             }
@@ -70,11 +70,11 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
             'creationDate': new Date().getTime()
         }, function (err, results) {
             if (err) {
-                logger.error(logEntry + '\n\tError inserting the new printer: ' + err);
+                closeLog(logEntry + '\n\tError inserting the new printer: ' + err, 1);
             } else if (results.insertedCount != 1) {
-                logger.error(logEntry + '\n\tError into database, the new printer could not be inserted: inserted count: ' + results.insertedCount);
+                closeLog(logEntry + '\n\tError into database, the new printer could not be inserted: inserted count: ' + results.insertedCount, 1);
             } else {
-                logger.log(logEntry + '\n\tNew printer successfully inserted');
+                closeLog(logEntry + '\n\tNew printer successfully inserted', 3);
                 updatePrinterInfo(printerBasicInfo.ip, results.insertedId, null, null);
             }
         });
@@ -87,11 +87,11 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
             $set: {'basicInfo': printerBasicInfo, 'lastUpdate.basicInfo': new Date().getTime()}
         }, function (err, results) {
             if (err) {
-                logger.error(logEntry + '\n\tError updating the printer basic information: ' + err);
+                closeLog(logEntry + '\n\tError updating the printer basic information: ' + err, 1);
             } else if (results.matchedCount != 1 || results.modifiedCount != 1) {
-                logger.error(logEntry + '\n\tError into database, the printer basic information could not be updated: matched count: ' + results.matchedCount + ', modified count: ' + results.modifiedCount);
+                closeLog(logEntry + '\n\tError into database, the printer basic information could not be updated: matched count: ' + results.matchedCount + ', modified count: ' + results.modifiedCount, 1);
             } else {
-                logger.log(logEntry + '\n\tPrinter basic information successfully updated');
+                closeLog(logEntry + '\n\tPrinter basic information successfully updated', 3);
                 updatePrinterInfo(printerBasicInfo.ip, id, detailedInfo, lastStatusUpdate);
             }
         });
@@ -109,7 +109,7 @@ var intervalID = setInterval(function() {
         projection: {'_id': 1, 'basicInfo.ip': 1, 'detailedInfo': 1, 'lastUpdate.status': 1}
     }).toArray(function(err, docs) {
         if (err) {
-            logger.error(logEntry + '\n\tError retrieving the list of printers: ' + err);
+            closeLog(logEntry + '\n\tError retrieving the list of printers: ' + err, 1);
         } else {
             for (var i=0; i<docs.length; i++) {
                 if (docs[i].detailedInfo && docs[i].detailedInfo.status == 'unreachable' && new Date().getTime() - docs[i].lastUpdate.status > printersDeadline) {
@@ -118,7 +118,7 @@ var intervalID = setInterval(function() {
                     updatePrinterInfo(docs[i].basicInfo.ip, docs[i]._id, docs[i].detailedInfo, docs[i].lastUpdate.status);
                 }
             }
-            logger.log(logEntry + '\n\tPrinter detailed information update or deletion requests successfully sended (' + docs.length + ')');
+            closeLog(logEntry + '\n\tPrinter detailed information update or deletion requests successfully sended (' + docs.length + ')', 3);
         }
     });
 }, updateInterval);
@@ -129,6 +129,8 @@ var intervalID = setInterval(function() {
 
 exports.init = function(controllers) {
     logger = controllers.logger;
+    logLevel = controllers.logLevel;
+    logSeparator = controllers.logSeparator;
     db = controllers.db;
     
     libHPDiscovery.HPDiscoveryInit();
@@ -145,7 +147,7 @@ exports.forcePrinterInfoUpdate = function(req, res) {
     if (req.query.ip && req.query.hostname) {
         check();
     } else {
-        logger.error(logEntry + '\n\tWarning (400): bad request, param "ip" and/or "hostname" not found');
+        closeLog(logEntry + '\n\tWarning (400): bad request, param "ip" and/or "hostname" not found', 2);
         res.sendStatus(400);
     }
 
@@ -157,18 +159,18 @@ exports.forcePrinterInfoUpdate = function(req, res) {
             projection: {'_id': 1, 'detailedInfo': 1, 'lastUpdate.status': 1}
         }).toArray(function(err, docs) {
             if (err) {
-                logger.error(logEntry + '\n\tError searching the given combination ip+hostname: ' + err);
+                closeLog(logEntry + '\n\tError searching the given combination ip+hostname: ' + err, 1);
                 res.sendStatus(500);
             } else if (docs.length == 0) {
-                logger.error(logEntry + '\n\tWarning (404): not found, given combination ip+hostname does not exist');
+                closeLog(logEntry + '\n\tWarning (404): not found, given combination ip+hostname does not exist', 2);
                 res.sendStatus(404);
             } else if (docs.length > 1) {
-                logger.error(logEntry + '\n\tError into database, given combination ip+hostname is duplicated');
+                closeLog(logEntry + '\n\tError into database, given combination ip+hostname is duplicated', 1);
                 res.sendStatus(500);
             } else {
                 updatePrinterInfo(req.query.ip, docs[0]._id, docs[0].detailedInfo, docs[0].lastUpdate.status);
 
-                logger.log(logEntry + '\n\tPrinter detailed information update request successfully sended');
+                closeLog(logEntry + '\n\tPrinter detailed information update request successfully sended', 3);
                 res.sendStatus(202);
             }
         });
@@ -198,11 +200,11 @@ function updatePrinterInfo(printerIP, id, currentInfo, lastStatusUpdate) {
             $set: {'detailedInfo': printerDetailedInfo, 'lastUpdate.detailedInfo': new Date().getTime(), 'lastUpdate.status': lastStatusUpdate}
         }, function (err, results) {
             if (err) {
-                logger.error(logEntry + '\n\tError updating the printer detailed information: ' + err);
+                closeLog(logEntry + '\n\tError updating the printer detailed information: ' + err, 1);
             } else if (results.matchedCount != 1 || results.modifiedCount != 1) {
-                logger.error(logEntry + '\n\tError into database, the printer detailed information could not be updated: matched count: ' + results.matchedCount + ', modified count: ' + results.modifiedCount);
+                closeLog(logEntry + '\n\tError into database, the printer detailed information could not be updated: matched count: ' + results.matchedCount + ', modified count: ' + results.modifiedCount, 1);
             } else {
-                logger.log(logEntry + '\n\tPrinter detailed information successfully updated');
+                closeLog(logEntry + '\n\tPrinter detailed information successfully updated', 3);
             }
         });
     }
@@ -215,11 +217,21 @@ function deletePrinter(printerIP, id) {
         '_id': id
     }, function(err, result) {
         if (err) {
-            logger.error(logEntry + '\n\tError deleting the printer: ' + err);
+            closeLog(logEntry + '\n\tError deleting the printer: ' + err, 1);
         } else if (result.deletedCount != 1) {
-            logger.error(logEntry + '\n\tError into database, the printer could not be deleted: deleted count: ' + result.deletedCount);
+            closeLog(logEntry + '\n\tError into database, the printer could not be deleted: deleted count: ' + result.deletedCount, 1);
         } else {
-            logger.log(logEntry + '\n\tPrinter successfully deleted');
+            closeLog(logEntry + '\n\tPrinter successfully deleted', 3);
         }
     });
+}
+
+function closeLog(entry, level) {
+    if (level >= logLevel) {
+        if (level >= logSeparator) {
+            logger.log(entry);
+        } else {
+            logger.error(entry);
+        }
+    }
 }

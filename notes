@@ -15,6 +15,7 @@ questions:
 
 notes:
     incluir body-parser en las tecnologias
+    manual de usuario para entender los logs
 
 links:
     https://github.com/node-ffi/node-ffi/wiki/Node-FFI-Tutorial             (Node FFI Tutorial)
