@@ -34,8 +34,8 @@ exports.updatePrinterMetadata = function(req, res) {
 
     function check() {
         db.collection('printers').find({
-            'details.ip': req.query.ip,
-            'details.hostname': req.query.hostname
+            'basicInfo.ip': req.query.ip,
+            'basicInfo.hostname': req.query.hostname
         }, {
             projection: {'_id': 1, 'metadata': 1}
         }).toArray(function(err, docs) {
@@ -92,8 +92,8 @@ exports.updatePrinterMetadata = function(req, res) {
 
     function check() {
         db.collection('printers').find({
-            'details.ip': req.query.ip,
-            'details.hostname': req.query.hostname
+            'basicInfo.ip': req.query.ip,
+            'basicInfo.hostname': req.query.hostname
         }, {
             projection: {'_id': 1}
         }).toArray(function(err, docs) {
