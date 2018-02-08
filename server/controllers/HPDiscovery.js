@@ -13,6 +13,7 @@ var xmljs = require('xml-js');
 
 var logger, db;
 var updateInterval = 300000;    // 300.000 ms are 5 minutes
+var printersDeadline = 7200000; // 7.200.000 ms are 2 hours
 var xmlOptions = {compact: true, ignoreDeclaration: true, ignoreInstruction: true, ignoreComment: true, ignoreCdata: true, ignoreDoctype: true};
 var metadataDefault = {alias: null, location: null, workteam: null, reservedBy: null, reservedUntil: null, calendar: []};
 
@@ -102,7 +103,7 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
 ========================================================================== */
 
 var intervalID = setInterval(function() {
-    var logEntry = 'Update-by-time (' + new Date() + ')';
+    var logEntry = 'Update/delete-by-time (' + new Date() + ')';
 
     db.collection('printers').find({}, {
         projection: {'_id': 1, 'details.ip': 1, 'information': 1, 'lastUpdate.status': 1}
@@ -111,12 +112,16 @@ var intervalID = setInterval(function() {
             logger.error(logEntry + '\n\tError retrieving the list of printers: ' + err);
         } else {
             for (var i=0; i<docs.length; i++) {
-                updatePrinterInfo(docs[i].details.ip, docs[i]._id, docs[i].information, docs[i].lastUpdate.status);
+                if (docs[i].information && docs[i].information.status == 'unreachable' && new Date().getTime() - docs[i].lastUpdate.status > printersDeadline) {
+                    deletePrinter(docs[i].details.ip, docs[i]._id);
+                } else {
+                    updatePrinterInfo(docs[i].details.ip, docs[i]._id, docs[i].information, docs[i].lastUpdate.status);
+                }
             }
-            logger.log(logEntry + '\n\tPrinter information update requests successfully sended (' + docs.length + ')');
+            logger.log(logEntry + '\n\tPrinter information update or deletion requests successfully sended (' + docs.length + ')');
         }
     });
-}, updateInterval); // 300.000 ms are 5 minutes
+}, updateInterval);
 
 
 /* API & functions
@@ -202,3 +207,19 @@ function updatePrinterInfo(printerIP, id, currentInfo, lastStatusUpdate) {
         });
     }
 };
+
+function deletePrinter(printerIP, id) {
+    var logEntry = 'Delete Printer (' + new Date() + ', ' + printerIP + ')';
+
+    db.collection('printers').deleteOne({
+        '_id': id
+    }, function(err, result) {
+        if (err) {
+            logger.error(logEntry + '\n\tError deleting the printer: ' + err);
+        } else if (result.deletedCount != 1) {
+            logger.error(logEntry + '\n\tError into database, the printer could not be deleted: deleted count: ' + result.deletedCount);
+        } else {
+            logger.log(logEntry + '\n\tPrinter successfully deleted');
+        }
+    });
+}
