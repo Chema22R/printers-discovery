@@ -78,7 +78,7 @@ exports.updatePrinterMetadata = function(req, res) {
 };
 
 
-exports.deletePrinter = function(req, res) {
+/*exports.deletePrinter = function(req, res) {
     var logEntry = 'Delete Printer (' + new Date() + ', ' + req.ip + ', ' + req.query.ip + ', ' + req.query.hostname + ')';
     var logger = req.app.locals.logger;
     var db = req.app.locals.db;
@@ -128,4 +128,4 @@ exports.deletePrinter = function(req, res) {
             }
         });
     }
-};
+};*/

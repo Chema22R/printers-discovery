@@ -14,7 +14,7 @@ var xmljs = require('xml-js');
 var logger, db;
 var updateInterval = 300000;    // 300.000 ms are 5 minutes
 var xmlOptions = {compact: true, ignoreDeclaration: true, ignoreInstruction: true, ignoreComment: true, ignoreCdata: true, ignoreDoctype: true};
-var metadataDefault = {alias: null, personInCharge: null, workteam: null, location: null, calendar: []};
+var metadataDefault = {alias: null, location: null, workteam: null, reservedBy: null, reservedUntil: null, calendar: []};
 
 var cstringPtr = ref.refType('CString');
 var cstringPtrPtr = ref.refType(cstringPtr);
