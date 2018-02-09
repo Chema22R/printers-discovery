@@ -117,13 +117,13 @@ function updatePrintersByTime() {
             closeLog(logEntry + '\n\tError retrieving the list of printers: ' + err, 1);
         } else {
             for (var i=0; i<docs.length; i++) {
-                if (docs[i].detailedInfo && docs[i].detailedInfo.status == 'unreachable' && new Date().getTime() - docs[i].lastUpdate.status > configData.deleteTimeout) {
+                if (docs[i].detailedInfo && docs[i].detailedInfo.status.toLowerCase() == 'unreachable' || docs[i].detailedInfo.status == '' && (new Date().getTime() - docs[i].lastUpdate.status) > configData.deleteTimeout) {
                     deletePrinter(docs[i].basicInfo.ip, docs[i]._id);
                 } else {
                     updatePrinterInfo(docs[i].basicInfo.ip, docs[i]._id, docs[i].detailedInfo, docs[i].lastUpdate.status);
                 }
             }
-            closeLog(logEntry + '\n\tPrinter detailed information update or deletion requests successfully sended (' + docs.length + ')', 3);
+            closeLog(logEntry + '\n\tPrinters update and/or deletion requests successfully sended (' + docs.length + ')', 3);
         }
     });
 }
