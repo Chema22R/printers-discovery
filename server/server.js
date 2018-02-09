@@ -16,7 +16,8 @@ var Console = require('console').Console;
 ========================================================================== */
 
 //var HPDiscovery = require('./controllers/HPDiscovery.js');
-var api = require('./controllers/api.js');
+var configAPI = require('./controllers/configAPI.js');
+var printersAPI = require('./controllers/printersAPI.js');
 
 
 /* app configuration
@@ -34,8 +35,30 @@ var log = fs.createWriteStream('./log/info.log', {flags: 'a'});
 var logErr = fs.createWriteStream('./log/error.log', {flags: 'a'});
 
 app.locals.logger = new Console(log, logErr);
-app.locals.logLevel = 3;    // default value, four levels (null/0, error/1, warn/2, info/3)
-app.locals.logSeparator = 3;    // default value
+
+
+/* configuration file
+========================================================================== */
+
+getConfigData();
+var getConfigDataID = setInterval(getConfigData, 60000);    // 60.000 ms is 1 minute
+
+function getConfigData() {
+    if (fs.existsSync('./config.json')) {
+        var data = fs.readFileSync('./config.json', {encoding: 'utf8', flag: 'r'});
+
+        if (JSON.stringify(data) !== JSON.stringify(app.locals.configData)) {
+            app.locals.configData = JSON.parse(data);
+            //HPDiscovery.updateConfigData(app.locals.configData);
+        }
+    } else {
+        app.locals.configData = {logLevel: 3, logSeparator: 3, updateFrecuency: 60000, deleteTimeout: 7200000}; // four levels (null/0, error/1, warn/2, info/3)
+
+        fs.writeFileSync('./config.json', JSON.stringify(app.locals.configData), {encoding: 'utf8', flag: 'w'});
+
+        //HPDiscovery.updateConfigData(app.locals.configData);
+    }
+}
 
 
 /* connections
@@ -47,7 +70,7 @@ var serverPort = 8080;
 
 mongodb.connect(databaseURI, function (err, client) {
     if (err) {
-        console.error('ERROR connecting to database server\n     ' + err.message);
+        console.error('ERROR connecting to database server\n\t' + err.message);
     } else {
         app.locals.db = client.db(databaseName);
         console.log('Connected to database "' + databaseName + '"');
@@ -65,6 +88,8 @@ app.listen(serverPort, function () {
 /* API
 ========================================================================== */
 
-//app.get('/printer/update', HPDiscovery.forcePrinterInfoUpdate);
-app.get('/printer/list', api.getPrintersList);
-app.put('/printer/update', api.updatePrinterMetadata);
+app.get('/config/data', configAPI.getConfigData);
+app.put('/config/update', configAPI.updateConfigData);
+app.get('/printers/list', printersAPI.getPrintersList);
+app.put('/printers/update', printersAPI.updatePrinterMetadata);
+//app.get('/printers/update', HPDiscovery.forcePrinterInfoUpdate);

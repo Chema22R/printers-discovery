@@ -1,8 +1,5 @@
 'use strict';
 
-/* API
-========================================================================== */
-
 exports.getPrintersList = function(req, res) {
     var logEntry = 'Get Printers List (' + new Date() + ', ' + req.ip + ')';
 
@@ -19,8 +16,8 @@ exports.getPrintersList = function(req, res) {
     });
 
     function closeLog(msj, level) {
-        if (level >= req.app.locals.logLevel) {
-            if (level >= req.app.locals.logSeparator) {
+        if (level <= req.app.locals.configData.logLevel) {
+            if (level >= req.app.locals.configData.logSeparator) {
                 req.app.locals.logger.log(logEntry + msj);
             } else {
                 req.app.locals.logger.error(logEntry + msj);
@@ -86,8 +83,8 @@ exports.updatePrinterMetadata = function(req, res) {
     }
 
     function closeLog(msj, level) {
-        if (level >= req.app.locals.logLevel) {
-            if (level >= req.app.locals.logSeparator) {
+        if (level <= req.app.locals.configData.logLevel) {
+            if (level >= req.app.locals.configData.logSeparator) {
                 req.app.locals.logger.log(logEntry + msj);
             } else {
                 req.app.locals.logger.error(logEntry + msj);

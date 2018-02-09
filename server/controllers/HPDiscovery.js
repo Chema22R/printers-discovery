@@ -11,9 +11,8 @@ var xmljs = require('xml-js');
 /* global
 ========================================================================== */
 
-var logger, logLevel, logSeparator, db, updatePrintersByTimeID;
-var updatePrintersByTimeInterval = 60000;    // default value, 60.000 ms is 1 minute
-var printersDeadline = 7200000; // default value, 7.200.000 ms are 2 hours
+var logger, db, updatePrintersByTimeID;
+var configData = {logLevel: 3, logSeparator: 3, updateFrecuency: 60000, deleteTimeout: 7200000};
 var xmlOptions = {compact: true, ignoreDeclaration: true, ignoreInstruction: true, ignoreComment: true, ignoreCdata: true, ignoreDoctype: true};
 var metadataDefault = {alias: null, location: null, workteam: null, reservedBy: null, reservedUntil: null, calendar: []};
 
@@ -106,7 +105,7 @@ var subscriptionCallback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], fu
 /* update by time
 ========================================================================== */
 
-updatePrintersByTimeID = setInterval(updatePrintersByTime, updatePrintersByTimeInterval);
+updatePrintersByTimeID = setInterval(updatePrintersByTime, configData.updateFrecuency);
 
 function updatePrintersByTime() {
     var logEntry = 'Update Printers By Time (' + new Date() + ')';
@@ -118,7 +117,7 @@ function updatePrintersByTime() {
             closeLog(logEntry + '\n\tError retrieving the list of printers: ' + err, 1);
         } else {
             for (var i=0; i<docs.length; i++) {
-                if (docs[i].detailedInfo && docs[i].detailedInfo.status == 'unreachable' && new Date().getTime() - docs[i].lastUpdate.status > printersDeadline) {
+                if (docs[i].detailedInfo && docs[i].detailedInfo.status == 'unreachable' && new Date().getTime() - docs[i].lastUpdate.status > configData.deleteTimeout) {
                     deletePrinter(docs[i].basicInfo.ip, docs[i]._id);
                 } else {
                     updatePrinterInfo(docs[i].basicInfo.ip, docs[i]._id, docs[i].detailedInfo, docs[i].lastUpdate.status);
@@ -135,8 +134,6 @@ function updatePrintersByTime() {
 
 exports.init = function(controllers) {
     logger = controllers.logger;
-    logLevel = controllers.logLevel;
-    logSeparator = controllers.logSeparator;
     db = controllers.db;
     
     libHPDiscovery.HPDiscoveryInit();
@@ -145,6 +142,13 @@ exports.init = function(controllers) {
 
 exports.terminate = function() {
     libHPDiscovery.HPDiscoveryTerminate();
+};
+
+exports.updateConfigData = function(data) {
+    configData = data;
+    
+    clearInterval(updatePrintersByTimeID);
+    updatePrintersByTimeID = setInterval(updatePrintersByTime, configData.updateFrecuency);
 };
 
 exports.forcePrinterInfoUpdate = function(req, res) {
@@ -237,8 +241,8 @@ function deletePrinter(printerIP, id) {
 }
 
 function closeLog(entry, level) {
-    if (level >= logLevel) {
-        if (level >= logSeparator) {
+    if (level <= configData.logLevel) {
+        if (level >= configData.logSeparator) {
             logger.log(entry);
         } else {
             logger.error(entry);
