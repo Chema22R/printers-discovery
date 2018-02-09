@@ -71,12 +71,12 @@ exports.updatePrinterMetadata = function(req, res) {
             '_id': id
         }, {
             $set: {'metadata': req.body, 'lastUpdate.metadata': new Date().getTime()}
-        }, function (err, results) {
+        }, function (err, result) {
             if (err) {
                 closeLog('\n\tError updating the printer metadata: ' + err, 1);
                 res.sendStatus(500);
-            } else if (results.matchedCount != 1 || results.modifiedCount != 1) {
-                closeLog('\n\tError into database, the printer metadata could not be updated: matched count: ' + results.matchedCount + ', modified count: ' + results.modifiedCount, 1);
+            } else if (result.matchedCount != 1 || result.modifiedCount != 1) {
+                closeLog('\n\tError into database, the printer metadata could not be updated: matched count: ' + result.matchedCount + ', modified count: ' + result.modifiedCount, 1);
                 res.sendStatus(500);
             } else {
                 closeLog('\n\tPrinter metadata successfully updated', 3);

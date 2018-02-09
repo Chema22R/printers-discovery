@@ -8,7 +8,7 @@ var ffi = require('ffi');
 var xmljs = require('xml-js');
 
 
-/* init
+/* global
 ========================================================================== */
 
 var logger, logLevel, logSeparator, db, updatePrintersByTimeID;
@@ -16,6 +16,10 @@ var updatePrintersByTimeInterval = 60000;    // default value, 60.000 ms is 1 mi
 var printersDeadline = 7200000; // default value, 7.200.000 ms are 2 hours
 var xmlOptions = {compact: true, ignoreDeclaration: true, ignoreInstruction: true, ignoreComment: true, ignoreCdata: true, ignoreDoctype: true};
 var metadataDefault = {alias: null, location: null, workteam: null, reservedBy: null, reservedUntil: null, calendar: []};
+
+
+/* ffi & HPDiscovery library
+========================================================================== */
 
 var cstringPtr = ref.refType('CString');
 var cstringPtrPtr = ref.refType(cstringPtr);
@@ -33,7 +37,7 @@ var libHPDiscovery = ffi.Library('./HPDiscovery/libdiscoverySimulator.so', {
 var printerInformation = ref.alloc(cstringPtrPtr);
 var printerInformationLength = ref.alloc('size_t');
 
-var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userData, newXmlPrinter, xmlLength) {
+var subscriptionCallback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userData, newXmlPrinter, xmlLength) {
     var printerBasicInfo, logEntry;
 
     printerBasicInfo = xmljs.xml2js(newXmlPrinter.readCString(), xmlOptions).Printer._attributes;
@@ -68,14 +72,14 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
             'metadata': metadataDefault,
             'lastUpdate': {'basicInfo': new Date().getTime()},
             'creationDate': new Date().getTime()
-        }, function (err, results) {
+        }, function (err, result) {
             if (err) {
                 closeLog(logEntry + '\n\tError inserting the new printer: ' + err, 1);
-            } else if (results.insertedCount != 1) {
-                closeLog(logEntry + '\n\tError into database, the new printer could not be inserted: inserted count: ' + results.insertedCount, 1);
+            } else if (result.insertedCount != 1) {
+                closeLog(logEntry + '\n\tError into database, the new printer could not be inserted: inserted count: ' + result.insertedCount, 1);
             } else {
                 closeLog(logEntry + '\n\tNew printer successfully inserted', 3);
-                updatePrinterInfo(printerBasicInfo.ip, results.insertedId, null, null);
+                updatePrinterInfo(printerBasicInfo.ip, result.insertedId, null, null);
             }
         });
     }
@@ -85,11 +89,11 @@ var callback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], function(userD
             '_id': id
         }, {
             $set: {'basicInfo': printerBasicInfo, 'lastUpdate.basicInfo': new Date().getTime()}
-        }, function (err, results) {
+        }, function (err, result) {
             if (err) {
                 closeLog(logEntry + '\n\tError updating the printer basic information: ' + err, 1);
-            } else if (results.matchedCount != 1 || results.modifiedCount != 1) {
-                closeLog(logEntry + '\n\tError into database, the printer basic information could not be updated: matched count: ' + results.matchedCount + ', modified count: ' + results.modifiedCount, 1);
+            } else if (result.matchedCount != 1 || result.modifiedCount != 1) {
+                closeLog(logEntry + '\n\tError into database, the printer basic information could not be updated: matched count: ' + result.matchedCount + ', modified count: ' + result.modifiedCount, 1);
             } else {
                 closeLog(logEntry + '\n\tPrinter basic information successfully updated', 3);
                 updatePrinterInfo(printerBasicInfo.ip, id, detailedInfo, lastStatusUpdate);
@@ -126,7 +130,7 @@ function updatePrintersByTime() {
 }
 
 
-/* API & functions
+/* API
 ========================================================================== */
 
 exports.init = function(controllers) {
@@ -136,7 +140,7 @@ exports.init = function(controllers) {
     db = controllers.db;
     
     libHPDiscovery.HPDiscoveryInit();
-    libHPDiscovery.HPDiscoverySubscribe(callback, null);
+    libHPDiscovery.HPDiscoverySubscribe(subscriptionCallback, null);
 };
 
 exports.terminate = function() {
@@ -179,6 +183,10 @@ exports.forcePrinterInfoUpdate = function(req, res) {
     }
 };
 
+
+/* functions
+========================================================================== */
+
 function updatePrinterInfo(printerIP, id, currentInfo, lastStatusUpdate) {
     var printerDetailedInfo, logEntry;
 
@@ -200,11 +208,11 @@ function updatePrinterInfo(printerIP, id, currentInfo, lastStatusUpdate) {
             '_id': id
         }, {
             $set: {'detailedInfo': printerDetailedInfo, 'lastUpdate.detailedInfo': new Date().getTime(), 'lastUpdate.status': lastStatusUpdate}
-        }, function (err, results) {
+        }, function (err, result) {
             if (err) {
                 closeLog(logEntry + '\n\tError updating the printer detailed information: ' + err, 1);
-            } else if (results.matchedCount != 1 || results.modifiedCount != 1) {
-                closeLog(logEntry + '\n\tError into database, the printer detailed information could not be updated: matched count: ' + results.matchedCount + ', modified count: ' + results.modifiedCount, 1);
+            } else if (result.matchedCount != 1 || result.modifiedCount != 1) {
+                closeLog(logEntry + '\n\tError into database, the printer detailed information could not be updated: matched count: ' + result.matchedCount + ', modified count: ' + result.modifiedCount, 1);
             } else {
                 closeLog(logEntry + '\n\tPrinter detailed information successfully updated', 3);
             }

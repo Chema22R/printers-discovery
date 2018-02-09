@@ -30,7 +30,7 @@ app.use(bodyParser.json());
 
 if (!fs.existsSync('./log')) {fs.mkdirSync('./log');}
 
-var log = fs.createWriteStream('./log/node.log', {flags: 'a'});
+var log = fs.createWriteStream('./log/info.log', {flags: 'a'});
 var logErr = fs.createWriteStream('./log/error.log', {flags: 'a'});
 
 app.locals.logger = new Console(log, logErr);
