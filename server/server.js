@@ -84,6 +84,16 @@ app.listen(serverPort, function () {
 });
 
 
+/* exit operation
+========================================================================== */
+
+process.on('exit', function(code) { // exit with "process.exit()"
+    clearInterval(getConfigDataID);
+    //HPDiscovery.terminate();
+    console.log("HPDiscovery terminated with status code " + code);
+});
+
+
 /* API
 ========================================================================== */
 

@@ -141,6 +141,7 @@ exports.init = function(controllers) {
 };
 
 exports.terminate = function() {
+    clearInterval(updatePrintersByTimeID);
     libHPDiscovery.HPDiscoveryTerminate();
 };
 
