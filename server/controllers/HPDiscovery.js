@@ -26,11 +26,11 @@ var intPtr = ref.refType('size_t');
 var voidPtr = ref.refType('void');
 
 var libHPDiscovery = ffi.Library('./HPDiscovery/libhpDiscovery.so', {
-    'HPDiscoveryInit': ['void', []],
-    'HPDiscoveryTerminate': ['void', []],
-    'HPDiscoverySubscribe': ['void', ['pointer', 'void']],
-    'HPDiscoveryGetPrinterInformation': ['void', ['string', cstringPtrPtr, intPtr]],
-    'HPDiscoveryDeleteBuffer': ['void', [cstringPtrPtr]]
+    'HPDiscoveryInit': ['int', []],
+    'HPDiscoveryTerminate': ['int', []],
+    'HPDiscoverySubscribe': ['int', ['pointer', 'void']],
+    'HPDiscoveryGetPrinterInformation': ['int', ['string', cstringPtrPtr, intPtr]],
+    'HPDiscoveryDeleteBuffer': ['int', [cstringPtrPtr]]
 });
 
 var printerInformation = ref.alloc(cstringPtrPtr);
@@ -78,7 +78,7 @@ var subscriptionCallback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], fu
                 closeLog(logEntry + '\n\tError into database, the new printer could not be inserted: inserted count: ' + result.insertedCount, 1);
             } else {
                 closeLog(logEntry + '\n\tNew printer successfully inserted', 3);
-                updatePrinterInfo(printerBasicInfo.ip, result.insertedId, null, null);
+                updatePrinterInfo(printerBasicInfo.ip, printerBasicInfo.hostname, result.insertedId, null, null);
             }
         });
     }
@@ -95,7 +95,7 @@ var subscriptionCallback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], fu
                 closeLog(logEntry + '\n\tError into database, the printer basic information could not be updated: matched count: ' + result.matchedCount + ', modified count: ' + result.modifiedCount, 1);
             } else {
                 closeLog(logEntry + '\n\tPrinter basic information successfully updated', 3);
-                updatePrinterInfo(printerBasicInfo.ip, id, detailedInfo, lastStatusUpdate);
+                updatePrinterInfo(printerBasicInfo.ip, printerBasicInfo.hostname, id, detailedInfo, lastStatusUpdate);
             }
         });
     }
@@ -111,16 +111,16 @@ function updatePrintersByTime() {
     var logEntry = 'Update Printers By Time (' + new Date() + ')';
 
     db.collection('printers').find({}, {
-        projection: {'_id': 1, 'basicInfo.ip': 1, 'detailedInfo': 1, 'lastUpdate.status': 1}
+        projection: {'_id': 1, 'basicInfo.ip': 1, 'basicInfo.hostname': 1, 'detailedInfo': 1, 'lastUpdate.status': 1}
     }).toArray(function(err, docs) {
         if (err) {
             closeLog(logEntry + '\n\tError retrieving the list of printers: ' + err, 1);
         } else {
             for (var i=0; i<docs.length; i++) {
                 if (docs[i].detailedInfo && docs[i].detailedInfo.status && docs[i].detailedInfo.status.toLowerCase() == 'unreachable' && (new Date().getTime() - docs[i].lastUpdate.status) > configData.deleteTimeout) {
-                    deletePrinter(docs[i].basicInfo.ip, docs[i]._id);
+                    deletePrinter(docs[i].basicInfo.ip, docs[i].basicInfo.hostname, docs[i]._id);
                 } else {
-                    updatePrinterInfo(docs[i].basicInfo.ip, docs[i]._id, docs[i].detailedInfo, docs[i].lastUpdate.status);
+                    updatePrinterInfo(docs[i].basicInfo.ip, docs[i].basicInfo.hostname, docs[i]._id, docs[i].detailedInfo, docs[i].lastUpdate.status);
                 }
             }
             closeLog(logEntry + '\n\tPrinters update and/or deletion requests successfully sended (' + docs.length + ')', 3);
@@ -133,16 +133,24 @@ function updatePrintersByTime() {
 ========================================================================== */
 
 exports.init = function(controllers) {
+    var returnState;
+
     logger = controllers.logger;
     db = controllers.db;
     
-    libHPDiscovery.HPDiscoveryInit();
-    libHPDiscovery.HPDiscoverySubscribe(subscriptionCallback, null);
+    returnState = libHPDiscovery.HPDiscoveryInit();
+    if (returnState != 0) {closeLog('Error at HPDiscoveryInit: returned the state ' + returnState, 1);}
+
+    returnState = libHPDiscovery.HPDiscoverySubscribe(subscriptionCallback, null);
+    if (returnState != 0) {closeLog('Error at HPDiscoverySubscribe: returned the state ' + returnState, 1);}
 };
 
 exports.terminate = function() {
+    var returnState;
+
     clearInterval(updatePrintersByTimeID);
-    libHPDiscovery.HPDiscoveryTerminate();
+    returnState = libHPDiscovery.HPDiscoveryTerminate();
+    if (returnState != 0) {closeLog('Error at HPDiscoveryTerminate: returned the state ' + returnState, 1);}
 };
 
 exports.updateConfigData = function(data) {
@@ -179,19 +187,32 @@ exports.forcePrinterInfoUpdate = function(req, res) {
                 closeLog(logEntry + '\n\tError into database, given combination ip+hostname is duplicated', 1);
                 res.sendStatus(500);
             } else {
-                getInfo(req.query.ip, docs[0]._id, docs[0].detailedInfo, docs[0].lastUpdate.status);
+                getInfo(docs[0]._id, docs[0].detailedInfo, docs[0].lastUpdate.status);
             }
         });
     }
 
-    function getInfo(printerIP, id, currentInfo, lastStatusUpdate) {
-        var printerDetailedInfo;
+    function getInfo(id, currentInfo, lastStatusUpdate) {
+        var printerDetailedInfo, returnState1, returnState2, integrityCheck;
 
-        libHPDiscovery.HPDiscoveryGetPrinterInformation(printerIP, printerInformation, printerInformationLength);
+        returnState1 = libHPDiscovery.HPDiscoveryGetPrinterInformation(req.query.ip, printerInformation, printerInformationLength);
+        if (returnState1 != 0) {logEntry += '\n\tError at HPDiscoveryGetPrinterInformation: returned the state ' + returnState1;}
+
         printerDetailedInfo = xmljs.xml2js(printerInformation.deref().readCString(), xmlOptions).Information._attributes;
-        libHPDiscovery.HPDiscoveryDeleteBuffer(printerInformation);
+        integrityCheck = printerDetailedInfo.hostName;
+        delete printerDetailedInfo.hostName;
 
-        if (JSON.stringify(currentInfo) !== JSON.stringify(printerDetailedInfo)) {
+        returnState2 = libHPDiscovery.HPDiscoveryDeleteBuffer(printerInformation);
+        if (returnState2 != 0) {logEntry += '\n\tError at HPDiscoveryDeleteBuffer: returned the state ' + returnState2;}
+
+        if (returnState1 != 0) {    // if returnstate2 != 0, we can continue but registering the error
+            closeLog(logEntry, 1);
+            res.sendStatus(500);
+        } else if (req.query.hostname != integrityCheck) {
+            deletePrinter(req.query.ip, req.query.hostname, id);
+            closeLog(logEntry + '\n\tPrinter is outdated and will be deleted', 3);
+            res.sendStatus(410);
+        } else if (JSON.stringify(currentInfo) !== JSON.stringify(printerDetailedInfo)) {
             updatePrinter(id, currentInfo, lastStatusUpdate, printerDetailedInfo);
         } else {
             closeLog(logEntry + '\n\tPrinter detailed information is already up to date', 3);
@@ -227,15 +248,25 @@ exports.forcePrinterInfoUpdate = function(req, res) {
 /* functions
 ========================================================================== */
 
-function updatePrinterInfo(printerIP, id, currentInfo, lastStatusUpdate) {
-    var printerDetailedInfo, logEntry;
+function updatePrinterInfo(printerIP, printerHostname, id, currentInfo, lastStatusUpdate) {
+    var printerDetailedInfo, returnState1, returnState2, integrityCheck;
+    var logEntry = 'Update Printer Detailed Information (' + new Date() + ', ' + printerIP + ', ' + printerHostname + ')';
 
-    libHPDiscovery.HPDiscoveryGetPrinterInformation(printerIP, printerInformation, printerInformationLength);
+    returnState1 = libHPDiscovery.HPDiscoveryGetPrinterInformation(printerIP, printerInformation, printerInformationLength);
+    if (returnState1 != 0) {logEntry += '\n\tError at HPDiscoveryGetPrinterInformation: returned the state ' + returnState1;}
+
     printerDetailedInfo = xmljs.xml2js(printerInformation.deref().readCString(), xmlOptions).Information._attributes;
-    libHPDiscovery.HPDiscoveryDeleteBuffer(printerInformation);
+    integrityCheck = printerDetailedInfo.hostName;
+    delete printerDetailedInfo.hostName;
 
-    if (JSON.stringify(currentInfo) !== JSON.stringify(printerDetailedInfo)) {
-        logEntry = 'Update Printer Detailed Information (' + new Date() + ', ' + printerIP + ')';
+    returnState2 = libHPDiscovery.HPDiscoveryDeleteBuffer(printerInformation);
+    if (returnState2 != 0) {logEntry += '\n\tError at HPDiscoveryDeleteBuffer: returned the state ' + returnState2;}
+
+    if (returnState1 != 0) {    // if returnstate2 != 0, we can continue but registering the error
+        closeLog(logEntry, 1);
+    } else if (printerHostname != integrityCheck) {
+        deletePrinter(printerIP, printerHostname, id);
+    } else if (JSON.stringify(currentInfo) !== JSON.stringify(printerDetailedInfo)) {
         updatePrinter();
     }
 
@@ -260,8 +291,8 @@ function updatePrinterInfo(printerIP, id, currentInfo, lastStatusUpdate) {
     }
 };
 
-function deletePrinter(printerIP, id) {
-    var logEntry = 'Delete Printer (' + new Date() + ', ' + printerIP + ')';
+function deletePrinter(printerIP, printerHostname, id) {
+    var logEntry = 'Delete Printer (' + new Date() + ', ' + printerIP + ', ' + printerHostname + ')';
 
     db.collection('printers').deleteOne({
         '_id': id
