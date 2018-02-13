@@ -179,10 +179,45 @@ exports.forcePrinterInfoUpdate = function(req, res) {
                 closeLog(logEntry + '\n\tError into database, given combination ip+hostname is duplicated', 1);
                 res.sendStatus(500);
             } else {
-                updatePrinterInfo(req.query.ip, docs[0]._id, docs[0].detailedInfo, docs[0].lastUpdate.status);
+                getInfo(req.query.ip, docs[0]._id, docs[0].detailedInfo, docs[0].lastUpdate.status);
+            }
+        });
+    }
 
-                closeLog(logEntry + '\n\tPrinter detailed information update request successfully sended', 3);
-                res.sendStatus(202);
+    function getInfo(printerIP, id, currentInfo, lastStatusUpdate) {
+        var printerDetailedInfo;
+
+        libHPDiscovery.HPDiscoveryGetPrinterInformation(printerIP, printerInformation, printerInformationLength);
+        printerDetailedInfo = xmljs.xml2js(printerInformation.deref().readCString(), xmlOptions).Information._attributes;
+        libHPDiscovery.HPDiscoveryDeleteBuffer(printerInformation);
+
+        if (JSON.stringify(currentInfo) !== JSON.stringify(printerDetailedInfo)) {
+            updatePrinter(id, currentInfo, lastStatusUpdate, printerDetailedInfo);
+        } else {
+            closeLog(logEntry + '\n\tPrinter detailed information is already up to date', 3);
+            res.sendStatus(200);
+        }
+    }
+
+    function updatePrinter(id, currentInfo, lastStatusUpdate, printerDetailedInfo) {
+        if (!currentInfo || !lastStatusUpdate || currentInfo.status != printerDetailedInfo.status) {
+            lastStatusUpdate = new Date().getTime();
+        }
+
+        db.collection('printers').updateOne({
+            '_id': id
+        }, {
+            $set: {'detailedInfo': printerDetailedInfo, 'lastUpdate.detailedInfo': new Date().getTime(), 'lastUpdate.status': lastStatusUpdate}
+        }, function (err, result) {
+            if (err) {
+                closeLog(logEntry + '\n\tError updating the printer detailed information: ' + err, 1);
+                res.sendStatus(500);
+            } else if (result.matchedCount != 1 || result.modifiedCount != 1) {
+                closeLog(logEntry + '\n\tError into database, the printer detailed information could not be updated: matched count: ' + result.matchedCount + ', modified count: ' + result.modifiedCount, 1);
+                res.sendStatus(500);
+            } else {
+                closeLog(logEntry + '\n\tPrinter detailed information successfully updated', 3);
+                res.sendStatus(200);
             }
         });
     }
