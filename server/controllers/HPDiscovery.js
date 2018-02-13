@@ -25,7 +25,7 @@ var cstringPtrPtr = ref.refType(cstringPtr);
 var intPtr = ref.refType('size_t');
 var voidPtr = ref.refType('void');
 
-var libHPDiscovery = ffi.Library('./HPDiscovery/libdiscoverySimulator.so', {
+var libHPDiscovery = ffi.Library('./HPDiscovery/libhpDiscovery.so', {
     'HPDiscoveryInit': ['void', []],
     'HPDiscoveryTerminate': ['void', []],
     'HPDiscoverySubscribe': ['void', ['pointer', 'void']],
