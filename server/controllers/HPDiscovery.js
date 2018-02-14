@@ -203,8 +203,8 @@ exports.forcePrinterInfoUpdate = function(req, res) {
         if (returnState1 != 0) {logEntry += '\n\tError at HPDiscoveryGetPrinterInformation: returned the state ' + returnState1;}
 
         printerDetailedInfo = xmljs.xml2js(printerInformation.deref().readCString(), xmlOptions).Information._attributes;
-        integrityCheck = printerDetailedInfo.hostName;
-        delete printerDetailedInfo.hostName;
+        integrityCheck = printerDetailedInfo.hostname;
+        delete printerDetailedInfo.hostname;
 
         returnState2 = libHPDiscovery.HPDiscoveryDeleteBuffer(printerInformation);
         if (returnState2 != 0) {logEntry += '\n\tError at HPDiscoveryDeleteBuffer: returned the state ' + returnState2;}
@@ -260,8 +260,8 @@ function updatePrinterInfo(printerIP, printerHostname, id, currentInfo, lastStat
     if (returnState1 != 0) {logEntry += '\n\tError at HPDiscoveryGetPrinterInformation: returned the state ' + returnState1;}
 
     printerDetailedInfo = xmljs.xml2js(printerInformation.deref().readCString(), xmlOptions).Information._attributes;
-    integrityCheck = printerDetailedInfo.hostName;
-    delete printerDetailedInfo.hostName;
+    integrityCheck = printerDetailedInfo.hostname;
+    delete printerDetailedInfo.hostname;
 
     returnState2 = libHPDiscovery.HPDiscoveryDeleteBuffer(printerInformation);
     if (returnState2 != 0) {logEntry += '\n\tError at HPDiscoveryDeleteBuffer: returned the state ' + returnState2;}
