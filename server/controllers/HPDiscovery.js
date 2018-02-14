@@ -111,7 +111,7 @@ function updatePrintersByTime() {
     var logEntry = 'Update Printers By Time (' + new Date() + ')';
 
     db.collection('printers').find({}, {
-        projection: {'_id': 1, 'basicInfo': 1, 'detailedInfo': 1, 'lastUpdate.status': 1}
+        projection: {'_id': 1, 'basicInfo': 1, 'detailedInfo': 1, 'metadata': 1, 'lastUpdate.status': 1}
     }).toArray(function(err, docs) {
         if (err) {
             closeLog(logEntry + '\n\tError retrieving the list of printers: ' + err, 1);
@@ -121,6 +121,10 @@ function updatePrintersByTime() {
                     deletePrinter(docs[i].basicInfo.ip, docs[i].basicInfo.hostname, docs[i]._id);
                 } else {
                     updatePrinterInfo(docs[i].basicInfo.ip, docs[i].basicInfo.hostname, docs[i]._id, docs[i].detailedInfo, docs[i].lastUpdate.status);
+
+                    if (metadata.reservedUntil < new Date().getTime()) {
+                        removeReservation(docs[i].basicInfo.ip, docs[i].basicInfo.hostname, docs[i]._id);
+                    }
                 }
             }
             closeLog(logEntry + '\n\tPrinters update and/or deletion requests successfully sended (' + docs.length + ')', 3);
@@ -303,6 +307,24 @@ function deletePrinter(printerIP, printerHostname, id) {
             closeLog(logEntry + '\n\tError into database, the printer could not be deleted: deleted count: ' + result.deletedCount, 1);
         } else {
             closeLog(logEntry + '\n\tPrinter successfully deleted', 3);
+        }
+    });
+}
+
+function removeReservation(printerIP, printerHostname, id) {
+    var logEntry = 'Remove Printer Reservation (' + new Date() + ', ' + printerIP + ', ' + printerHostname + ')';
+
+    db.collection('printers').updateOne({
+        '_id': id
+    }, {
+        $set: {'metadata.reservedBy': null, 'metadata.reservedUntil': null, 'lastUpdate.metadata': new Date().getTime()}
+    }, function (err, result) {
+        if (err) {
+            closeLog(logEntry + '\n\tError removing the printer reservation: ' + err, 1);
+        } else if (result.matchedCount != 1 || result.modifiedCount != 1) {
+            closeLog(logEntry + '\n\tError into database, the printer reservation could not be removed: matched count: ' + result.matchedCount + ', modified count: ' + result.modifiedCount, 1);
+        } else {
+            closeLog(logEntry + '\n\tPrinter reservation successfully removed', 3);
         }
     });
 }
