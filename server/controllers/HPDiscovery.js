@@ -111,7 +111,7 @@ function updatePrintersByTime() {
     var logEntry = 'Update Printers By Time (' + new Date() + ')';
 
     db.collection('printers').find({}, {
-        projection: {'_id': 1, 'basicInfo.ip': 1, 'basicInfo.hostname': 1, 'detailedInfo': 1, 'lastUpdate.status': 1}
+        projection: {'_id': 1, 'basicInfo': 1, 'detailedInfo': 1, 'lastUpdate.status': 1}
     }).toArray(function(err, docs) {
         if (err) {
             closeLog(logEntry + '\n\tError retrieving the list of printers: ' + err, 1);
