@@ -1,7 +1,29 @@
 notes:
-    en el frontend, poner el tiempo que le queda a una impresora unreachable para ser eliminada (en base al lastupdate.state y el deleteTimeout)
-    tener cuidado con las impresoras en el frontend, el usuario puede acceder y/o editar una que ya no exista o haya sido editada, por lo que al pinchar en una impresora, se debe actualizar
     manual de usuario para entender los logs
+
+frontend:
+    opciones:
+        poner todos los campos del archivo de configuracion del servidor
+        el delete timeout en minutos y el update frequency en segundos
+        configuracion de que columnas mostrar en la vista de lista
+
+    vista iconos:
+        añadir algo para decir en funcion de que se ordena
+        boton para liberar una impresora y que quede en blanco el reservedBy y el reservedUntil
+        boton derecho y muestra opciones con el boton para liberar impresora
+
+    vista lista:
+        que la lista se ordene en funcion de cada columna al pinchar en el title superior
+
+    vista columna
+        redefinir filtros en vista columna
+            la primera columna muestra los filtros creados y permite seleccionar entre ellos
+            la ventana de filtros avanzados, realiza el filtrado y almacena en cookies los filtros, mostrandolos en la columna
+
+    añadir campo reserved until para que la impresora se libere automaticamente
+    location = string maximo 100
+    poner el tiempo que le queda a una impresora unreachable para ser eliminada (en base al lastupdate.state y el deleteTimeout)
+    er cuidado con las impresoras en el frontend, el usuario puede acceder y/o editar una que ya no exista o haya sido editada, por lo que al pinchar en una impresora, se debe actualizar
 
 links:
     https://github.com/node-ffi/node-ffi/wiki/Node-FFI-Tutorial             (Node FFI Tutorial)

@@ -122,7 +122,7 @@ function updatePrintersByTime() {
                 } else {
                     updatePrinterInfo(docs[i].basicInfo.ip, docs[i].basicInfo.hostname, docs[i]._id, docs[i].detailedInfo, docs[i].lastUpdate.status);
 
-                    if (metadata.reservedUntil < new Date().getTime()) {
+                    if (docs[i].metadata && docs[i].metadata.reservedUntil && docs[i].metadata.reservedUntil < new Date().getTime()) {
                         removeReservation(docs[i].basicInfo.ip, docs[i].basicInfo.hostname, docs[i]._id);
                     }
                 }
