@@ -7,27 +7,69 @@
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
 
         <link rel="stylesheet" type="text/css" href="css.min.css">
-
         <link rel="stylesheet" href="fonts/icomoon/style.css">
     </head>
     <body>
         <header id='headerBar'>
             <div>
-                <button class='borderRight icon-iconsView icon' type='button' title='Icons View'/>
-                <button class='borderRight icon-listView icon' type='button' title='List View'/>
-                <button class='borderRight icon-columnsView icon' type='button' title='Columns View'/>
+                <button class='borderRight icon-iconsView icon current' type='button' title='Icons View' tabindex='1' accesskey='i'/>
+                <button class='borderRight icon-listView icon' type='button' title='List View' tabindex='2' accesskey='l'/>
+                <button class='borderRight icon-columnsView icon' type='button' title='Columns View' tabindex='3' accesskey='c'/>
             </div>
-            <div id='searchInput'>
-                <input type='text' maxlength='100' placeholder="Search for printers...">
+            <div id='headerBar-search'>
+                <input type='text' maxlength='100' placeholder="Search for printers..." tabindex='4' accesskey='s'>
             </div>
             <div>
-                <button class='borderLeft icon-advancedFilter icon' type='button' title='Advanced Filter'/>
-                <button class='borderLeft icon-config icon' type='button' title='Configuration'/>
+                <button class='borderLeft icon-advancedFilter icon' type='button' title='Advanced Filter' tabindex='5' accesskey='f'/>
+                <button class='borderLeft icon-config icon' type='button' title='Configuration' tabindex='6' accesskey='o'/>
             </div>
         </header>
 
         <div id='mainContent'>
-
+            <div id='iconsView'>
+                <div class='printer connected reserved' style='order: 1'>
+                    <div class='info'>
+                        <p>192.192.192.192</p>
+                        <p>modelname&nbsp;modelname&nbsp;modelname&nbsp;</p>
+                        <p>JGR_00_17_16.1</p>
+                    </div>
+                    <div class='state'>
+                        <p>RESERVED</p>
+                    </div>
+                </div>
+                <div class='printer warning reserved' style='order: 1'>
+                    <div class='info'>
+                        <p>192.192.192.192</p>
+                        <p>modelname&nbsp;modelname&nbsp;modelname&nbsp;</p>
+                        <p>JGR_00_17_16.1</p>
+                    </div>
+                    <div class='state'>
+                        <p>RESERVED</p>
+                    </div>
+                </div>
+                <div class='printer error reserved' style='order: 1'>
+                    <div class='info'>
+                        <p>192.192.192.192</p>
+                        <p>modelname&nbsp;modelname&nbsp;modelname&nbsp;</p>
+                        <p>JGR_00_17_16.1</p>
+                    </div>
+                    <div class='state'>
+                        <p>RESERVED</p>
+                    </div>
+                </div>
+                <div class='printer missing reserved' style='order: 1'>
+                    <div class='info'>
+                        <p>192.192.192.192</p>
+                        <p>modelname&nbsp;modelname&nbsp;modelname&nbsp;</p>
+                        <p>JGR_00_17_16.1</p>
+                    </div>
+                    <div class='state'>
+                        <p>RESERVED</p>
+                    </div>
+                </div>
+            </div>
+            <div id='listView'></div>
+            <div id='columnsView'></div>
         </div>
 
         <!-- JS -->
