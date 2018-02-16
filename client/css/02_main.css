@@ -107,8 +107,10 @@ p {margin: 0;}
 
 /* iconsView */
 
-#iconsView {
-    display: none;
+#iconsView {display: none;}
+
+#iconsView > div.wrapper {
+    display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
     align-content: flex-start;
@@ -116,7 +118,7 @@ p {margin: 0;}
     padding: 30px 5%;
 }
 
-#iconsView > .printer {
+#iconsView > div.wrapper > div.printer {
     width: 250px;
     height: 100px;
 
@@ -137,13 +139,13 @@ p {margin: 0;}
     overflow: hidden;
 }
 
-#iconsView > .printer:hover {
+#iconsView > div.wrapper > div.printer:hover {
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
     -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
     -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
 }
 
-#iconsView > .printer > .info {
+#iconsView > div.wrapper > div.printer > div.info {
     width: 220px;
     height: 90px;
 
@@ -151,7 +153,7 @@ p {margin: 0;}
     padding: 5px 0;
 }
 
-#iconsView > .printer > .info > p {
+#iconsView > div.wrapper > div.printer > div.info > p {
     height: 30px;
     padding: 0 15px;
     
@@ -161,20 +163,20 @@ p {margin: 0;}
     overflow: hidden;
 }
 
-#iconsView > .printer > .state {
+#iconsView > div.wrapper > div.printer > div.state {
     width: 30px;
     height: 100%;
 
     float: left;
 }
 
-#iconsView > .printer.connected > .state {background-color: #1DBE00;}
-#iconsView > .printer.warning > .state {background-color: #EBD000;}
-#iconsView > .printer.error > .state {background-color: #E40000;}
-#iconsView > .printer.missing > .state {background-color: #A8A8A8;}
-#iconsView > .printer > .state > p {display: none;}
+#iconsView > div.wrapper > div.printer.connected > div.state {background-color: #1DBE00;}
+#iconsView > div.wrapper > div.printer.warning > div.state {background-color: #EBD000;}
+#iconsView > div.wrapper > div.printer.error > div.state {background-color: #E40000;}
+#iconsView > div.wrapper > div.printer.missing > div.state {background-color: #A8A8A8;}
+#iconsView > div.wrapper > div.printer > div.state > p {display: none;}
 
-#iconsView > .printer.reserved > .state > p {
+#iconsView > div.wrapper > div.printer.reserved > div.state > p {
     width: 100px;
     margin-left: -99px;
 
@@ -191,17 +193,18 @@ p {margin: 0;}
 
 /* listView */
 
-#listView {
-    display: none;
-    width: 100%;
+#listView {display: none;}
 
+#listView > table.wrapper {
+    width: 100%;
+    
     table-layout: fixed;
     border-spacing: 0;
 
     text-align: center;
 }
 
-#listView > thead {
+#listView > table.wrapper > thead {
     width: 100%;
     height: 36px;
     
@@ -216,7 +219,7 @@ p {margin: 0;}
     background-color: #EFEFEF;
 }
 
-#listView > tbody {
+#listView > table.wrapper > tbody {
     position: relative;
     top: 36px;
 
@@ -226,8 +229,8 @@ p {margin: 0;}
     background-color: #FFF;
 }
 
-#listView th,
-#listView td {
+#listView > table.wrapper > thead > tr > th,
+#listView > table.wrapper > tbody > tr > td {
     padding: 8px;
     border-bottom: 1px solid #95989A;
 
@@ -235,12 +238,23 @@ p {margin: 0;}
     overflow: hidden;
 }
 
-#listView > tbody > tr:hover > td {font-weight: bold;}
-#listView > tbody > tr:hover > td:first-child {border-left: 3px solid #0099D8;}
+#listView > table.wrapper > tbody > tr.printer:hover > td {font-weight: bold;}
+#listView > table.wrapper > tbody > tr.printer:hover > td:first-child {border-left: 3px solid #0099D8;}
 
-#listView > tbody > tr.connected > td.state {color: #1DBE00;}
-#listView > tbody > tr.warning > td.state {color: #EBD000;}
-#listView > tbody > tr.error > td.state {color: #E40000;}
-#listView > tbody > tr.missing > td.state {color: #A8A8A8;}
+#listView > table.wrapper > tbody > tr.printer.connected > td.state {color: #1DBE00;}
+#listView > table.wrapper > tbody > tr.printer.warning > td.state {color: #EBD000;}
+#listView > table.wrapper > tbody > tr.printer.error > td.state {color: #E40000;}
+#listView > table.wrapper > tbody > tr.printer.missing > td.state {color: #A8A8A8;}
 
 /* columnsView */
+
+#columnsView {display: block;}
+
+#columnsView > div.wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-content: flex-start;
+
+    padding: 30px 5%;
+}

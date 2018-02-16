@@ -27,96 +27,106 @@
 
         <div id='mainContent'>
             <div id='iconsView'>
-                <div class='printer connected reserved' title='Awake'>
-                    <div class='info'>
-                        <p>192.192.192.192</p>
-                        <p>modelname&nbsp;modelname&nbsp;modelname&nbsp;</p>
-                        <p>JGR_00_17_16.1</p>
+                <div class='wrapper'>
+                    <div class='printer connected reserved' title='Awake'>
+                        <div class='info'>
+                            <p>192.192.192.192</p>
+                            <p>modelname&nbsp;modelname&nbsp;modelname&nbsp;</p>
+                            <p>JGR_00_17_16.1</p>
+                        </div>
+                        <div class='state'>
+                            <p>RESERVED</p>
+                        </div>
                     </div>
-                    <div class='state'>
-                        <p>RESERVED</p>
+                    <div class='printer warning reserved' title='With Alerts'>
+                        <div class='info'>
+                            <p>192.192.192.192</p>
+                            <p>modelname&nbsp;modelname&nbsp;modelname&nbsp;</p>
+                            <p>JGR_00_17_16.1</p>
+                        </div>
+                        <div class='state'>
+                            <p>RESERVED</p>
+                        </div>
                     </div>
-                </div>
-                <div class='printer warning reserved' title='With Alerts'>
-                    <div class='info'>
-                        <p>192.192.192.192</p>
-                        <p>modelname&nbsp;modelname&nbsp;modelname&nbsp;</p>
-                        <p>JGR_00_17_16.1</p>
+                    <div class='printer error reserved' title='With System Errors'>
+                        <div class='info'>
+                            <p>192.192.192.192</p>
+                            <p>modelname&nbsp;modelname&nbsp;modelname&nbsp;</p>
+                            <p>JGR_00_17_16.1</p>
+                        </div>
+                        <div class='state'>
+                            <p>RESERVED</p>
+                        </div>
                     </div>
-                    <div class='state'>
-                        <p>RESERVED</p>
-                    </div>
-                </div>
-                <div class='printer error reserved' title='With System Errors'>
-                    <div class='info'>
-                        <p>192.192.192.192</p>
-                        <p>modelname&nbsp;modelname&nbsp;modelname&nbsp;</p>
-                        <p>JGR_00_17_16.1</p>
-                    </div>
-                    <div class='state'>
-                        <p>RESERVED</p>
-                    </div>
-                </div>
-                <div class='printer missing reserved' title='Unreachable'>
-                    <div class='info'>
-                        <p>192.192.192.192</p>
-                        <p>modelname&nbsp;modelname&nbsp;modelname&nbsp;</p>
-                        <p>JGR_00_17_16.1</p>
-                    </div>
-                    <div class='state'>
-                        <p>RESERVED</p>
+                    <div class='printer missing reserved' title='Unreachable'>
+                        <div class='info'>
+                            <p>192.192.192.192</p>
+                            <p>modelname&nbsp;modelname&nbsp;modelname&nbsp;</p>
+                            <p>JGR_00_17_16.1</p>
+                        </div>
+                        <div class='state'>
+                            <p>RESERVED</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <table id='listView'>
-                <thead>
-                    <tr>
-                        <th>IP</th>
-                        <th>Modelname</th>
-                        <th>Firmware</th>
-                        <th>State</th>
-                        <th>Alias</th>
-                        <th>Reserved&nbsp;by</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class='printer connected'>
-                        <td>192.192.192.192</td>
-                        <td>modelname</td>
-                        <td>JGR_00_17_16.1</td>
-                        <td class='state'>Awake</td>
-                        <td>Destroyer</td>
-                        <td>José María Rivera Alonso</td>
-                    </tr>
-                    <tr class='printer warning'>
-                        <td>192.192.192.192</td>
-                        <td>modelname</td>
-                        <td>JGR_00_17_16.1</td>
-                        <td class='state'>With Alerts</td>
-                        <td>Destroyer</td>
-                        <td>José María Rivera Alonso</td>
-                    </tr>
-                    <tr class='printer error'>
-                        <td>192.192.192.192</td>
-                        <td>modelname</td>
-                        <td>JGR_00_17_16.1</td>
-                        <td class='state'>With System Errors</td>
-                        <td>Destroyer</td>
-                        <td>José María Rivera Alonso</td>
-                    </tr>
-                    <tr class='printer missing'>
-                        <td>192.192.192.192</td>
-                        <td>modelname</td>
-                        <td>JGR_00_17_16.1</td>
-                        <td class='state'>Unreachable</td>
-                        <td>Destroyer</td>
-                        <td>José María Rivera Alonso</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div id='listView'>
+                <table class='wrapper'>
+                    <thead>
+                        <tr>
+                            <th>IP</th>
+                            <th>Modelname</th>
+                            <th>Firmware</th>
+                            <th>State</th>
+                            <th>Alias</th>
+                            <th>Reserved&nbsp;by</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='printer connected'>
+                            <td>192.192.192.192</td>
+                            <td>modelname</td>
+                            <td>JGR_00_17_16.1</td>
+                            <td class='state'>Awake</td>
+                            <td>Destroyer</td>
+                            <td>José María Rivera Alonso</td>
+                        </tr>
+                        <tr class='printer warning'>
+                            <td>192.192.192.192</td>
+                            <td>modelname</td>
+                            <td>JGR_00_17_16.1</td>
+                            <td class='state'>With Alerts</td>
+                            <td>Destroyer</td>
+                            <td>José María Rivera Alonso</td>
+                        </tr>
+                        <tr class='printer error'>
+                            <td>192.192.192.192</td>
+                            <td>modelname</td>
+                            <td>JGR_00_17_16.1</td>
+                            <td class='state'>With System Errors</td>
+                            <td>Destroyer</td>
+                            <td>José María Rivera Alonso</td>
+                        </tr>
+                        <tr class='printer missing'>
+                            <td>192.192.192.192</td>
+                            <td>modelname</td>
+                            <td>JGR_00_17_16.1</td>
+                            <td class='state'>Unreachable</td>
+                            <td>Destroyer</td>
+                            <td>José María Rivera Alonso</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-            <div id='columnsView'></div>
+            <div id='columnsView'>
+                <div class='wrapper'>
+                    <table></table>
+                    <table></table>
+                    <table></table>
+                </div>
+            </div>
         </div>
 
         <!-- JS -->
