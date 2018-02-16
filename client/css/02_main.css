@@ -38,14 +38,14 @@ p {margin: 0;}
     background-color: #FFF;
 }
 
-#headerBar div {
+#headerBar > div {
     height: 50px;
     float: left;
 }
 
 /* buttons */
 
-#headerBar div button {
+#headerBar > div > button {
     width: 52px;
     height: inherit;
 
@@ -55,11 +55,11 @@ p {margin: 0;}
     border-bottom-style: solid;
 }
 
-#headerBar div button.borderRight {border-right-style: solid;}
-#headerBar div button.borderLeft {border-left-style: solid;}
-#headerBar div button.current {background-color: #EFEFEF;}
+#headerBar > div > button.borderRight {border-right-style: solid;}
+#headerBar > div > button.borderLeft {border-left-style: solid;}
+#headerBar > div > button.current {background-color: #EFEFEF;}
 
-#headerBar div button:hover {
+#headerBar > div > button:hover {
     padding-top: 3px;
     border-bottom: 3px solid #0099D8;
 }
@@ -72,7 +72,7 @@ p {margin: 0;}
     width: -webkit-calc(100% - 52*5px);
 }
 
-#headerBar-search input {
+#headerBar-search > input {
     width: calc(100% - 20px);
     width: -moz-calc(100% - 20px);
     width: -webkit-calc(100% - 20px);
@@ -84,8 +84,8 @@ p {margin: 0;}
     text-align: center;
 }
 
-#headerBar-search input:hover,
-#headerBar-search input:focus {
+#headerBar-search > input:hover,
+#headerBar-search > input:focus {
     height: 46px;
 
     padding-top: 1px;
@@ -108,7 +108,7 @@ p {margin: 0;}
 /* iconsView */
 
 #iconsView {
-    display: flex;
+    display: none;
     flex-flow: row wrap;
     justify-content: space-around;
     align-content: flex-start;
@@ -116,7 +116,7 @@ p {margin: 0;}
     padding: 30px 5%;
 }
 
-#iconsView .printer {
+#iconsView > .printer {
     width: 250px;
     height: 100px;
 
@@ -137,13 +137,13 @@ p {margin: 0;}
     overflow: hidden;
 }
 
-#iconsView .printer:hover {
+#iconsView > .printer:hover {
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
     -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
     -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
 }
 
-#iconsView .printer .info {
+#iconsView > .printer > .info {
     width: 220px;
     height: 90px;
 
@@ -151,7 +151,7 @@ p {margin: 0;}
     padding: 5px 0;
 }
 
-#iconsView .printer .info p {
+#iconsView > .printer > .info > p {
     height: 30px;
     padding: 0 15px;
     
@@ -161,20 +161,20 @@ p {margin: 0;}
     overflow: hidden;
 }
 
-#iconsView .printer .state {
+#iconsView > .printer > .state {
     width: 30px;
     height: 100%;
 
     float: left;
 }
 
-#iconsView .printer.connected .state {background-color: #1DBE00;}
-#iconsView .printer.warning .state {background-color: #EBD000;}
-#iconsView .printer.error .state {background-color: #E40000;}
-#iconsView .printer.missing .state {background-color: #A8A8A8;}
-#iconsView .printer .state p {display: none;}
+#iconsView > .printer.connected > .state {background-color: #1DBE00;}
+#iconsView > .printer.warning > .state {background-color: #EBD000;}
+#iconsView > .printer.error > .state {background-color: #E40000;}
+#iconsView > .printer.missing > .state {background-color: #A8A8A8;}
+#iconsView > .printer > .state > p {display: none;}
 
-#iconsView .printer.reserved .state p {
+#iconsView > .printer.reserved > .state > p {
     width: 100px;
     margin-left: -99px;
 
@@ -188,3 +188,59 @@ p {margin: 0;}
     line-height: 30px;
     letter-spacing: 2px;
 }
+
+/* listView */
+
+#listView {
+    display: none;
+    width: 100%;
+
+    table-layout: fixed;
+    border-spacing: 0;
+
+    text-align: center;
+}
+
+#listView > thead {
+    width: 100%;
+    height: 36px;
+    
+    position: fixed;
+    display: table;
+    table-layout: fixed;
+    z-index: 90;
+
+    cursor: default;
+
+    font-weight: bold;
+    background-color: #EFEFEF;
+}
+
+#listView > tbody {
+    position: relative;
+    top: 36px;
+
+    cursor: pointer;
+
+    font-weight: normal;
+    background-color: #FFF;
+}
+
+#listView th,
+#listView td {
+    padding: 8px;
+    border-bottom: 1px solid #95989A;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+#listView > tbody > tr:hover > td {font-weight: bold;}
+#listView > tbody > tr:hover > td:first-child {border-left: 3px solid #0099D8;}
+
+#listView > tbody > tr.connected > td.state {color: #1DBE00;}
+#listView > tbody > tr.warning > td.state {color: #EBD000;}
+#listView > tbody > tr.error > td.state {color: #E40000;}
+#listView > tbody > tr.missing > td.state {color: #A8A8A8;}
+
+/* columnsView */
