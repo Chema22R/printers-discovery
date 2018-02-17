@@ -1,0 +1,85 @@
+#iconsView {display: none;}
+
+#iconsView > div.wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    -moz-flex-flow: row wrap;
+    -webkit-flex-flow: row wrap;
+    justify-content: space-around;
+    -moz-justify-content: space-around;
+    -webkit-justify-content: space-around;
+    align-content: flex-start;
+    -webkit-align-content: flex-start;
+
+    padding: 30px 5%;
+}
+
+#iconsView > div.wrapper > div.printer {
+    width: 250px;
+    height: 100px;
+
+    margin: 20px;
+
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.3);
+
+    text-align: center;
+    background-color: #FFF;
+
+    cursor: pointer;
+    overflow: hidden;
+}
+
+#iconsView > div.wrapper > div.printer:hover {
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+}
+
+#iconsView > div.wrapper > div.printer > div.info {
+    width: 220px;
+    height: 90px;
+
+    float: left;
+    padding: 5px 0;
+}
+
+#iconsView > div.wrapper > div.printer > div.info > p {
+    height: 30px;
+    padding: 0 15px;
+    
+    line-height: 30px;
+}
+
+#iconsView > div.wrapper > div.printer > div.state {
+    width: 30px;
+    height: 100%;
+
+    float: left;
+}
+
+#iconsView > div.wrapper > div.printer.connected > div.state {background-color: #1DBE00;}
+#iconsView > div.wrapper > div.printer.warning > div.state {background-color: #EBD000;}
+#iconsView > div.wrapper > div.printer.error > div.state {background-color: #E40000;}
+#iconsView > div.wrapper > div.printer.missing > div.state {background-color: #A8A8A8;}
+#iconsView > div.wrapper > div.printer > div.state > p {display: none;}
+
+#iconsView > div.wrapper > div.printer.reserved > div.state > p {
+    width: 100px;
+    margin-left: -99px;
+
+    display: block;
+    transform: rotate(270deg);
+    transform-origin: top right;
+
+    color: #FFF;
+    font-size: 0.7em;
+    font-weight: lighter;
+    line-height: 30px;
+    letter-spacing: 2px;
+}

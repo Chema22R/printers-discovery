@@ -1,0 +1,49 @@
+#listView {display: none;}
+
+#listView > table.wrapper {
+    width: 100%;
+    
+    table-layout: fixed;
+    border-spacing: 0;
+
+    text-align: center;
+}
+
+#listView > table.wrapper > thead {
+    width: 100%;
+    height: 36px;
+    
+    position: fixed;
+    display: table;
+    table-layout: fixed;
+    z-index: 90;
+
+    cursor: default;
+
+    font-weight: bold;
+    background-color: #EFEFEF;
+}
+
+#listView > table.wrapper > tbody {
+    position: relative;
+    top: 36px;
+
+    cursor: pointer;
+
+    font-weight: normal;
+    background-color: #FFF;
+}
+
+#listView > table.wrapper > thead > tr > th,
+#listView > table.wrapper > tbody > tr > td {
+    padding: 8px;
+    border-bottom: 1px solid #95989A;
+}
+
+#listView > table.wrapper > tbody > tr.printer:hover > td {font-weight: bold;}
+#listView > table.wrapper > tbody > tr.printer:hover > td:first-child {border-left: 3px solid #0099D8;}
+
+#listView > table.wrapper > tbody > tr.printer.connected > td.state {color: #1DBE00;}
+#listView > table.wrapper > tbody > tr.printer.warning > td.state {color: #EBD000;}
+#listView > table.wrapper > tbody > tr.printer.error > td.state {color: #E40000;}
+#listView > table.wrapper > tbody > tr.printer.missing > td.state {color: #A8A8A8;}
