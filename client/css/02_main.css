@@ -11,7 +11,12 @@ button, input {
 
 button {cursor: pointer;}
 input {cursor: text;}
-p {margin: 0;}
+
+p, th, td {
+    margin: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
 
 .icon {
     font-size: 25px;
@@ -112,8 +117,13 @@ p {margin: 0;}
 #iconsView > div.wrapper {
     display: flex;
     flex-flow: row wrap;
+    -moz-flex-flow: row wrap;
+    -webkit-flex-flow: row wrap;
     justify-content: space-around;
+    -moz-justify-content: space-around;
+    -webkit-justify-content: space-around;
     align-content: flex-start;
+    -webkit-align-content: flex-start;
 
     padding: 30px 5%;
 }
@@ -158,9 +168,6 @@ p {margin: 0;}
     padding: 0 15px;
     
     line-height: 30px;
-    text-overflow: ellipsis;
-
-    overflow: hidden;
 }
 
 #iconsView > div.wrapper > div.printer > div.state {
@@ -233,9 +240,6 @@ p {margin: 0;}
 #listView > table.wrapper > tbody > tr > td {
     padding: 8px;
     border-bottom: 1px solid #95989A;
-
-    text-overflow: ellipsis;
-    overflow: hidden;
 }
 
 #listView > table.wrapper > tbody > tr.printer:hover > td {font-weight: bold;}
@@ -252,9 +256,105 @@ p {margin: 0;}
 
 #columnsView > div.wrapper {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
+    -moz-flex-flow: row nowrap;
+    -webkit-flex-flow: row nowrap;
     justify-content: space-around;
-    align-content: flex-start;
+    -moz-justify-content: space-around;
+    -webkit-justify-content: space-around;
 
-    padding: 30px 5%;
+    text-align: center;
 }
+
+#columnsView > div.wrapper > div.column {
+    height: calc(100vh - 50px);
+
+    flex-grow: 1;
+    -moz-flex-grow: 1;
+    -webkit-flex-grow: 1;
+
+    overflow: hidden;
+}
+
+#columnsView > div.wrapper > div.column.small {
+    max-width: 25%;
+    border-right: 1px solid #95989A;
+}
+
+#columnsView > div.wrapper > div.column.big {max-width: 50%;}
+
+#columnsView > div.wrapper > div.column.small > div.wrapper {
+    height: calc(100vh - 85px);
+    overflow-y: scroll;
+}
+
+@media (min-width: 1000px) {
+    #columnsView > div.wrapper > div.column.small {max-width: 20%;}
+    #columnsView > div.wrapper > div.column.big {max-width: 60%;}
+}
+
+@media (min-width: 1250px) {
+    #columnsView > div.wrapper > div.column.small {max-width: 16%;}
+    #columnsView > div.wrapper > div.column.big {max-width: 68%;}
+}
+
+@media (min-width: 1556px) {
+    #columnsView > div.wrapper > div.column.small {max-width: 13%;}
+    #columnsView > div.wrapper > div.column.big {max-width: 74%;}
+}
+
+#columnsView > div.wrapper > div.column > p.title {
+    cursor: default;
+    font-weight: bold;
+}
+
+#columnsView > div.wrapper > div.column.small > p.title {border-bottom: 1px solid #95989A;}
+
+#columnsView > div.wrapper > div.column.small p {
+    line-height: 35px;
+    padding: 0 8px;
+}
+
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.filter {height: 35px;}
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer {height: 71px;}
+
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.filter,
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer {
+    border-bottom: 1px solid #95989A;
+    cursor: pointer;
+}
+
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.filter,
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer,
+#columnsView > div.wrapper > div.column.big {background-color: #FFF;}
+
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.filter:hover,
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer:hover {
+    border-left: 3px solid #0099D8;
+    font-weight: bold;
+}
+
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer > div {float: left;}
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer > div.info {width: calc(100% - 20px);}
+
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer > div.state {
+    width: 20px;
+    height: 100%;
+}
+
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer > div.state > p {display: none;}
+
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer.reserved > div.state > p {
+    display: block;
+    padding: 0 0 0 1px;
+    
+    color: #FFF;
+    font-size: 0.9em;
+    font-weight: normal;
+    line-height: 71px;
+}
+
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer.connected > div.state {background-color: #1DBE00;}
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer.warning > div.state {background-color: #EBD000;}
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer.error > div.state {background-color: #E40000;}
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer.missing > div.state {background-color: #A8A8A8;}
