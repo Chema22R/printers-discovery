@@ -23,7 +23,8 @@ frontend:
     añadir campo reserved until para que la impresora se libere automaticamente
     location = string maximo 100
     poner el tiempo que le queda a una impresora unreachable para ser eliminada (en base al lastupdate.state y el deleteTimeout)
-    er cuidado con las impresoras en el frontend, el usuario puede acceder y/o editar una que ya no exista o haya sido editada, por lo que al pinchar en una impresora, se debe actualizar
+    tener cuidado con las impresoras en el frontend, el usuario puede acceder y/o editar una que ya no exista o haya sido editada, por lo que al pinchar en una impresora, se debe actualizar
+    poner en la configuracion un selector de idioma
 
 links:
     https://github.com/node-ffi/node-ffi/wiki/Node-FFI-Tutorial             (Node FFI Tutorial)
