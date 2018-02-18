@@ -73,6 +73,35 @@
     {
       "icon": {
         "paths": [
+          "M512 426.679l-426.664-426.664-85.321 85.321 426.664 426.664-426.664 426.664 85.321 85.321 426.664-426.664 426.664 426.664 85.321-85.321-426.664-426.664 426.664-426.664-85.321-85.321-426.664 426.664z"
+        ],
+        "attrs": [
+          {}
+        ],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "tags": [
+          "close"
+        ],
+        "grid": 32
+      },
+      "attrs": [
+        {}
+      ],
+      "properties": {
+        "order": 1,
+        "id": 4,
+        "name": "close",
+        "prevSize": 32,
+        "code": 59653
+      },
+      "setIdx": 1,
+      "setId": 0,
+      "iconIdx": 0
+    },
+    {
+      "icon": {
+        "paths": [
           "M0 153.6h1024v102.4h-1024v-102.4zM0 358.4h1024v102.4h-1024v-102.4zM0 563.2h1024v102.4h-1024v-102.4zM0 768h1024v102.4h-1024v-102.4z"
         ],
         "attrs": [
@@ -97,7 +126,7 @@
       },
       "setIdx": 1,
       "setId": 0,
-      "iconIdx": 0
+      "iconIdx": 1
     },
     {
       "icon": {
@@ -126,7 +155,7 @@
       },
       "setIdx": 1,
       "setId": 0,
-      "iconIdx": 1
+      "iconIdx": 2
     },
     {
       "icon": {
@@ -155,7 +184,7 @@
       },
       "setIdx": 1,
       "setId": 0,
-      "iconIdx": 2
+      "iconIdx": 3
     }
   ],
   "height": 1024,
@@ -185,7 +214,8 @@
       "png": true,
       "useClassSelector": true,
       "color": 0,
-      "bgColor": 16777215
+      "bgColor": 16777215,
+      "classSelector": ".icon"
     },
     "historySize": 50,
     "gridSize": 16,

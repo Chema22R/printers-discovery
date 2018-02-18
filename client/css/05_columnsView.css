@@ -100,6 +100,8 @@
     width: calc(100% - 20px);
     width: -moz-calc(100% - 20px);
     width: -webkit-calc(100% - 20px);
+
+    text-align: left;
 }
 
 #columnsView > div.wrapper > div.column.small > div.wrapper > div.printer > div.state {
@@ -122,4 +124,62 @@
     font-size: 0.9em;
     font-weight: normal;
     line-height: 71px;
+}
+
+/* details & information */
+
+#columnsView > div.wrapper > div.column.big {overflow-y: scroll;}
+#columnsView > div.wrapper > div.column.big > div.wrapper {margin: 8px 0;}
+
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper {
+    width: 50%;
+    display: inline-block;
+}
+
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper.left {
+    float: left;
+    text-align: right;
+}
+
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper.right {text-align: left;}
+
+#columnsView > div.wrapper > div.column.big > div.wrapper > p.title {
+    padding: 0 8px;
+    cursor: default;
+
+    line-height: 36px;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > p  {
+    padding: 0 8px;
+    cursor: default;
+    line-height: 30px;
+}
+
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > p.state.connected {color: #1DBE00;}
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > p.state.warning {color: #EBD000;}
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > p.state.error {color: #E40000;}
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > p.state.missing {color: #A8A8A8;}
+
+#columnsView > div.wrapper > div.column.big > button {
+    margin: 8px 0 24px 0;
+    padding: 10px 60px;
+    
+    border: 1px solid #95989A;
+
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.3);
+}
+
+#columnsView > div.wrapper > div.column.big > button:hover {
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
 }

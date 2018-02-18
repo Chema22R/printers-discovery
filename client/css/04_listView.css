@@ -16,7 +16,7 @@
     position: fixed;
     display: table;
     table-layout: fixed;
-    z-index: 90;
+    z-index: 40;
 
     cursor: default;
 

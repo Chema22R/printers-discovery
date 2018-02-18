@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
 
         <link rel="stylesheet" type="text/css" href="css.min.css">
-        <link rel="stylesheet" href="fonts/icomoon/style.css">
+        <link rel="stylesheet" href="fonts/style.css">
 
         <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
@@ -88,7 +88,7 @@
                             <th>Firmware</th>
                             <th>State</th>
                             <th>Alias</th>
-                            <th>Reserved&nbsp;by</th>
+                            <th>Reserved&nbsp;By</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -191,10 +191,208 @@
 
                     <div class='column big'>
                         <div class='wrapper'>
-                            <p class='title'>Information</p>
                             <p class='title'>Details</p>
+                            <div class='wrapper left'>
+                                <p>Hostname</p>
+                                <p>IP&nbsp;Address</p>
+                                <p>Modelname</p>
+                                <p>Firmware&nbsp;Version</p>
+                                <p>State</p>
+                                <p>Creation&nbsp;Date</p>
+                                <p>Last&nbsp;State&nbsp;Change</p>
+                            </div>
+                            <div class='wrapper right'>
+                                <p>hostname</p>
+                                <p>192.192.192.192</p>
+                                <p>modelname&nbsp;modelname</p>
+                                <p>adada3231asdasd</p>
+                                <p class='state connected'>Awake</p>
+                                <p>yughj1n2lnj2k13nadsa</p>
+                                <p>yughj1n2lnj2k13nsdada</p>
+                            </div>
+                        </div>
+
+                        <div class='wrapper'>
+                            <p class='title'>Information</p>
+                            <div class='wrapper left'>
+                                <p>Alias</p>
+                                <p>Location</p>
+                                <p>Workteam</p>
+                                <p>Reserved&nbsp;By</p>
+                                <p>Reserved&nbsp;Until</p>
+                            </div>
+                            <div class='wrapper right'>
+                                <p>Destroyer</p>
+                                <p>León</p>
+                                <p>Workteam&nbsp;Workteam</p>
+                                <p>José&nbsp;María&nbsp;Rivera&nbsp;Alonso</p>
+                                <p>adada3231asdasd</p>
+                            </div>
+                        </div>
+
+                        <button type='button' title='Edit Information' accesskey='e'>Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id='menusLeftover'></div>
+        <div id='menus'>
+            <div class='wrapper'>
+                <div id='infoMenu'>
+                    <div class='wrapper'>
+                        <p class='title'>Details</p>
+                        <div class='wrapper left'>
+                            <p>Hostname</p>
+                            <p>IP&nbsp;Address</p>
+                            <p>Modelname</p>
+                            <p>Firmware&nbsp;Version</p>
+                            <p>State</p>
+                            <p>Creation&nbsp;Date</p>
+                            <p>Last&nbsp;State&nbsp;Change</p>
+                        </div>
+                        <div class='wrapper right'>
+                            <p>hostname</p>
+                            <p>192.192.192.192</p>
+                            <p>modelname&nbsp;modelname</p>
+                            <p>adada3231asdasd</p>
+                            <p class='state connected'>Awake</p>
+                            <p>yughj1n2lnj2k13nadsa</p>
+                            <p>yughj1n2lnj2k13nsdada</p>
                         </div>
                     </div>
+
+                    <div class='wrapper'>
+                        <p class='title'>Information</p>
+                        <div class='wrapper left'>
+                            <p>Alias</p>
+                            <p>Location</p>
+                            <p>Workteam</p>
+                            <p>Reserved&nbsp;By</p>
+                            <p>Reserved&nbsp;Until</p>
+                        </div>
+                        <div class='wrapper right'>
+                            <p>Destroyer</p>
+                            <p>León</p>
+                            <p>Workteam&nbsp;Workteam</p>
+                            <p>José&nbsp;María&nbsp;Rivera&nbsp;Alonso</p>
+                            <p>adada3231asdasd</p>
+                        </div>
+                    </div>
+
+                    <button class='actionButton' type='button' title='Edit Information'>Edit</button>
+                    <button class='closeButton icon-close icon' type='button' title='Close Window'/>
+                </div>
+
+                <div id='editMenu'>
+                    <div class='wrapper'>
+                        <p class='title'>Details</p>
+                        <div class='wrapper left'>
+                            <p>Hostname</p>
+                            <p>IP&nbsp;Address</p>
+                            <p>Modelname</p>
+                            <p>Firmware&nbsp;Version</p>
+                            <p>State</p>
+                            <p>Creation&nbsp;Date</p>
+                            <p>Last&nbsp;State&nbsp;Change</p>
+                        </div>
+                        <div class='wrapper right'>
+                            <p>hostname</p>
+                            <p>192.192.192.192</p>
+                            <p>modelname&nbsp;modelname</p>
+                            <p>adada3231asdasd</p>
+                            <p class='state connected'>Awake</p>
+                            <p>yughj1n2lnj2k13nadsa</p>
+                            <p>yughj1n2lnj2k13nsdada</p>
+                        </div>
+                    </div>
+
+                    <div class='wrapper'>
+                        <p class='title'>Information</p>
+                        <div class='wrapper left'>
+                            <p>Alias</p>
+                            <p>Location</p>
+                            <p>Workteam</p>
+                            <p>Reserved&nbsp;By</p>
+                            <p>Reserved&nbsp;Until</p>
+                        </div>
+                        <form id='editForm' class='wrapper right'>
+                            <input type='text' value='Destroyer' maxlength='100' placeholder='alias' required>
+                            <input type='text' value='León' maxlength='100' placeholder='location' required>
+                            <input type='text' value='Workteam&nbsp;Workteam' maxlength='100' placeholder='workteam' required>
+                            <input type='text' value='José&nbsp;María&nbsp;Rivera&nbsp;Alonso' maxlength='100' placeholder='reserved by' required>
+                            <input type='text' value='adada3231asdasd' maxlength='100' placeholder='dd/mm/aaaa hh:mm' required>
+                        </form>
+                    </div>
+
+                    <button class='actionButton' type='submit' form='editForm' title='Upload Information'>Send</button>
+                    <button class='closeButton icon-close icon' type='button' title='Close Window'/>
+                </div>
+
+                <div id='advanceFiltersMenu'>
+                    <div class='wrapper'>
+                        <p class='title'>Details</p>
+                        <div class='wrapper left'>
+                            <p>Hostname</p>
+                            <p>IP&nbsp;Address</p>
+                            <p>Modelname</p>
+                            <p>Firmware&nbsp;Version</p>
+                            <p>State</p>
+                            <p>Creation&nbsp;Date</p>
+                            <p>Last&nbsp;State&nbsp;Change</p>
+                        </div>
+                        <form id='filterFormDetails' class='wrapper right'>
+                            <input type='text' value='' maxlength='100' placeholder='hostname'>
+                            <input type='text' value='' maxlength='100' placeholder='ip address'>
+                            <input type='text' value='' maxlength='100' placeholder='modelname'>
+                            <input type='text' value='' maxlength='100' placeholder='firmware version'>
+                            <input type='text' value='' maxlength='100' placeholder='state'>
+                            <input type='text' value='' maxlength='100' placeholder='dd/mm/aaaa hh:mm'>
+                            <input type='text' value='' maxlength='100' placeholder='dd/mm/aaaa hh:mm'>
+                        </form>
+                    </div>
+
+                    <div class='wrapper'>
+                        <p class='title'>Information</p>
+                        <div class='wrapper left'>
+                            <p>Alias</p>
+                            <p>Location</p>
+                            <p>Workteam</p>
+                            <p>Reserved&nbsp;By</p>
+                            <p>Reserved&nbsp;Until</p>
+                        </div>
+                        <form id='filterFormDetails' class='wrapper right'>
+                            <input type='text' value='' maxlength='100' placeholder='alias'>
+                            <input type='text' value='' maxlength='100' placeholder='location'>
+                            <input type='text' value='' maxlength='100' placeholder='workteam'>
+                            <input type='text' value='' maxlength='100' placeholder='reserved by'>
+                            <input type='text' value='' maxlength='100' placeholder='dd/mm/aaaa hh:mm'>
+                        </form>
+                    </div>
+
+                    <button class='actionButton' type='submit' title='Filter'>Filter</button>
+                    <button class='closeButton icon-close icon' type='button' title='Close Window'/>
+                </div>
+
+                <div id='configMenu'>
+                    <div class='wrapper'>
+                        <p class='title'>Configuration</p>
+                        <div class='wrapper left'>
+                            <p>Log&nbsp;Level</p>
+                            <p>Log&nbsp;Separator</p>
+                            <p>Update&nbsp;Frecuency</p>
+                            <p>Delete&nbsp;Timeout</p>
+                        </div>
+                        <form id='configForm' class='wrapper right'>
+                            <input type='number' value='3' min='0' max='3' placeholder='log level' required>
+                            <input type='number' value='3' min='0' max='3' placeholder='log separator' required>
+                            <input type='number' value='60000' min='0' placeholder='update frecuency' required>
+                            <input type='number' value='7200000' min='0' placeholder='delete timeout' required>
+                        </form>
+                    </div>
+
+                    <button class='actionButton' type='submit' form='configForm' title='Update Configuration'>Send</button>
+                    <button class='closeButton icon-close icon' type='button' title='Close Window'/>
                 </div>
             </div>
         </div>

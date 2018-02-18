@@ -25,6 +25,8 @@ frontend:
     poner el tiempo que le queda a una impresora unreachable para ser eliminada (en base al lastupdate.state y el deleteTimeout)
     tener cuidado con las impresoras en el frontend, el usuario puede acceder y/o editar una que ya no exista o haya sido editada, por lo que al pinchar en una impresora, se debe actualizar
     poner en la configuracion un selector de idioma
+    todos los p deben estar con &nbsp;
+    poner title en todos los p en los que no haya info ya al ponerse encima
 
 links:
     https://github.com/node-ffi/node-ffi/wiki/Node-FFI-Tutorial             (Node FFI Tutorial)
