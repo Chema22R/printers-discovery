@@ -12,7 +12,7 @@ var xmljs = require('xml-js');
 ========================================================================== */
 
 var logger, db, updatePrintersByTimeID;
-var configData = {logLevel: 3, logSeparator: 3, updateFrecuency: 60000, deleteTimeout: 7200000};
+var configData = {logLevel: 3, logSeparator: 3, updateFrequency: 60000, deleteTimeout: 7200000};
 var xmlOptions = {compact: true, ignoreDeclaration: true, ignoreInstruction: true, ignoreComment: true, ignoreCdata: true, ignoreDoctype: true};
 var metadataDefault = {alias: null, location: null, workteam: null, reservedBy: null, reservedUntil: null, calendar: []};
 
@@ -105,7 +105,7 @@ var subscriptionCallback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], fu
 /* update by time
 ========================================================================== */
 
-updatePrintersByTimeID = setInterval(updatePrintersByTime, configData.updateFrecuency);
+updatePrintersByTimeID = setInterval(updatePrintersByTime, configData.updateFrequency);
 
 function updatePrintersByTime() {
     var logEntry = 'Update Printers By Time (' + new Date() + ')';
@@ -161,7 +161,7 @@ exports.updateConfigData = function(data) {
     configData = data;
     
     clearInterval(updatePrintersByTimeID);
-    updatePrintersByTimeID = setInterval(updatePrintersByTime, configData.updateFrecuency);
+    updatePrintersByTimeID = setInterval(updatePrintersByTime, configData.updateFrequency);
 };
 
 exports.forcePrinterInfoUpdate = function(req, res) {

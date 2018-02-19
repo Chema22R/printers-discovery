@@ -52,7 +52,7 @@ function getConfigData() {
             //HPDiscovery.updateConfigData(app.locals.configData);
         }
     } else {
-        app.locals.configData = {logLevel: 3, logSeparator: 3, updateFrecuency: 60000, deleteTimeout: 7200000}; // four levels (null/0, error/1, warn/2, info/3)
+        app.locals.configData = {logLevel: 3, logSeparator: 3, updateFrequency: 60000, deleteTimeout: 7200000}; // four levels (null/0, error/1, warn/2, info/3)
         //HPDiscovery.updateConfigData(app.locals.configData);
 
         fs.writeFileSync('./config.json', JSON.stringify(app.locals.configData), {encoding: 'utf8', flag: 'w'});
