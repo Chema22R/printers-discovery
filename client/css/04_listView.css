@@ -16,7 +16,6 @@
     position: fixed;
     display: table;
     table-layout: fixed;
-    z-index: 40;
 
     cursor: default;
 
@@ -27,6 +26,7 @@
 #listView > table.wrapper > tbody {
     position: relative;
     top: 36px;
+    z-index: -1;
 
     cursor: pointer;
 

@@ -20,9 +20,9 @@
     <body>
         <header id='headerBar'>
             <div>
-                <button class='marked borderRight icon-iconsView icon current' type='button' title='Icons View' tabindex='1' accesskey='i'></button>
-                <button class='marked borderRight icon-listView icon' type='button' title='List View' tabindex='2' accesskey='l'></button>
-                <button class='marked borderRight icon-columnsView icon' type='button' title='Columns View' tabindex='3' accesskey='c'></button>
+                <button id='iconsViewTrigger' class='marked borderRight icon-iconsView icon current' type='button' title='Icons View' tabindex='1' accesskey='i'></button>
+                <button id='listViewTrigger' class='marked borderRight icon-listView icon' type='button' title='List View' tabindex='2' accesskey='l'></button>
+                <button id='columnsViewTrigger' class='marked borderRight icon-columnsView icon' type='button' title='Columns View' tabindex='3' accesskey='c'></button>
             </div>
             <div id='headerBar-search'>
                 <input type='text' maxlength='100' placeholder="Search for printers..." tabindex='4' accesskey='s'>
@@ -37,8 +37,8 @@
                 </div>
             </div>
             <div>
-                <button class='marked borderLeft icon-advancedFilter icon' type='button' title='Advanced Filter' tabindex='5' accesskey='a'></button>
-                <button class='marked borderLeft icon-config icon' type='button' title='Configuration' tabindex='6' accesskey='o'></button>
+                <button id='advancedFiltersMenuTrigger' class='marked borderLeft icon-advancedFilter icon' type='button' title='Advanced Filter' tabindex='5' accesskey='a'></button>
+                <button id='configMenuTrigger' class='marked borderLeft icon-config icon' type='button' title='Configuration' tabindex='6' accesskey='o'></button>
             </div>
         </header>
 
@@ -245,9 +245,9 @@
             </div>
         </div>
 
-        <div id='menusLeftover'></div>
         <div id='menus'>
-            <div class='wrapper'>
+            <div id='menusLeftover'></div>
+            <div id='menusWrapper' class='wrapper'>
                 <div id='infoMenu'>
                     <div class='wrapper'>
                         <p class='title'>Details</p>
@@ -352,7 +352,7 @@
                     </div>
                 </div>
 
-                <div id='advanceFiltersMenu'>
+                <div id='advancedFiltersMenu'>
                     <div class='wrapper'>
                         <p class='title'>Details</p>
                         <div class='wrapper left'>

@@ -1,8 +1,7 @@
-#menusLeftover,
 #menus,
 #menus > div.wrapper > div {display: none;}
 
-#menusLeftover, #menus > div.wrapper {
+#menus > div {
     position: fixed;
     top: 0;
     right: 0;
@@ -11,8 +10,6 @@
 }
 
 #menusLeftover {
-    z-index: 90;
-
     opacity: .4;
     background-color: #000;
 }
@@ -28,7 +25,7 @@
     align-items: center;
     -webkit-align-items: center;
 
-    z-index: 100;
+    z-index: 1;
 }
 
 #menus > div.wrapper > div {
