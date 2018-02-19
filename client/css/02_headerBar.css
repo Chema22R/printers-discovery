@@ -101,7 +101,7 @@ p, th, td {
 
 /* dropdown */
 
-#headerBar > div > div.dropDown > button {
+#headerBar > div > div.dropdown > button {
     padding: 15px 10px;
     
     position: absolute;
@@ -111,7 +111,7 @@ p, th, td {
     font-size: 20px;
 }
 
-#headerBar > div > div.dropDown > div {
+#headerBar > div > div.dropdown > div {
     max-width: 300px;
 
     display: none;
@@ -125,12 +125,12 @@ p, th, td {
     background-color: #FFF;
 }
 
-@media (max-width: 402px) {#headerBar > div > div.dropDown > div {max-width: 250px;}}
-@media (max-width: 352px) {#headerBar > div > div.dropDown > div {max-width: 200px;}}
-@media (max-width: 302px) {#headerBar > div > div.dropDown > div {max-width: 150px;}}
-#headerBar > div > div.dropDown:hover > div {display: block;}
+@media (max-width: 402px) {#headerBar > div > div.dropdown > div {max-width: 250px;}}
+@media (max-width: 352px) {#headerBar > div > div.dropdown > div {max-width: 200px;}}
+@media (max-width: 302px) {#headerBar > div > div.dropdown > div {max-width: 150px;}}
+#headerBar > div > div.dropdown:hover > div {display: block;}
 
-#headerBar > div > div.dropDown > div > button {
+#headerBar > div > div.dropdown > div > button {
     width: 100%;
 
     padding: 6px 10px;
@@ -140,7 +140,7 @@ p, th, td {
     overflow: hidden;
 }
 
-#headerBar > div > div.dropDown > div > button:hover {
+#headerBar > div > div.dropdown > div > button:hover {
     border-left: 2px solid #0099D8;
     font-weight: bold;
     background-color: #EFEFEF;

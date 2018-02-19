@@ -26,8 +26,8 @@
             </div>
             <div id='headerBar-search'>
                 <input type='text' maxlength='100' placeholder="Search for printers..." tabindex='4' accesskey='s'>
-                <div class='dropDown'>
-                    <button class='icon-dropdown icon' type='button' title='Filters' accesskey='f'></button>
+                <div class='dropdown'>
+                    <button class='icon-dropdown icon' type='button' accesskey='f'></button>
                     <div>
                         <button>All&nbsp;printers</button>
                         <button>filter&nbsp;2</button>
@@ -291,6 +291,13 @@
 
                     <button class='actionButton' type='button' title='Edit Information'>Edit</button>
                     <button class='closeButton icon-close icon' type='button' title='Close Window'></button>
+
+                    <div class='dropdown'>
+                        <button class='icon-help icon' type='button' accesskey='f'></button>
+                        <div>
+                            <p>This menu shows the details and information of the selected printer, as well as allows the user to edit it through the "Edit" button at the bottom</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div id='editMenu'>
@@ -336,6 +343,13 @@
 
                     <button class='actionButton' type='submit' form='editForm' title='Upload Information'>Send</button>
                     <button class='closeButton icon-close icon' type='button' title='Close Window'></button>
+
+                    <div class='dropdown'>
+                        <button class='icon-help icon' type='button' accesskey='f'></button>
+                        <div>
+                            <p>This menu shows the details of the selected printer and allows the user to edit its information (metadata), all fields must be filled in</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div id='advanceFiltersMenu'>
@@ -381,6 +395,13 @@
 
                     <button class='actionButton' type='submit' title='Filter'>Filter</button>
                     <button class='closeButton icon-close icon' type='button' title='Close Window'></button>
+
+                    <div class='dropdown'>
+                        <button class='icon-help icon' type='button' accesskey='f'></button>
+                        <div>
+                            <p>This menu allows the user to search printers using an advanced filter, which will be stored in cookies</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div id='configMenu'>
@@ -389,19 +410,30 @@
                         <div class='wrapper left'>
                             <p>Log&nbsp;Level</p>
                             <p>Log&nbsp;Separator</p>
-                            <p>Update&nbsp;Frecuency</p>
+                            <p>Update&nbsp;Frequency</p>
                             <p>Delete&nbsp;Timeout</p>
                         </div>
                         <form id='configForm' class='wrapper right'>
                             <input type='number' value='3' min='0' max='3' placeholder='log level' required>
                             <input type='number' value='3' min='0' max='3' placeholder='log separator' required>
-                            <input type='number' value='60000' min='0' placeholder='update frecuency' required>
+                            <input type='number' value='60000' min='0' placeholder='update frequency' required>
                             <input type='number' value='7200000' min='0' placeholder='delete timeout' required>
                         </form>
                     </div>
 
                     <button class='actionButton' type='submit' form='configForm' title='Update Configuration'>Send</button>
                     <button class='closeButton icon-close icon' type='button' title='Close Window'></button>
+
+                    <div class='dropdown large'>
+                        <button class='icon-help icon' type='button' accesskey='f'></button>
+                        <div>
+                            <p>This menu allows the user to edit the server configuration (all fields must be filled in):</p>
+                            <p class='withIndentation'>Log Level indicates the messages to be stored (0=null, 1=error, 2=warning, 3=info)</p>
+                            <p class='withIndentation'>Log Separator indicates the level to be used as a separator in log files (messages from lower levels will be stored in <em>error.log</em> and the rest in <em>info.log)</em></p>
+                            <p class='withIndentation'>Update Frequency indicates how often the server updates the printers</p>
+                            <p class='withIndentation'>Delete Timeout indicates how often the server deletes the printers with <em>Unreachable</em> status</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
