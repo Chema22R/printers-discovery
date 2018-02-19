@@ -28,10 +28,9 @@ p, th, td {
 */
 
 #headerBar {
-    width: 100%;
-
     position: fixed;
     top: 0;
+    right: 0;
     left: 0;
     z-index: 50;
 
@@ -55,6 +54,7 @@ p, th, td {
     height: inherit;
 
     padding: 2px 0;
+    float: left;
     
     border: 2px none #95989A;
     border-bottom-style: solid;

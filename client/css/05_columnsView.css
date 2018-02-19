@@ -1,4 +1,4 @@
-#columnsView {display: block;}
+#columnsView {display: none;}
 
 #columnsView > div.wrapper {
     display: flex;
