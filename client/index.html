@@ -20,16 +20,25 @@
     <body>
         <header id='headerBar'>
             <div>
-                <button class='borderRight icon-iconsView icon current' type='button' title='Icons View' tabindex='1' accesskey='i'/>
-                <button class='borderRight icon-listView icon' type='button' title='List View' tabindex='2' accesskey='l'/>
-                <button class='borderRight icon-columnsView icon' type='button' title='Columns View' tabindex='3' accesskey='c'/>
+                <button class='marked borderRight icon-iconsView icon current' type='button' title='Icons View' tabindex='1' accesskey='i'/>
+                <button class='marked borderRight icon-listView icon' type='button' title='List View' tabindex='2' accesskey='l'/>
+                <button class='marked borderRight icon-columnsView icon' type='button' title='Columns View' tabindex='3' accesskey='c'/>
             </div>
             <div id='headerBar-search'>
                 <input type='text' maxlength='100' placeholder="Search for printers..." tabindex='4' accesskey='s'>
+                <div class='dropDown'>
+                    <button class='icon-dropdown icon' type='button' title='Filters' accesskey='f'></button>
+                    <div>
+                        <button>All&nbsp;printers</button>
+                        <button>filter&nbsp;2</button>
+                        <button>filter&nbsp;3&nbsp;filter&nbsp;3&nbsp;filter&nbsp;filter&nbsp;3&nbsp;filter&nbsp;3&nbsp;filter&nbsp;filter&nbsp;3&nbsp;filter&nbsp;3&nbsp;filter&nbsp;</button>
+                        <button>filter&nbsp;4</button>
+                    </div>
+                </div>
             </div>
             <div>
-                <button class='borderLeft icon-advancedFilter icon' type='button' title='Advanced Filter' tabindex='5' accesskey='f'/>
-                <button class='borderLeft icon-config icon' type='button' title='Configuration' tabindex='6' accesskey='o'/>
+                <button class='marked borderLeft icon-advancedFilter icon' type='button' title='Advanced Filter' tabindex='5' accesskey='a'/>
+                <button class='marked borderLeft icon-config icon' type='button' title='Configuration' tabindex='6' accesskey='o'/>
             </div>
         </header>
 
@@ -281,7 +290,7 @@
                     </div>
 
                     <button class='actionButton' type='button' title='Edit Information'>Edit</button>
-                    <button class='closeButton icon-close icon' type='button' title='Close Window'/>
+                    <button class='closeButton icon-close icon' type='button' title='Close Window'></button>
                 </div>
 
                 <div id='editMenu'>
@@ -326,7 +335,7 @@
                     </div>
 
                     <button class='actionButton' type='submit' form='editForm' title='Upload Information'>Send</button>
-                    <button class='closeButton icon-close icon' type='button' title='Close Window'/>
+                    <button class='closeButton icon-close icon' type='button' title='Close Window'></button>
                 </div>
 
                 <div id='advanceFiltersMenu'>
@@ -371,7 +380,7 @@
                     </div>
 
                     <button class='actionButton' type='submit' title='Filter'>Filter</button>
-                    <button class='closeButton icon-close icon' type='button' title='Close Window'/>
+                    <button class='closeButton icon-close icon' type='button' title='Close Window'></button>
                 </div>
 
                 <div id='configMenu'>
@@ -392,7 +401,7 @@
                     </div>
 
                     <button class='actionButton' type='submit' form='configForm' title='Update Configuration'>Send</button>
-                    <button class='closeButton icon-close icon' type='button' title='Close Window'/>
+                    <button class='closeButton icon-close icon' type='button' title='Close Window'></button>
                 </div>
             </div>
         </div>

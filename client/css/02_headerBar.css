@@ -47,9 +47,10 @@ p, th, td {
     float: left;
 }
 
+
 /* buttons */
 
-#headerBar > div > button {
+#headerBar > div > button.marked {
     width: 52px;
     height: inherit;
 
@@ -59,14 +60,15 @@ p, th, td {
     border-bottom-style: solid;
 }
 
-#headerBar > div > button.borderRight {border-right-style: solid;}
-#headerBar > div > button.borderLeft {border-left-style: solid;}
-#headerBar > div > button.current {background-color: #EFEFEF;}
+#headerBar > div > button.marked.borderRight {border-right-style: solid;}
+#headerBar > div > button.marked.borderLeft {border-left-style: solid;}
+#headerBar > div > button.marked.current {background-color: #EFEFEF;}
 
-#headerBar > div > button:hover {
+#headerBar > div > button.marked:hover {
     padding-top: 3px;
     border-bottom: 3px solid #0099D8;
 }
+
 
 /* search */
 
@@ -77,12 +79,12 @@ p, th, td {
 }
 
 #headerBar-search > input {
-    width: calc(100% - 20px);
-    width: -moz-calc(100% - 20px);
-    width: -webkit-calc(100% - 20px);
+    width: calc(100% - 60px);
+    width: -moz-calc(100% - 60px);
+    width: -webkit-calc(100% - 60px);
     height: 48px;
 
-    padding: 0 10px;
+    padding: 0 40px 0 20px;
     border-bottom: 2px solid #95989A;
 
     text-align: center;
@@ -94,6 +96,54 @@ p, th, td {
 
     padding-top: 1px;
     border-bottom: 3px solid #0099D8;
+}
+
+
+/* dropdown */
+
+#headerBar > div > div.dropDown > button {
+    padding: 15px 10px;
+    
+    position: absolute;
+    top: 0;
+    right: 104px;
+
+    font-size: 20px;
+}
+
+#headerBar > div > div.dropDown > div {
+    max-width: 300px;
+
+    display: none;
+    position: absolute;
+    right: 102px;
+
+    border: 2px solid #95989A;
+    border-top: none;
+
+    text-align: center;
+    background-color: #FFF;
+}
+
+@media (max-width: 402px) {#headerBar > div > div.dropDown > div {max-width: 250px;}}
+@media (max-width: 352px) {#headerBar > div > div.dropDown > div {max-width: 200px;}}
+@media (max-width: 302px) {#headerBar > div > div.dropDown > div {max-width: 150px;}}
+#headerBar > div > div.dropDown:hover > div {display: block;}
+
+#headerBar > div > div.dropDown > div > button {
+    width: 100%;
+
+    padding: 6px 10px;
+    display: block;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+#headerBar > div > div.dropDown > div > button:hover {
+    border-left: 2px solid #0099D8;
+    font-weight: bold;
+    background-color: #EFEFEF;
 }
 
 

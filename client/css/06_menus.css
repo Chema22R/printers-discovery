@@ -1,8 +1,6 @@
 #menusLeftover,
 #menus,
-#menus > div.wrapper > div {
-    display: none;
-}
+#menus > div.wrapper > div {display: none;}
 
 #menusLeftover, #menus > div.wrapper {
     position: fixed;
@@ -15,8 +13,8 @@
 #menusLeftover {
     z-index: 90;
 
-    background-color: #000;
     opacity: .4;
+    background-color: #000;
 }
 
 #menus > div.wrapper {
