@@ -1,4 +1,8 @@
-#listView {display: none;}
+#listView {
+    height: calc(100vh - 50px);
+    display: none;
+    overflow-y: scroll;
+}
 
 #listView > table.wrapper {
     width: 100%;
@@ -16,6 +20,7 @@
     position: fixed;
     display: table;
     table-layout: fixed;
+    z-index: 1;
 
     cursor: default;
 
@@ -26,7 +31,6 @@
 #listView > table.wrapper > tbody {
     position: relative;
     top: 36px;
-    z-index: -1;
 
     cursor: pointer;
 

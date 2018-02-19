@@ -1,4 +1,8 @@
-#iconsView {display: none;}
+#iconsView {
+    height: calc(100vh - 50px);
+    display: none;
+    overflow-y: scroll;
+}
 
 #iconsView > div.wrapper {
     display: flex;
