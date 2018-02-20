@@ -116,7 +116,7 @@
 
 #columnsView > div.wrapper > div.column.small > div.wrapper > div.printer > div.state > p {display: none;}
 
-#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer.reserved > div.state > p {
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer > div.state > p {
     display: block;
     padding: 0 0 0 1px;
     
