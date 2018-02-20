@@ -1,14 +1,13 @@
 'use strict';
 
 $(function() {
-    var printersList;
+    var printersPersistent = {};
 
     $.ajax({
         url: 'http://'+serverAddress+':'+serverPort+'/printers/list',
         method: 'GET',
         success: function(res, status) {
-            printersList = res;
-            populateViews();
+            populateViews(res);
         },
         error: function(jqXHR, status, err) {
             if (!err) {
@@ -20,16 +19,18 @@ $(function() {
     });
 
 
-    function populateViews() {
+    function populateViews(printersList) {
         var iconsViewPrinters = '<div id="iconsViewPopulation" class="wrapper">';
         var listViewPrinters = '<tbody id="listViewPopulation">';
         var columnsViewPrinters = '<div id="columnsViewPopulation" class="wrapper">';
-        var title = '';
+        var id, title;
 
         for (var i=0; i<printersList.length; i++) {
-            iconsViewPrinters += '<div class="printer';
-            listViewPrinters += '<tr class="printer';
-            columnsViewPrinters += '<div class="printer';
+            id = uuid();
+
+            iconsViewPrinters += '<div id="' + id +'" class="printer';
+            listViewPrinters += '<tr id="' + id +'" class="printer';
+            columnsViewPrinters += '<div id="' + id +'" class="printer';
 
             switch (printersList[i].detailedInfo.status.toLowerCase()) {
                 case 'awake':
@@ -146,8 +147,10 @@ $(function() {
             }
 
             iconsViewPrinters += '</div></div>';    // state div and printer end
-            listViewPrinters += '<tr>';             // printer end
+            listViewPrinters += '</tr>';             // printer end
             columnsViewPrinters += '</div></div>';  // state div and printer end
+
+            printersPersistent[id] = printersList[i];
         }
 
         iconsViewPrinters += '</div>';      // iconsViewPopulation end
@@ -161,5 +164,16 @@ $(function() {
         $(iconsViewPrinters).appendTo('#iconsView');
         $(listViewPrinters).appendTo('#listView table.wrapper');
         $(columnsViewPrinters).appendTo('#columnsViewPrintersColumn');
+    }
+
+
+    function uuid() {
+        var uuid = '', i, random;
+        for (i = 0; i < 32; i++) {
+            random = Math.random() * 16 | 0;
+            if (i == 8 || i == 12 || i == 16 || i == 20) {uuid += '-'}
+            uuid += (i == 12 ? 4 : (i == 16 ? (random & 3 | 8) : random)).toString(16);
+        }
+        return uuid;
     }
 });
