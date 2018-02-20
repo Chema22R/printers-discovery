@@ -46,7 +46,7 @@ $(function() {
         e.preventDefault();
         
         if ($('#advancedFiltersMenu').is(':hidden')) {
-            $('#menusLeftover, #menus, #advancedFiltersMenu').fadeIn('slow');
+            $('#menus, #advancedFiltersMenu').fadeIn('slow');
         }
     });
 
@@ -57,7 +57,7 @@ $(function() {
         e.preventDefault();
         
         if ($('#configMenu').is(':hidden')) {
-            $('#menusLeftover, #menus, #configMenu').fadeIn('slow');
+            $('#menus, #configMenu').fadeIn('slow');
         }
     });
 
@@ -67,19 +67,19 @@ $(function() {
     $('#menusLeftover, #menusWrapper').on('click touchstart', function(e) {
         e.preventDefault();
         
-        if ($("#infoMenu").is(":visible") && (!$(e.target).is("#infoMenu, #infoMenu *") || $(e.target).is(".closeButton"))) {
+        if ($('#infoMenu').is(':visible') && (!$(e.target).is('#infoMenu, #infoMenu *') || $(e.target).is('.closeButton'))) {
             $('#menus, #infoMenu').fadeOut('slow');
         }
 
-        if ($("#editMenu").is(":visible") && (!$(e.target).is("#editMenu, #editMenu *") || $(e.target).is(".closeButton"))) {
+        if ($('#editMenu').is(':visible') && (!$(e.target).is('#editMenu, #editMenu *') || $(e.target).is('.closeButton'))) {
             $('#menus, #editMenu').fadeOut('slow');
         }
 
-        if ($("#advancedFiltersMenu").is(":visible") && (!$(e.target).is("#advancedFiltersMenu, #advancedFiltersMenu *") || $(e.target).is(".closeButton"))) {
+        if ($('#advancedFiltersMenu').is(':visible') && (!$(e.target).is('#advancedFiltersMenu, #advancedFiltersMenu *') || $(e.target).is('.closeButton'))) {
             $('#menus, #advancedFiltersMenu').fadeOut('slow');
         }
 
-        if ($("#configMenu").is(":visible") && (!$(e.target).is("#configMenu, #configMenu *") || $(e.target).is(".closeButton"))) {
+        if ($('#configMenu').is(':visible') && (!$(e.target).is('#configMenu, #configMenu *') || $(e.target).is('.closeButton'))) {
             $('#menus, #configMenu').fadeOut('slow');
         }
     });
