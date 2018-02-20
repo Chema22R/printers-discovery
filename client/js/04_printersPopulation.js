@@ -12,11 +12,9 @@ $(function() {
         },
         error: function(jqXHR, status, err) {
             if (!err) {
-                //showMessage('Unable to connect to server', 'red');
-                console.log('Unable to connect to server');
+                showMessage('Unable to connect to server', 'red');
             } else {
-                //showMessage(jqXHR.responseText, 'red');
-                console.log(jqXHR.responseText);
+                showMessage(jqXHR.responseText, 'red');
             }
         }
     });

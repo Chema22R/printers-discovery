@@ -1,0 +1,56 @@
+body {
+    font-family: sans-serif;
+    background-color: #EFEFEF;
+}
+
+button, input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+button {cursor: pointer;}
+input {cursor: text;}
+
+p, th, td {
+    margin: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.icon {
+    font-size: 25px;
+    color: #6A6A6A;
+}
+
+
+/* fixedLog */
+
+#fixedLog {
+    height: 50px;
+
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+
+    cursor: default;
+
+    text-align: center;
+}
+
+#fixedLog p {line-height: 50px;}
+
+
+/* mainContent */
+
+#mainContent {
+    width: 100%;
+
+    position: absolute;
+    top: 50px;
+    left: 0;
+    z-index: -1;
+}
