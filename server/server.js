@@ -6,6 +6,7 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var cors = require('cors');
 
 var mongodb = require('mongodb').MongoClient;
 var fs = require('fs');
@@ -23,6 +24,7 @@ var printersAPI = require('./controllers/printersAPI.js');
 /* app configuration
 ========================================================================== */
 
+app.use(cors());
 app.use(bodyParser.json());
 
 

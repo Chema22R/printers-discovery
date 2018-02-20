@@ -5,6 +5,7 @@
   "main": "server.js",
   "dependencies": {
     "express": "4.x.x",
+    "cors": "2.x.x",
     "mongodb": "3.x.x",
     "ref": "1.x.x",
     "ffi": "2.x.x",
