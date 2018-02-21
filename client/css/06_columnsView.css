@@ -129,6 +129,7 @@
 /* details & information */
 
 #columnsView > div.wrapper > div.column.big {overflow-y: scroll;}
+#columnsView > div.wrapper > div.column.big * {display: none;}
 #columnsView > div.wrapper > div.column.big > div.wrapper {margin: 8px 0;}
 
 #columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper {

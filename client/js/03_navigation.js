@@ -1,7 +1,8 @@
 'use strict';
 
 $(function() {
-    /* views triggers */
+    /* Views Triggers
+    ========================================================================== */
 
     $('#iconsViewTrigger').on('click touchstart', function(e) {
         e.preventDefault();
@@ -40,7 +41,8 @@ $(function() {
     });
 
 
-    /* advanced filters menu trigger */
+    /* Advanced Filters Menu Trigger
+    ========================================================================== */
 
     $('#advancedFiltersMenuTrigger').on('click touchstart', function(e) {
         e.preventDefault();
@@ -51,7 +53,8 @@ $(function() {
     });
 
 
-    /* config menu trigger */
+    /* Config Menu Trigger
+    ========================================================================== */
 
     $('#configMenuTrigger').on('click touchstart', function(e) {
         e.preventDefault();
@@ -62,7 +65,8 @@ $(function() {
     });
 
 
-
+    /* Exit Menus Triggers
+    ========================================================================== */
 
     $('#menusLeftover, #menusWrapper').on('click touchstart', function(e) {
         e.preventDefault();

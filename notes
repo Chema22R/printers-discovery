@@ -27,6 +27,7 @@ frontend:
     poner en la configuracion un selector de idioma
     todos los p deben estar con &nbsp;
     poner title en todos los p en los que no haya info ya al ponerse encima
+    poner en config menu una opcion para elegir en funcion de que campo se ordenan las impresoras
 
 links:
     https://github.com/node-ffi/node-ffi/wiki/Node-FFI-Tutorial             (Node FFI Tutorial)
