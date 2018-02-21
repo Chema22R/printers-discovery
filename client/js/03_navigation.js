@@ -75,7 +75,7 @@ $(function() {
             $('#menus, #infoMenu').fadeOut('slow');
         }
 
-        if ($('#editMenu').is(':visible') && (!$(e.target).is('#editMenu, #editMenu *') || $(e.target).is('.closeButton'))) {
+        if ($('#editMenu').is(':visible') && (!$(e.target).is('#editMenu, #editMenu *, #infoMenu button.actionButton') || $(e.target).is('.closeButton'))) {
             $('#menus, #editMenu').fadeOut('slow');
         }
 

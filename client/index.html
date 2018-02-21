@@ -117,8 +117,8 @@
                                 <p>Reserved&nbsp;Until</p>
                             </div>
                         </div>
-
-                        <button type='button' title='Edit Information' accesskey='e'>Edit</button>
+                        
+                        <button type='button' class='actionButton' title='Edit Information' accesskey='e'>Edit</button>
                     </div>
                 </div>
             </div>
@@ -164,7 +164,7 @@
                 </div>
 
                 <div id='editMenu'>
-                    <div class='wrapper'>
+                    <div id='editMenuDetailsWrapper' class='wrapper'>
                         <p class='title'>Details</p>
                         <div class='wrapper left'>
                             <p>Hostname</p>
@@ -175,18 +175,9 @@
                             <p>Creation&nbsp;Date</p>
                             <p>Last&nbsp;State&nbsp;Change</p>
                         </div>
-                        <div class='wrapper right'>
-                            <p>hostname</p>
-                            <p>192.192.192.192</p>
-                            <p>modelname&nbsp;modelname</p>
-                            <p>adada3231asdasd</p>
-                            <p class='state connected'>Awake</p>
-                            <p>yughj1n2lnj2k13nadsa</p>
-                            <p>yughj1n2lnj2k13nsdada</p>
-                        </div>
                     </div>
 
-                    <div class='wrapper'>
+                    <div id='editMenuInformationWrapper' class='wrapper'>
                         <p class='title'>Information</p>
                         <div class='wrapper left'>
                             <p>Alias</p>
@@ -195,13 +186,6 @@
                             <p>Reserved&nbsp;By</p>
                             <p>Reserved&nbsp;Until</p>
                         </div>
-                        <form id='editForm' class='wrapper right'>
-                            <input type='text' value='Destroyer' maxlength='100' placeholder='alias' required>
-                            <input type='text' value='León' maxlength='100' placeholder='location' required>
-                            <input type='text' value='Workteam&nbsp;Workteam' maxlength='100' placeholder='workteam' required>
-                            <input type='text' value='José&nbsp;María&nbsp;Rivera&nbsp;Alonso' maxlength='100' placeholder='reserved by' required>
-                            <input type='text' value='adada3231asdasd' maxlength='100' placeholder='dd/mm/aaaa hh:mm' required>
-                        </form>
                     </div>
 
                     <button class='actionButton' type='submit' form='editForm' title='Upload Information'>Send</button>

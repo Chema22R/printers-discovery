@@ -8,7 +8,7 @@ $(function() {
         method: 'GET',
         success: function(res, status) {
             populateViews(res);
-            activateTriggers();
+            activatePrintersTriggers();
         },
         error: function(jqXHR, status, err) {
             if (!err) {
@@ -175,7 +175,7 @@ $(function() {
     }
 
 
-    function activateTriggers() {
+    function activatePrintersTriggers() {
         $('#iconsViewPopulation div.printer, #listViewPopulation tr.printer').off().on('click touchstart', function(e) {
             e.preventDefault();
 
@@ -188,6 +188,7 @@ $(function() {
             $(details).appendTo('#infoMenuDetailsWrapper');
             $(information).appendTo('#infoMenuInformationWrapper');
             
+            $('#infoMenu button.actionButton').attr('name', e.currentTarget.id);
 
             if ($('#infoMenu').is(':hidden')) {
                 $('#menus, #infoMenu').fadeIn('slow');
@@ -206,10 +207,58 @@ $(function() {
             $(details).appendTo('#columnsViewPrinterDetailsWrapper');
             $(information).appendTo('#columnsViewPrinterInformationWrapper');
 
+            $('#columnsViewPrinterDataColumn button.actionButton').attr('name', e.currentTarget.id);
             
             $('#columnsViewPrinterDataColumn *').fadeIn('slow');
         });
     }
+
+
+    $('#infoMenu button.actionButton, #columnsViewPrinterDataColumn button.actionButton').on('click touchstart', function(e) {
+        e.preventDefault(e);
+
+        var details = fillDetailsFields('<div id="editMenuDetails" class="wrapper right">', printersPersistent[e.currentTarget.name]);
+        var information = fillEditForm('<form id="editForm" class="wrapper right">', printersPersistent[e.currentTarget.name]);
+
+        $('#editMenuDetails').remove();
+        $('#editForm').remove();
+
+        $(details).appendTo('#editMenuDetailsWrapper');
+        $(information).appendTo('#editMenuInformationWrapper');
+
+        
+        if ($('#editMenu').is(':hidden')) {
+            if ($('#menus').is(':hidden')) {
+                $('#menus').fadeIn('slow');
+            }
+            
+            if ($('#infoMenu').is(':visible')) {
+                $('#infoMenu').fadeOut(0);
+            }
+
+            $('#editMenu').fadeIn('slow');
+        }
+    });
+
+
+    $('#editMenu button.actionButton').on('click touchstart', function(e) {
+        e.preventDefault(e);
+
+        var inputs = $('#editForm').children();
+        var metadata = {};
+
+        for (var i=0; i<inputs.length; i++) {
+            switch (inputs[i].attributes.name.value) {
+                case 'alias': metadata.alias = inputs[i].attributes.value.value;break;
+                case 'location': metadata.location = inputs[i].attributes.value.value;break;
+                case 'workteam': metadata.workteam = inputs[i].attributes.value.value;break;
+                case 'reservedBy': metadata.reservedBy = inputs[i].attributes.value.value;break;
+                case 'reservedUntil': metadata.reservedUntil = new Date(inputs[i].attributes.value.value).getTime();break;
+            }
+        }
+
+        console.log(metadata);
+    });
 
     
     function fillDetailsFields(details, printer) {
@@ -306,6 +355,42 @@ $(function() {
         }
 
         information += '</div>';    // information end
+
+        return information;
+    }
+
+    function fillEditForm(information, printer) {
+        if (printer.metadata.alias) {
+            information += '<input name="alias" type="text" value="' + printer.metadata.alias.replace(/\s/g, '&nbsp;') + '" maxlength="100" placeholder="alias">';
+        } else {
+            information += '<input name="alias" type="text" value="" maxlength="100" placeholder="alias">';
+        }
+
+        if (printer.metadata.location) {
+            information += '<input name="location" type="text" value="' + printer.metadata.location.replace(/\s/g, '&nbsp;') + '" maxlength="100" placeholder="location">';
+        } else {
+            information += '<input name="location" type="text" value="" maxlength="100" placeholder="location">';
+        }
+
+        if (printer.metadata.workteam) {
+            information += '<input name="workteam" type="text" value="' + printer.metadata.workteam.replace(/\s/g, '&nbsp;') + '" maxlength="100" placeholder="workteam">';
+        } else {
+            information += '<input name="workteam" type="text" value="" maxlength="100" placeholder="workteam">';
+        }
+
+        if (printer.metadata.reservedBy) {
+            information += '<input name="reservedBy" type="text" value="' + printer.metadata.reservedBy.replace(/\s/g, '&nbsp;') + '" maxlength="100" placeholder="reservedBy">';
+        } else {
+            information += '<input name="reservedBy" type="text" value="" maxlength="100" placeholder="reserved&nbsp;by">';
+        }
+
+        if (printer.metadata.reservedUntil) {
+            information += '<input name="reservedUntil" type="text" value="' + new Date(printer.metadata.reservedUntil).toLocaleString().replace(/\s/g, '&nbsp;') + '" maxlength="100" placeholder="dd/mm/aaaa&nbsp;hh:mm">';
+        } else {
+            information += '<input name="reservedUntil" type="text" value="" maxlength="100" placeholder="dd/mm/aaaa&nbsp;hh:mm">';
+        }
+
+        information += '</form>';    // information end
 
         return information;
     }
