@@ -20,6 +20,9 @@ $(function() {
     });
 
 
+    /*
+        Populates the three view (iconsView, listView and columnsView) with the printers received from the server
+    */
     function populateViews(printersList) {
         var iconsViewPrinters = '<div id="iconsViewPopulation" class="wrapper">';
         var listViewPrinters = '<tbody id="listViewPopulation">';
@@ -174,7 +177,10 @@ $(function() {
         $(columnsViewPrinters).appendTo('#columnsViewPrintersColumn');
     }
 
-
+    /*
+        After the population of the view, this function is executed to generate triggers for each printer into those views and
+        to define the behaviour of the triggers, which fill the field of the infoMenu
+    */
     function activatePrintersTriggers() {
         $('#iconsViewPopulation div.printer, #listViewPopulation tr.printer').off().on('click touchstart', function(e) {
             e.preventDefault();
@@ -189,6 +195,7 @@ $(function() {
             $(information).appendTo('#infoMenuInformationWrapper');
             
             $('#infoMenu button.actionButton').attr('name', e.currentTarget.id);
+
 
             if ($('#infoMenu').is(':hidden')) {
                 $('#menus, #infoMenu').fadeIn('slow');
@@ -209,22 +216,22 @@ $(function() {
 
             $('#columnsViewPrinterDataColumn button.actionButton').attr('name', e.currentTarget.id);
             
+
             $('#columnsViewPrinterDataColumn *').fadeIn('slow');
         });
     }
 
-
+    /*
+        This function defines the behaviour of the 'Edit' button, placed into the infoMenu, which fills the fields of the editMenu
+    */
     $('#infoMenu button.actionButton, #columnsViewPrinterDataColumn button.actionButton').on('click touchstart', function(e) {
-        e.preventDefault(e);
+        e.preventDefault();
 
         var details = fillDetailsFields('<div id="editMenuDetails" class="wrapper right">', printersPersistent[e.currentTarget.name]);
-        var information = fillEditForm('<form id="editForm" class="wrapper right">', printersPersistent[e.currentTarget.name]);
-
         $('#editMenuDetails').remove();
-        $('#editForm').remove();
-
         $(details).appendTo('#editMenuDetailsWrapper');
-        $(information).appendTo('#editMenuInformationWrapper');
+
+        fillEditForm(printersPersistent[e.currentTarget.name]);
 
         
         if ($('#editMenu').is(':hidden')) {
@@ -240,22 +247,19 @@ $(function() {
         }
     });
 
+    /*
+        This function defines the behaviour of the 'Send' button, placed into the editMenu, which sends the input values to the server
+    */
+    $('#editForm').on('submit', function(e) {
+        e.preventDefault();
 
-    $('#editMenu button.actionButton').on('click touchstart', function(e) {
-        e.preventDefault(e);
-
-        var inputs = $('#editForm').children();
-        var metadata = {};
-
-        for (var i=0; i<inputs.length; i++) {
-            switch (inputs[i].attributes.name.value) {
-                case 'alias': metadata.alias = inputs[i].attributes.value.value;break;
-                case 'location': metadata.location = inputs[i].attributes.value.value;break;
-                case 'workteam': metadata.workteam = inputs[i].attributes.value.value;break;
-                case 'reservedBy': metadata.reservedBy = inputs[i].attributes.value.value;break;
-                case 'reservedUntil': metadata.reservedUntil = new Date(inputs[i].attributes.value.value).getTime();break;
-            }
-        }
+        var metadata = {
+            alias = $('#editForm input[name="alias"]').val().replace(/\s\s+/g, ' ').trim(),
+            location = $('#editForm input[name="location"]').val().replace(/\s\s+/g, ' ').trim(),
+            workteam = $('#editForm input[name="workteam"]').val().replace(/\s\s+/g, ' ').trim(),
+            reservedBy = $('#editForm input[name="reservedBy"]').val().replace(/\s\s+/g, ' ').trim(),
+            reservedUntil = $('#editForm input[name="reservedUntil"]').val().replace(/\s\s+/g, ' ').trim()
+        };
 
         console.log(metadata);
     });
@@ -359,40 +363,36 @@ $(function() {
         return information;
     }
 
-    function fillEditForm(information, printer) {
+    function fillEditForm(printer) {
         if (printer.metadata.alias) {
-            information += '<input name="alias" type="text" value="' + printer.metadata.alias.replace(/\s/g, '&nbsp;') + '" maxlength="100" placeholder="alias">';
+            $('#editForm input[name="alias"]').attr('value', printer.metadata.alias);
         } else {
-            information += '<input name="alias" type="text" value="" maxlength="100" placeholder="alias">';
+            $('#editForm input[name="alias"]').attr('value', '');
         }
 
         if (printer.metadata.location) {
-            information += '<input name="location" type="text" value="' + printer.metadata.location.replace(/\s/g, '&nbsp;') + '" maxlength="100" placeholder="location">';
+            $('#editForm input[name="location"]').attr('value', printer.metadata.location);
         } else {
-            information += '<input name="location" type="text" value="" maxlength="100" placeholder="location">';
+            $('#editForm input[name="location"]').attr('value', '');
         }
 
         if (printer.metadata.workteam) {
-            information += '<input name="workteam" type="text" value="' + printer.metadata.workteam.replace(/\s/g, '&nbsp;') + '" maxlength="100" placeholder="workteam">';
+            $('#editForm input[name="workteam"]').attr('value', printer.metadata.workteam);
         } else {
-            information += '<input name="workteam" type="text" value="" maxlength="100" placeholder="workteam">';
+            $('#editForm input[name="workteam"]').attr('value', '');
         }
 
         if (printer.metadata.reservedBy) {
-            information += '<input name="reservedBy" type="text" value="' + printer.metadata.reservedBy.replace(/\s/g, '&nbsp;') + '" maxlength="100" placeholder="reservedBy">';
+            $('#editForm input[name="reservedBy"]').attr('value', printer.metadata.reservedBy);
         } else {
-            information += '<input name="reservedBy" type="text" value="" maxlength="100" placeholder="reserved&nbsp;by">';
+            $('#editForm input[name="reservedBy"]').attr('value', '');
         }
 
         if (printer.metadata.reservedUntil) {
-            information += '<input name="reservedUntil" type="text" value="' + new Date(printer.metadata.reservedUntil).toLocaleString().replace(/\s/g, '&nbsp;') + '" maxlength="100" placeholder="dd/mm/aaaa&nbsp;hh:mm">';
+            $('#editForm input[name="reservedUntil"]').attr('value', new Date(printer.metadata.reservedUntil).toLocaleString());
         } else {
-            information += '<input name="reservedUntil" type="text" value="" maxlength="100" placeholder="dd/mm/aaaa&nbsp;hh:mm">';
+            $('#editForm input[name="reservedUntil"]').attr('value', '');
         }
-
-        information += '</form>';    // information end
-
-        return information;
     }
 
     function uuid() {
