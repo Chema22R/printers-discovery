@@ -2,26 +2,41 @@
 
 $(function() {
     var printersPersistent = {};
+    var dateTimePickerOptions = {
+        controlType: 'select',
+        oneLine: true,
+        timeInput: true,
+        dateFormat: 'dd/mm/yy',
+        timeFormat: 'HH:mm:ss'
+    };
 
-    $.ajax({
-        url: 'http://'+serverAddress+':'+serverPort+'/printers/list',
-        method: 'GET',
-        success: function(res, status) {
-            populateViews(res);
-            activatePrintersTriggers();
-        },
-        error: function(jqXHR, status, err) {
-            if (!err) {
-                showMessage('Unable to connect to server', 'red');
-            } else {
-                showMessage(jqXHR.responseText, 'red');
-            }
-        }
-    });
-
+    updatePrintersList();
 
     /*
-        Populates the three view (iconsView, listView and columnsView) with the printers received from the server
+        Update the list of printers and repopulate the three views
+    */
+    function updatePrintersList() {
+        $.ajax({
+            async: true,
+            crossDomain: true,
+            url: 'http://'+serverAddress+':'+serverPort+'/printers/list',
+            method: 'GET',
+            success: function(res, status) {
+                populateViews(res);
+                activatePrintersTriggers();
+            },
+            error: function(jqXHR, status, err) {
+                if (!err) {
+                    showMessage('Unable to connect to server', 'red');
+                } else {
+                    showMessage(jqXHR.responseText, 'red');
+                }
+            }
+        });
+    }
+
+    /*
+        Populates the three views (iconsView, listView and columnsView) with the printers received from the server
     */
     function populateViews(printersList) {
         var iconsViewPrinters = '<div id="iconsViewPopulation" class="wrapper">';
@@ -132,8 +147,18 @@ $(function() {
                 listViewPrinters += '<td>&mdash;</td>';
             }
 
+            iconsViewPrinters += '</div>';      // info div end
+            columnsViewPrinters += '</div>';    // info div end
+
+            iconsViewPrinters += '<div class="state">';
             listViewPrinters += '<td class="state">' + title + '</td>';
+            columnsViewPrinters += '<div class="state">';
             
+            if (printersList[i].metadata.reservedBy != null && printersList[i].metadata.reservedUntil != null) {
+                iconsViewPrinters += '<p>RESERVED</p>';
+                columnsViewPrinters += '<p>R</p>';
+            }
+
             if (printersList[i].metadata.alias) {
                 listViewPrinters += '<td>' + printersList[i].metadata.alias + '</td>';
             } else {
@@ -144,17 +169,6 @@ $(function() {
                 listViewPrinters += '<td>' + printersList[i].metadata.reservedBy + '</td>';
             } else {
                 listViewPrinters += '<td>&mdash;</td>';
-            }
-
-            iconsViewPrinters += '</div>';      // info div end
-            columnsViewPrinters += '</div>';    // info div end
-
-            iconsViewPrinters += '<div class="state">';
-            columnsViewPrinters += '<div class="state">';
-            
-            if (printersList[i].metadata.reservedBy != null && printersList[i].metadata.reservedUntil != null) {
-                iconsViewPrinters += '<p>RESERVED</p>';
-                columnsViewPrinters += '<p>R</p>';
             }
 
             iconsViewPrinters += '</div></div>';    // state div and printer end
@@ -232,8 +246,11 @@ $(function() {
         $(details).appendTo('#editMenuDetailsWrapper');
 
         fillEditForm(printersPersistent[e.currentTarget.name]);
+        $('#editForm input.datetimepicker').datetimepicker(dateTimePickerOptions);
 
-        
+        $('#editMenu button.actionButton').attr('name', e.currentTarget.name);
+
+
         if ($('#editMenu').is(':hidden')) {
             if ($('#menus').is(':hidden')) {
                 $('#menus').fadeIn('slow');
@@ -253,15 +270,45 @@ $(function() {
     $('#editForm').on('submit', function(e) {
         e.preventDefault();
 
+        var dateTime = $('#editForm input[name="reservedUntil"]').val().replace(/\s\s+/g, ' ').trim().split(/\/|\s|\:/);
+        var printer = printersPersistent[$('#editMenu button.actionButton').attr('name')];
         var metadata = {
-            alias = $('#editForm input[name="alias"]').val().replace(/\s\s+/g, ' ').trim(),
-            location = $('#editForm input[name="location"]').val().replace(/\s\s+/g, ' ').trim(),
-            workteam = $('#editForm input[name="workteam"]').val().replace(/\s\s+/g, ' ').trim(),
-            reservedBy = $('#editForm input[name="reservedBy"]').val().replace(/\s\s+/g, ' ').trim(),
-            reservedUntil = $('#editForm input[name="reservedUntil"]').val().replace(/\s\s+/g, ' ').trim()
+            alias: $('#editForm input[name="alias"]').val().replace(/\s\s+/g, ' ').trim(),
+            location: $('#editForm input[name="location"]').val().replace(/\s\s+/g, ' ').trim(),
+            workteam: $('#editForm input[name="workteam"]').val().replace(/\s\s+/g, ' ').trim(),
+            reservedBy: $('#editForm input[name="reservedBy"]').val().replace(/\s\s+/g, ' ').trim(),
+            reservedUntil: new Date(dateTime[2], dateTime[1]-1, dateTime[0], dateTime[3], dateTime[4], dateTime[5]).getTime(),
+            calendar: []
         };
 
-        console.log(metadata);
+        $.ajax({
+            async: true,
+            crossDomain: true,
+            url: 'http://'+serverAddress+':'+serverPort+'/printers/update?ip=' + printer.basicInfo.ip + '&hostname=' + printer.basicInfo.hostname,
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            processData: false,
+            data: JSON.stringify(metadata),
+            success: function(res, status) {
+                showMessage('Information successfully updated', 'green');
+
+                printersPersistent[$('#editMenu button.actionButton').attr('name')].metadata = metadata;
+                $('#columnsViewPrinterInformation').remove();
+                $(fillInformationFields('<div id="columnsViewPrinterInformation" class="wrapper right">', printersPersistent[$('#editMenu button.actionButton').attr('name')])).appendTo('#columnsViewPrinterInformationWrapper');
+                $('#columnsViewPrinterDataColumn *').fadeIn('slow');
+
+                updatePrintersList();
+
+                $('#menus, #editMenu').fadeOut('slow');
+            },
+            error: function(jqXHR, status, err) {
+                if (!err) {
+                    showMessage('Unable to connect to server', 'red');
+                } else {
+                    showMessage(jqXHR.responseText, 'red');
+                }
+            }
+        });
     });
 
     
@@ -311,13 +358,15 @@ $(function() {
         }
 
         if (printer.creationDate) {
-            details += '<p>' + new Date(printer.creationDate).toLocaleString().replace(/\s/g, '&nbsp;') + '</p>';
+            var date = new Date(printer.creationDate);
+            details += '<p>' + ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + ':' + ('0' + (date.getSeconds())).slice(-2) + '</p>';
         } else {
             details += '<p>&mdash;</p>';
         }
 
         if (printer.lastUpdate.status) {
-            details += '<p>' + new Date(printer.lastUpdate.status).toLocaleString().replace(/\s/g, '&nbsp;') + '</p>';
+            var date = new Date(printer.lastUpdate.status);
+            details += '<p>' + ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + ':' + ('0' + (date.getSeconds())).slice(-2) + '</p>';
         } else {
             details += '<p>&mdash;</p>';
         }
@@ -353,7 +402,8 @@ $(function() {
         }
 
         if (printer.metadata.reservedUntil) {
-            information += '<p>' + new Date(printer.metadata.reservedUntil).toLocaleString().replace(/\s/g, '&nbsp;') + '</p>';
+            var date = new Date(printer.metadata.reservedUntil);
+            information += '<p>' + ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + ':' + ('0' + (date.getSeconds())).slice(-2) + '</p>';
         } else {
             information += '<p>&mdash;</p>';
         }
@@ -365,33 +415,34 @@ $(function() {
 
     function fillEditForm(printer) {
         if (printer.metadata.alias) {
-            $('#editForm input[name="alias"]').attr('value', printer.metadata.alias);
+            $('#editForm input[name="alias"]').val(printer.metadata.alias);
         } else {
-            $('#editForm input[name="alias"]').attr('value', '');
+            $('#editForm input[name="alias"]').val('');
         }
 
         if (printer.metadata.location) {
-            $('#editForm input[name="location"]').attr('value', printer.metadata.location);
+            $('#editForm input[name="location"]').val(printer.metadata.location);
         } else {
-            $('#editForm input[name="location"]').attr('value', '');
+            $('#editForm input[name="location"]').val('');
         }
 
         if (printer.metadata.workteam) {
-            $('#editForm input[name="workteam"]').attr('value', printer.metadata.workteam);
+            $('#editForm input[name="workteam"]').val(printer.metadata.workteam);
         } else {
-            $('#editForm input[name="workteam"]').attr('value', '');
+            $('#editForm input[name="workteam"]').val('');
         }
 
         if (printer.metadata.reservedBy) {
-            $('#editForm input[name="reservedBy"]').attr('value', printer.metadata.reservedBy);
+            $('#editForm input[name="reservedBy"]').val(printer.metadata.reservedBy);
         } else {
-            $('#editForm input[name="reservedBy"]').attr('value', '');
+            $('#editForm input[name="reservedBy"]').val('');
         }
 
         if (printer.metadata.reservedUntil) {
-            $('#editForm input[name="reservedUntil"]').attr('value', new Date(printer.metadata.reservedUntil).toLocaleString());
+            var date = new Date(printer.metadata.reservedUntil);
+            $('#editForm input[name="reservedUntil"]').val(('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + ':' + ('0' + (date.getSeconds())).slice(-2));
         } else {
-            $('#editForm input[name="reservedUntil"]').attr('value', '');
+            $('#editForm input[name="reservedUntil"]').val('');
         }
     }
 

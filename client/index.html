@@ -6,6 +6,8 @@
         <meta name="author" content="Jose Maria Rivera Alonso"/>
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
 
+        <link rel="stylesheet" type="text/css" href="libs/jquery-ui-1.12.1/jquery-ui.min.css">
+        <link rel="stylesheet" type="text/css" href="libs/jquery-ui-timepicker-addon/timepicker.min.css">
         <link rel="stylesheet" type="text/css" href="css.min.css">
         <link rel="stylesheet" href="fonts/style.css">
 
@@ -18,7 +20,7 @@
         <meta name="theme-color" content="#ffffff">
     </head>
     <body>
-        <div id='fixedLog'><p>asdadad asdad dasdada saddas dasd</p></div>
+        <div id='fixedLog'><p></p></div>
 
         <header id='headerBar'>
             <div>
@@ -191,7 +193,7 @@
                             <input type='text' value='' name='location' maxlength='100' placeholder='location'>
                             <input type='text' value='' name='workteam' maxlength='100' placeholder='workteam'>
                             <input type='text' value='' name='reservedBy' maxlength='100' placeholder='reserved&nbsp;by'>
-                            <input type='text' value='' name='reservedUntil' maxlength='100' placeholder='dd/mm/aaaa&nbsp;hh:mm'>
+                            <input class='datetimepicker' type='text' value='' name='reservedUntil' maxlength='100' placeholder='reserved&nbsp;until'>
                         </form>
                     </div>
 
@@ -294,6 +296,8 @@
 
         <!-- JS -->
 		<script src="libs/jquery-3.3.1.min.js"></script>
+		<script src="libs/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+		<script src="libs/jquery-ui-timepicker-addon/timepicker.min.js"></script>
 		<script src="js.min.js"></script>
     </body>
 </html>
