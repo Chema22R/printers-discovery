@@ -292,12 +292,11 @@ $(function() {
             success: function(res, status) {
                 showMessage('Information successfully updated', 'green');
 
-                printersPersistent[$('#editMenu button.actionButton').attr('name')].metadata = metadata;
-                $('#columnsViewPrinterInformation').remove();
-                $(fillInformationFields('<div id="columnsViewPrinterInformation" class="wrapper right">', printersPersistent[$('#editMenu button.actionButton').attr('name')])).appendTo('#columnsViewPrinterInformationWrapper');
-                $('#columnsViewPrinterDataColumn *').fadeIn('slow');
-
                 updatePrintersList();
+
+                $('#columnsViewPrinterInformation').remove();
+                $(fillInformationFields('<div id="columnsViewPrinterInformation" class="wrapper right">', {metadata: metadata})).appendTo('#columnsViewPrinterInformationWrapper');
+                $('#columnsViewPrinterDataColumn *').fadeIn('slow');
 
                 $('#menus, #editMenu').fadeOut('slow');
             },
