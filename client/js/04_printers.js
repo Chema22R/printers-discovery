@@ -1,7 +1,7 @@
 'use strict';
 
 $(function() {
-    var printersPersistent = {};
+    var printersPersistent;
     var dateTimePickerOptions = {
         controlType: 'select',
         oneLine: true,
@@ -43,6 +43,8 @@ $(function() {
         var listViewPrinters = '<tbody id="listViewPopulation">';
         var columnsViewPrinters = '<div id="columnsViewPopulation" class="wrapper">';
         var id, title;
+
+        printersPersistent = new Object();
 
         for (var i=0; i<printersList.length; i++) {
             id = uuid();
@@ -200,7 +202,7 @@ $(function() {
             e.preventDefault();
 
             var details = fillDetailsFields('<div id="infoMenuDetails" class="wrapper right">', printersPersistent[e.currentTarget.id]);
-            var information = fillInformationFields('<div id="infoMenuInformation" class="wrapper right">', printersPersistent[e.currentTarget.id]);
+            var information = fillInformationFields('<div id="infoMenuInformation" class="wrapper right">', printersPersistent[e.currentTarget.id].metadata);
 
             $('#infoMenuDetails').remove();
             $('#infoMenuInformation').remove();
@@ -220,7 +222,7 @@ $(function() {
             e.preventDefault();
 
             var details = fillDetailsFields('<div id="columnsViewPrinterDetails" class="wrapper right">', printersPersistent[e.currentTarget.id]);
-            var information = fillInformationFields('<div id="columnsViewPrinterInformation" class="wrapper right">', printersPersistent[e.currentTarget.id]);
+            var information = fillInformationFields('<div id="columnsViewPrinterInformation" class="wrapper right">', printersPersistent[e.currentTarget.id].metadata);
 
             $('#columnsViewPrinterDetails').remove();
             $('#columnsViewPrinterInformation').remove();
@@ -229,7 +231,10 @@ $(function() {
             $(information).appendTo('#columnsViewPrinterInformationWrapper');
 
             $('#columnsViewPrinterDataColumn button.actionButton').attr('name', e.currentTarget.id);
-            
+
+            $('#columnsViewPopulation div.current').removeClass('current');
+            $(e.currentTarget).addClass('current');
+
 
             $('#columnsViewPrinterDataColumn *').fadeIn('slow');
         });
@@ -245,7 +250,7 @@ $(function() {
         $('#editMenuDetails').remove();
         $(details).appendTo('#editMenuDetailsWrapper');
 
-        fillEditForm(printersPersistent[e.currentTarget.name]);
+        fillEditForm(printersPersistent[e.currentTarget.name].metadata);
         $('#editForm input.datetimepicker').datetimepicker(dateTimePickerOptions);
 
         $('#editMenu button.actionButton').attr('name', e.currentTarget.name);
@@ -292,10 +297,10 @@ $(function() {
             success: function(res, status) {
                 showMessage('Information successfully updated', 'green');
 
-                updatePrintersList();
+                printersPersistent[$('#editMenu button.actionButton').attr('name')].metadata = metadata;
 
                 $('#columnsViewPrinterInformation').remove();
-                $(fillInformationFields('<div id="columnsViewPrinterInformation" class="wrapper right">', {metadata: metadata})).appendTo('#columnsViewPrinterInformationWrapper');
+                $(fillInformationFields('<div id="columnsViewPrinterInformation" class="wrapper right">', metadata)).appendTo('#columnsViewPrinterInformationWrapper');
                 $('#columnsViewPrinterDataColumn *').fadeIn('slow');
 
                 $('#menus, #editMenu').fadeOut('slow');
@@ -375,33 +380,33 @@ $(function() {
         return details;
     }
 
-    function fillInformationFields(information, printer) {
-        if (printer.metadata.alias) {
-            information += '<p>' + printer.metadata.alias.replace(/\s/g, '&nbsp;') + '</p>';
+    function fillInformationFields(information, metadata) {
+        if (metadata.alias) {
+            information += '<p>' + metadata.alias.replace(/\s/g, '&nbsp;') + '</p>';
         } else {
             information += '<p>&mdash;</p>';
         }
 
-        if (printer.metadata.location) {
-            information += '<p>' + printer.metadata.location.replace(/\s/g, '&nbsp;') + '</p>';
+        if (metadata.location) {
+            information += '<p>' + metadata.location.replace(/\s/g, '&nbsp;') + '</p>';
         } else {
             information += '<p>&mdash;</p>';
         }
 
-        if (printer.metadata.workteam) {
-            information += '<p>' + printer.metadata.workteam.replace(/\s/g, '&nbsp;') + '</p>';
+        if (metadata.workteam) {
+            information += '<p>' + metadata.workteam.replace(/\s/g, '&nbsp;') + '</p>';
         } else {
             information += '<p>&mdash;</p>';
         }
 
-        if (printer.metadata.reservedBy) {
-            information += '<p>' + printer.metadata.reservedBy.replace(/\s/g, '&nbsp;') + '</p>';
+        if (metadata.reservedBy) {
+            information += '<p>' + metadata.reservedBy.replace(/\s/g, '&nbsp;') + '</p>';
         } else {
             information += '<p>&mdash;</p>';
         }
 
-        if (printer.metadata.reservedUntil) {
-            var date = new Date(printer.metadata.reservedUntil);
+        if (metadata.reservedUntil) {
+            var date = new Date(metadata.reservedUntil);
             information += '<p>' + ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + ':' + ('0' + (date.getSeconds())).slice(-2) + '</p>';
         } else {
             information += '<p>&mdash;</p>';
@@ -412,33 +417,33 @@ $(function() {
         return information;
     }
 
-    function fillEditForm(printer) {
-        if (printer.metadata.alias) {
-            $('#editForm input[name="alias"]').val(printer.metadata.alias);
+    function fillEditForm(metadata) {
+        if (metadata.alias) {
+            $('#editForm input[name="alias"]').val(metadata.alias);
         } else {
             $('#editForm input[name="alias"]').val('');
         }
 
-        if (printer.metadata.location) {
-            $('#editForm input[name="location"]').val(printer.metadata.location);
+        if (metadata.location) {
+            $('#editForm input[name="location"]').val(metadata.location);
         } else {
             $('#editForm input[name="location"]').val('');
         }
 
-        if (printer.metadata.workteam) {
-            $('#editForm input[name="workteam"]').val(printer.metadata.workteam);
+        if (metadata.workteam) {
+            $('#editForm input[name="workteam"]').val(metadata.workteam);
         } else {
             $('#editForm input[name="workteam"]').val('');
         }
 
-        if (printer.metadata.reservedBy) {
-            $('#editForm input[name="reservedBy"]').val(printer.metadata.reservedBy);
+        if (metadata.reservedBy) {
+            $('#editForm input[name="reservedBy"]').val(metadata.reservedBy);
         } else {
             $('#editForm input[name="reservedBy"]').val('');
         }
 
-        if (printer.metadata.reservedUntil) {
-            var date = new Date(printer.metadata.reservedUntil);
+        if (metadata.reservedUntil) {
+            var date = new Date(metadata.reservedUntil);
             $('#editForm input[name="reservedUntil"]').val(('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + ':' + ('0' + (date.getSeconds())).slice(-2));
         } else {
             $('#editForm input[name="reservedUntil"]').val('');
