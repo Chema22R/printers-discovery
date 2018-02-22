@@ -226,8 +226,8 @@
                             <input type='text' value='' maxlength='100' placeholder='modelname'>
                             <input type='text' value='' maxlength='100' placeholder='firmware version'>
                             <input type='text' value='' maxlength='100' placeholder='state'>
-                            <input type='text' value='' maxlength='100' placeholder='dd/mm/aaaa hh:mm'>
-                            <input type='text' value='' maxlength='100' placeholder='dd/mm/aaaa hh:mm'>
+                            <input class='datetimepicker' type='text' value='' maxlength='100' placeholder='creation date'>
+                            <input class='datetimepicker' type='text' value='' maxlength='100' placeholder='last state change'>
                         </form>
                     </div>
 
@@ -245,7 +245,7 @@
                             <input type='text' value='' maxlength='100' placeholder='location'>
                             <input type='text' value='' maxlength='100' placeholder='workteam'>
                             <input type='text' value='' maxlength='100' placeholder='reserved by'>
-                            <input type='text' value='' maxlength='100' placeholder='dd/mm/aaaa hh:mm'>
+                            <input class='datetimepicker' type='text' value='' maxlength='100' placeholder='reserved until'>
                         </form>
                     </div>
 
@@ -270,10 +270,10 @@
                             <p>Delete&nbsp;Timeout</p>
                         </div>
                         <form id='configForm' class='wrapper right'>
-                            <input type='number' value='3' min='0' max='3' placeholder='log level' required>
-                            <input type='number' value='3' min='0' max='3' placeholder='log separator' required>
-                            <input type='number' value='60000' min='0' placeholder='update frequency' required>
-                            <input type='number' value='7200000' min='0' placeholder='delete timeout' required>
+                            <input type='number' value='' min='0' max='3' placeholder='log level' required>
+                            <input type='number' value='' min='0' max='3' placeholder='log separator' required>
+                            <input type='number' value='' min='0' placeholder='update freq.' required>
+                            <input type='number' value='' min='0' placeholder='delete timeout' required>
                         </form>
                     </div>
 

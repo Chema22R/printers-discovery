@@ -97,11 +97,7 @@
     line-height: 18px;
 }
 
-#configForm > input {
-    max-width: calc(25% - 16px)!important;
-    max-width: -moz-calc(25% - 16px)!important;
-    max-width: -webkit-calc(25% - 16px)!important;
-}
+#configForm > input {width: 120px;}
 
 #menus > div.wrapper > div > div.wrapper > form.wrapper {padding-bottom: 5px;}    /* to compensate the behaviour of inputs */
 #menus > div.wrapper > div > div.wrapper > form.wrapper > input:focus {border-bottom: 1px solid #0099D8;}
