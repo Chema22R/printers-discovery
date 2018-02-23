@@ -10,30 +10,26 @@ $(function() {
         timeFormat: 'HH:mm:ss'
     };
 
-    updatePrintersList();
-
 
     /* Update the list of printers, populate the three views and activate the printers triggers
     =========================================================================================== */
-    function updatePrintersList() {
-        $.ajax({
-            async: true,
-            crossDomain: true,
-            url: 'http://'+serverAddress+':'+serverPort+'/printers/list',
-            method: 'GET',
-            success: function(res, status) {
-                populateViews(res);
-                activatePrintersTriggers();
-            },
-            error: function(jqXHR, status, err) {
-                if (!err) {
-                    showMessage('Unable to connect to server', 'red');
-                } else {
-                    showMessage(jqXHR.responseText, 'red');
-                }
+    $.ajax({
+        async: true,
+        crossDomain: true,
+        url: 'http://'+serverAddress+':'+serverPort+'/printers/list',
+        method: 'GET',
+        success: function(res, status) {
+            populateViews(res);
+            activatePrintersTriggers();
+        },
+        error: function(jqXHR, status, err) {
+            if (!err) {
+                showMessage('Unable to connect to server', 'red');
+            } else {
+                showMessage(jqXHR.responseText, 'red');
             }
-        });
-    }
+        }
+    });
 
     
     /* This function populates the three views (iconsView, listView and columnsView)
@@ -215,6 +211,8 @@ $(function() {
 
             if ($('#infoMenu').is(':hidden')) {
                 $('#menus, #infoMenu').fadeIn('slow');
+                $('#infoMenu').scrollTop(0);
+                psInfoMenu.update();
             }
         });
 
@@ -237,6 +235,8 @@ $(function() {
 
 
             $('#columnsViewPrinterDataColumn *').fadeIn('slow');
+            $('#columnsViewPrinterDataColumn').scrollTop(0);
+            psColumnsViewPrinterDataColumn.update();
         });
     }
 
@@ -266,6 +266,8 @@ $(function() {
             }
 
             $('#editMenu').fadeIn('slow');
+            $('#editMenu').scrollTop(0);
+            psEditMenu.update();
         }
     });
 
@@ -299,9 +301,11 @@ $(function() {
 
                 printersPersistent[$('#editMenu button.actionButton').attr('name')].metadata = metadata;
 
-                $('#columnsViewPrinterInformation').remove();
-                $(fillInformationFields('<div id="columnsViewPrinterInformation" class="wrapper right">', metadata)).appendTo('#columnsViewPrinterInformationWrapper');
-                $('#columnsViewPrinterDataColumn *').fadeIn('slow');
+                if ($('#editMenu button.actionButton').attr('name') == $('#columnsViewPrinterDataColumn button.actionButton').attr('name')) {
+                    $('#columnsViewPrinterInformation').remove();
+                    $(fillInformationFields('<div id="columnsViewPrinterInformation" class="wrapper right">', metadata)).appendTo('#columnsViewPrinterInformationWrapper');
+                    $('#columnsViewPrinterDataColumn *').fadeIn('slow');
+                }
 
                 $('#menus, #editMenu').fadeOut('slow');
             },

@@ -38,6 +38,8 @@ $(function() {
                     }
                     
                     $('#menus, #configMenu').fadeIn('slow');
+                    $('#configMenu').scrollTop(0);
+                    psConfigMenu.update();
                 },
                 error: function(jqXHR, status, err) {
                     if (!err) {

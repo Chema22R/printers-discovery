@@ -32,7 +32,7 @@
     min-width: 600px;
 
     position: relative;
-    overflow-y: scroll;
+    overflow: hidden;
 
     border-radius: 15px 15px 15px 15px;
     -moz-border-radius: 15px 15px 15px 15px;
@@ -97,7 +97,7 @@
     line-height: 18px;
 }
 
-#configForm > input {width: 120px;}
+#configForm > input {width: 50px;}
 
 #menus > div.wrapper > div > div.wrapper > form.wrapper {padding-bottom: 5px;}    /* to compensate the behaviour of inputs */
 #menus > div.wrapper > div > div.wrapper > form.wrapper > input:focus {border-bottom: 1px solid #0099D8;}

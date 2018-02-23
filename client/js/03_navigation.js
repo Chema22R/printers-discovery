@@ -8,11 +8,11 @@ $(function() {
         e.preventDefault();
         
         if ($('#iconsView').is(':hidden')) {
-            $('#iconsView').fadeIn(0);
             $('#listView, #columnsView').fadeOut(0);
+            $('#iconsView').fadeIn(0);
 
-            $('#iconsViewTrigger').addClass('current');
             $('#listViewTrigger, #columnsViewTrigger').removeClass('current');
+            $('#iconsViewTrigger').addClass('current');
         }
     });
 
@@ -20,11 +20,11 @@ $(function() {
         e.preventDefault();
         
         if ($('#listView').is(':hidden')) {
-            $('#listView').fadeIn(0);
             $('#iconsView, #columnsView').fadeOut(0);
+            $('#listView').fadeIn(0);
 
-            $('#listViewTrigger').addClass('current');
             $('#iconsViewTrigger, #columnsViewTrigger').removeClass('current');
+            $('#listViewTrigger').addClass('current');
         }
     });
 
@@ -32,11 +32,11 @@ $(function() {
         e.preventDefault();
         
         if ($('#columnsView').is(':hidden')) {
-            $('#columnsView').fadeIn(0);
             $('#iconsView, #listView').fadeOut(0);
+            $('#columnsView').fadeIn(0);
 
-            $('#columnsViewTrigger').addClass('current');
             $('#iconsViewTrigger, #listViewTrigger').removeClass('current');
+            $('#columnsViewTrigger').addClass('current');
         }
     });
 
@@ -49,6 +49,8 @@ $(function() {
         
         if ($('#advancedFiltersMenu').is(':hidden')) {
             $('#menus, #advancedFiltersMenu').fadeIn('slow');
+            $('#advancedFiltersMenu').scrollTop(0);
+            psAdvancedFiltersMenu.update();
         }
     });
 
