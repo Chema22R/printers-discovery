@@ -41,20 +41,6 @@ $(function() {
     });
 
 
-    /* Advanced Filters Menu Trigger
-    ========================================================================== */
-
-    $('#advancedFiltersMenuTrigger').on('click touchstart', function(e) {
-        e.preventDefault();
-        
-        if ($('#advancedFiltersMenu').is(':hidden')) {
-            $('#menus, #advancedFiltersMenu').fadeIn('slow');
-            $('#advancedFiltersMenu').scrollTop(0);
-            psAdvancedFiltersMenu.update();
-        }
-    });
-
-
     /* Exit Menus Triggers
     ========================================================================== */
 
