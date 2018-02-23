@@ -1,3 +1,5 @@
+'use strict';
+
 function showMessage(msj, color) {
     $('#fixedLog p')
     .text(msj)

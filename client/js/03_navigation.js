@@ -53,18 +53,6 @@ $(function() {
     });
 
 
-    /* Config Menu Trigger
-    ========================================================================== */
-
-    $('#configMenuTrigger').on('click touchstart', function(e) {
-        e.preventDefault();
-        
-        if ($('#configMenu').is(':hidden')) {
-            $('#menus, #configMenu').fadeIn('slow');
-        }
-    });
-
-
     /* Exit Menus Triggers
     ========================================================================== */
 

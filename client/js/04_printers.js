@@ -12,9 +12,9 @@ $(function() {
 
     updatePrintersList();
 
-    /*
-        Update the list of printers and repopulate the three views
-    */
+
+    /* Update the list of printers, populate the three views and activate the printers triggers
+    =========================================================================================== */
     function updatePrintersList() {
         $.ajax({
             async: true,
@@ -35,9 +35,9 @@ $(function() {
         });
     }
 
-    /*
-        Populates the three views (iconsView, listView and columnsView) with the printers received from the server
-    */
+    
+    /* This function populates the three views (iconsView, listView and columnsView)
+    ================================================================================ */
     function populateViews(printersList) {
         var iconsViewPrinters = '<div id="iconsViewPopulation" class="wrapper">';
         var listViewPrinters = '<tbody id="listViewPopulation">';
@@ -193,10 +193,10 @@ $(function() {
         $(columnsViewPrinters).appendTo('#columnsViewPrintersColumn');
     }
 
-    /*
-        After the population of the view, this function is executed to generate triggers for each printer into those views and
-        to define the behaviour of the triggers, which fill the field of the infoMenu
-    */
+
+    /* After the population of the views, this function is executed to generate triggers for each printer
+       into those views and to define the behaviour of the triggers, which fill the fields of the infoMenu
+    ====================================================================================================== */
     function activatePrintersTriggers() {
         $('#iconsViewPopulation div.printer, #listViewPopulation tr.printer').off().on('click touchstart', function(e) {
             e.preventDefault();
@@ -240,9 +240,9 @@ $(function() {
         });
     }
 
-    /*
-        This function defines the behaviour of the 'Edit' button, placed into the infoMenu, which fills the fields of the editMenu
-    */
+
+    /* This function defines the behaviour of the 'Edit' button, placed into the infoMenu, which fills the fields of the editMenu
+    ============================================================================================================================= */
     $('#infoMenu button.actionButton, #columnsViewPrinterDataColumn button.actionButton').on('click touchstart', function(e) {
         e.preventDefault();
 
@@ -269,9 +269,9 @@ $(function() {
         }
     });
 
-    /*
-        This function defines the behaviour of the 'Send' button, placed into the editMenu, which sends the input values to the server
-    */
+
+    /* This function defines the behaviour of the 'Send' button, placed into the editMenu, which puts the input values to the server
+    ================================================================================================================================ */
     $('#editForm').on('submit', function(e) {
         e.preventDefault();
 
@@ -316,6 +316,9 @@ $(function() {
     });
 
     
+    /* Secondary functions
+    ====================== */
+
     function fillDetailsFields(details, printer) {
         if (printer.basicInfo.hostname) {
             details += '<p>' + printer.basicInfo.hostname.replace(/\s/g, '&nbsp;') + '</p>';

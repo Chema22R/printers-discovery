@@ -221,13 +221,13 @@
                             <p>Last&nbsp;State&nbsp;Change</p>
                         </div>
                         <form id='filterFormDetails' class='wrapper right'>
-                            <input type='text' value='' maxlength='100' placeholder='hostname'>
-                            <input type='text' value='' maxlength='100' placeholder='ip address'>
-                            <input type='text' value='' maxlength='100' placeholder='modelname'>
-                            <input type='text' value='' maxlength='100' placeholder='firmware version'>
-                            <input type='text' value='' maxlength='100' placeholder='state'>
-                            <input class='datetimepicker' type='text' value='' maxlength='100' placeholder='creation date'>
-                            <input class='datetimepicker' type='text' value='' maxlength='100' placeholder='last state change'>
+                            <input type='text' value='' name='hostname' maxlength='100' placeholder='hostname'>
+                            <input type='text' value='' name='ip' maxlength='100' placeholder='ip address'>
+                            <input type='text' value='' name='modelname' maxlength='100' placeholder='modelname'>
+                            <input type='text' value='' name='firmwareVersion' maxlength='100' placeholder='firmware version'>
+                            <input type='text' value='' name='status' maxlength='100' placeholder='state'>
+                            <input class='datetimepicker' type='text' value='' name='creationDate' maxlength='100' placeholder='creation date'>
+                            <input class='datetimepicker' type='text' value='' name='lastUpdateStatus' maxlength='100' placeholder='last state change'>
                         </form>
                     </div>
 
@@ -241,11 +241,11 @@
                             <p>Reserved&nbsp;Until</p>
                         </div>
                         <form id='filterFormInfo' class='wrapper right'>
-                            <input type='text' value='' maxlength='100' placeholder='alias'>
-                            <input type='text' value='' maxlength='100' placeholder='location'>
-                            <input type='text' value='' maxlength='100' placeholder='workteam'>
-                            <input type='text' value='' maxlength='100' placeholder='reserved by'>
-                            <input class='datetimepicker' type='text' value='' maxlength='100' placeholder='reserved until'>
+                            <input type='text' value='' name='alias' maxlength='100' placeholder='alias'>
+                            <input type='text' value='' name='location' maxlength='100' placeholder='location'>
+                            <input type='text' value='' name='workteam' maxlength='100' placeholder='workteam'>
+                            <input type='text' value='' name='reservedBy' maxlength='100' placeholder='reserved by'>
+                            <input class='datetimepicker' type='text' value='' name='reservedUntil' maxlength='100' placeholder='reserved until'>
                         </form>
                     </div>
 
@@ -266,14 +266,14 @@
                         <div class='wrapper left'>
                             <p>Log&nbsp;Level</p>
                             <p>Log&nbsp;Separator</p>
-                            <p>Update&nbsp;Frequency</p>
-                            <p>Delete&nbsp;Timeout</p>
+                            <p>Update&nbsp;Frequency&nbsp;(sec)</p>
+                            <p>Delete&nbsp;Timeout&nbsp;(min)</p>
                         </div>
                         <form id='configForm' class='wrapper right'>
-                            <input type='number' value='' min='0' max='3' placeholder='log level' required>
-                            <input type='number' value='' min='0' max='3' placeholder='log separator' required>
-                            <input type='number' value='' min='0' placeholder='update freq.' required>
-                            <input type='number' value='' min='0' placeholder='delete timeout' required>
+                            <input type='number' value='' name='logLevel' min='0' max='3' placeholder='log level' required>
+                            <input type='number' value='' name='logSeparator' min='0' max='3' placeholder='log separator' required>
+                            <input type='number' value='' name='updateFrequency' min='0' placeholder='update freq.' required>
+                            <input type='number' value='' name='deleteTimeout' min='0' placeholder='delete timeout' required>
                         </form>
                     </div>
 
