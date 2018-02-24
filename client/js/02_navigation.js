@@ -8,8 +8,8 @@ $(function() {
         e.preventDefault();
         
         if ($('#iconsView').is(':hidden')) {
-            $('#listView, #columnsView').fadeOut(0);
-            $('#iconsView').fadeIn(0);
+            $('#listView, #columnsView').hide();
+            $('#iconsView').show();
 
             $('#iconsView').scrollTop(0);
             psIconsView.update();
@@ -23,8 +23,8 @@ $(function() {
         e.preventDefault();
         
         if ($('#listView').is(':hidden')) {
-            $('#iconsView, #columnsView').fadeOut(0);
-            $('#listView').fadeIn(0);
+            $('#iconsView, #columnsView').hide();
+            $('#listView').show();
             
             $('#listView').scrollTop(0);
             psListView.update();
@@ -38,8 +38,8 @@ $(function() {
         e.preventDefault();
         
         if ($('#columnsView').is(':hidden')) {
-            $('#iconsView, #listView').fadeOut(0);
-            $('#columnsView').fadeIn(0);
+            $('#iconsView, #listView').hide();
+            $('#columnsView').show();
             
             $('#columnsViewFiltersWrapper').scrollTop(0);
             $('#columnsViewPopulation').scrollTop(0);

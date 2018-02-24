@@ -1,7 +1,6 @@
 'use strict';
 
 $(function() {
-    var printersPersistent;
     var dateTimePickerOptions = {
         controlType: 'select',
         oneLine: true,
@@ -268,7 +267,7 @@ $(function() {
             }
             
             if ($('#infoMenu').is(':visible')) {
-                $('#infoMenu').fadeOut(0);
+                $('#infoMenu').hide();
             }
 
             $('#editMenu').fadeIn('slow');
