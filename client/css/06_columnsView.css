@@ -35,7 +35,9 @@
     height: calc(100vh - 85px);
     height: -moz-calc(100vh - 85px);
     height: -webkit-calc(100vh - 85px);
-    overflow-y: scroll;
+    
+    position: relative;
+    overflow: hidden;
 }
 
 @media (min-width: 1000px) {
@@ -128,23 +130,28 @@
 
 /* details & information */
 
-#columnsView > div.wrapper > div.column.big {overflow: hidden;}
-#columnsView > div.wrapper > div.column.big * {display: none;}
-#columnsView > div.wrapper > div.column.big > div.wrapper {margin: 8px 0;}
+#columnsView > div.wrapper > div.column.big > div.wrapper {
+    height: 100%;
+    display: none;
+    position: relative;
+    overflow: hidden;
+}
 
-#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper {
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper {margin: 8px 0;}
+
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > div.wrapper {
     width: 50%;
     display: inline-block;
 }
 
-#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper.left {
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > div.wrapper.left {
     float: left;
     text-align: right;
 }
 
-#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper.right {text-align: left;}
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > div.wrapper.right {text-align: left;}
 
-#columnsView > div.wrapper > div.column.big > div.wrapper > p.title {
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > p.title {
     padding: 0 8px;
     cursor: default;
 
@@ -153,18 +160,18 @@
     font-weight: bold;
 }
 
-#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > p  {
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > div.wrapper > p  {
     padding: 0 8px;
     cursor: default;
     line-height: 30px;
 }
 
-#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > p.state.connected {color: #1DBE00;}
-#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > p.state.warning {color: #EBD000;}
-#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > p.state.error {color: #E40000;}
-#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > p.state.missing {color: #A8A8A8;}
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > div.wrapper > p.state.connected {color: #1DBE00;}
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > div.wrapper > p.state.warning {color: #EBD000;}
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > div.wrapper > p.state.error {color: #E40000;}
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > div.wrapper > p.state.missing {color: #A8A8A8;}
 
-#columnsView > div.wrapper > div.column.big > button {
+#columnsView > div.wrapper > div.column.big > div.wrapper > button {
     margin: 8px 0 24px 0;
     padding: 10px 60px;
     
@@ -179,7 +186,7 @@
     -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.3);
 }
 
-#columnsView > div.wrapper > div.column.big > button:hover {
+#columnsView > div.wrapper > div.column.big > div.wrapper > button:hover {
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
     -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
     -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);

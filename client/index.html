@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
     <head>
         <title>HPDiscovery</title>
-        <meta charset="UTF-8"/>
-        <meta name="author" content="Jose Maria Rivera Alonso"/>
-        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+        <meta charset='UTF-8'/>
+        <meta name='author' content='Jose Maria Rivera Alonso'/>
+        <meta name='viewport' content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'/>
 
-        <link rel="stylesheet" type="text/css" href="libs/jquery-ui-1.12.1/jquery-ui.min.css">
-        <link rel="stylesheet" type="text/css" href="libs/jquery-ui-timepicker-addon/timepicker.min.css">
-        <link rel="stylesheet" type="text/css" href="libs/perfect-scrollbar/perfect-scrollbar.css">
-        <link rel="stylesheet" type="text/css" href="css.min.css">
-        <link rel="stylesheet" href="fonts/style.css">
+        <link rel='stylesheet' type='text/css' href='libs/jquery-ui-1.12.1/jquery-ui.min.css'>
+        <link rel='stylesheet' type='text/css' href='libs/jquery-ui-timepicker-addon/timepicker.min.css'>
+        <link rel='stylesheet' type='text/css' href='libs/perfect-scrollbar/perfect-scrollbar.css'>
+        <link rel='stylesheet' type='text/css' href='css.min.css'>
+        <link rel='stylesheet' href='fonts/style.css'>
 
-        <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
-        <link rel="manifest" href="favicons/site.webmanifest">
-        <link rel="mask-icon" href="favicons/safari-pinned-tab.svg" color="#5bbad5">
-        <meta name="msapplication-TileColor" content="#2d89ef">
-        <meta name="theme-color" content="#ffffff">
+        <link rel='apple-touch-icon' sizes='180x180' href='favicons/apple-touch-icon.png'>
+        <link rel='icon' type='image/png' sizes='32x32' href='favicons/favicon-32x32.png'>
+        <link rel='icon' type='image/png' sizes='16x16' href='favicons/favicon-16x16.png'>
+        <link rel='manifest' href='favicons/site.webmanifest'>
+        <link rel='mask-icon' href='favicons/safari-pinned-tab.svg' color='#5bbad5'>
+        <meta name='msapplication-TileColor' content='#2d89ef'>
+        <meta name='theme-color' content='#ffffff'>
     </head>
     <body>
         <div id='fixedLog'><p></p></div>
@@ -30,7 +30,7 @@
                 <button id='columnsViewTrigger' class='marked borderRight icon-columnsView icon' type='button' title='Columns View' tabindex='3' accesskey='c'></button>
             </div>
             <div id='headerBar-search'>
-                <input type='text' maxlength='100' placeholder="Search for printers..." tabindex='4' accesskey='s'>
+                <input type='text' maxlength='100' placeholder='Search for printers...' tabindex='4' accesskey='s'>
                 <div class='dropdown'>
                     <button class='icon-dropdown icon' type='button' accesskey='f'></button>
                     <div>
@@ -69,7 +69,7 @@
                 <div class='wrapper'>
                     <div class='column small'>
                         <p class='title'>Filters</p>
-                        <div class='wrapper'>
+                        <div id='columnsViewFiltersWrapper' class='wrapper'>
                             <div class='filter current'><p>filter&nbsp;to&nbsp;apply&nbsp;to&nbsp;apply&nbsp;to&nbsp;apply</p></div>
                             <div class='filter'><p>filter&nbsp;to&nbsp;apply</p></div>
                             <div class='filter'><p>filter&nbsp;to&nbsp;apply</p></div>
@@ -94,34 +94,37 @@
 
                     <div id='columnsViewPrintersColumn' class='column small'>
                         <p class='title'>Printers</p>
+                        <div id='columnsViewPopulation' class='wrapper'></div>
                     </div>
 
                     <div id='columnsViewPrinterDataColumn' class='column big'>
-                        <div id='columnsViewPrinterDetailsWrapper' class='wrapper'>
-                            <p class='title'>Details</p>
-                            <div class='wrapper left'>
-                                <p>Hostname</p>
-                                <p>IP&nbsp;Address</p>
-                                <p>Modelname</p>
-                                <p>Firmware&nbsp;Version</p>
-                                <p>State</p>
-                                <p>Creation&nbsp;Date</p>
-                                <p>Last&nbsp;State&nbsp;Change</p>
+                        <div id='columnsViewPrinterWrapper' class='wrapper'>
+                            <div id='columnsViewPrinterDetailsWrapper' class='wrapper'>
+                                <p class='title'>Details</p>
+                                <div class='wrapper left'>
+                                    <p>Hostname</p>
+                                    <p>IP&nbsp;Address</p>
+                                    <p>Modelname</p>
+                                    <p>Firmware&nbsp;Version</p>
+                                    <p>State</p>
+                                    <p>Creation&nbsp;Date</p>
+                                    <p>Last&nbsp;State&nbsp;Change</p>
+                                </div>
                             </div>
-                        </div>
 
-                        <div id='columnsViewPrinterInformationWrapper' class='wrapper'>
-                            <p class='title'>Information</p>
-                            <div class='wrapper left'>
-                                <p>Alias</p>
-                                <p>Location</p>
-                                <p>Workteam</p>
-                                <p>Reserved&nbsp;By</p>
-                                <p>Reserved&nbsp;Until</p>
+                            <div id='columnsViewPrinterInformationWrapper' class='wrapper'>
+                                <p class='title'>Information</p>
+                                <div class='wrapper left'>
+                                    <p>Alias</p>
+                                    <p>Location</p>
+                                    <p>Workteam</p>
+                                    <p>Reserved&nbsp;By</p>
+                                    <p>Reserved&nbsp;Until</p>
+                                </div>
                             </div>
+                            
+                            <button type='button' class='actionButton' title='Edit Information' accesskey='e'>Edit</button>
                         </div>
-                        
-                        <button type='button' class='actionButton' title='Edit Information' accesskey='e'>Edit</button>
                     </div>
                 </div>
             </div>
@@ -161,7 +164,7 @@
                     <div class='dropdown'>
                         <button class='icon-help icon' type='button' accesskey='f'></button>
                         <div>
-                            <p>This menu shows the details and information of the selected printer, as well as allows the user to edit it through the "Edit" button at the bottom</p>
+                            <p>This menu shows the details and information of the selected printer, as well as allows the user to edit it through the 'Edit' button at the bottom</p>
                         </div>
                     </div>
                 </div>
@@ -296,10 +299,10 @@
         </div>
 
         <!-- JS -->
-		<script src="libs/jquery-3.3.1.min.js"></script>
-		<script src="libs/jquery-ui-1.12.1/jquery-ui.min.js"></script>
-		<script src="libs/jquery-ui-timepicker-addon/timepicker.min.js"></script>
-		<script src="libs/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-		<script src="js.min.js"></script>
+		<script src='libs/jquery-3.3.1.min.js'></script>
+		<script src='libs/jquery-ui-1.12.1/jquery-ui.min.js'></script>
+		<script src='libs/jquery-ui-timepicker-addon/timepicker.min.js'></script>
+		<script src='libs/perfect-scrollbar/perfect-scrollbar.min.js'></script>
+		<script src='js.min.js'></script>
     </body>
 </html>

@@ -59,7 +59,5 @@ p, th, td {
 
 /* scrollbars */
 
-.ps__rail-y {
-    margin: 15px 0;
-    z-index: 5;
-}
+.ps__rail-y {margin: 10px 0;}
+#listView .ps__rail-y {margin-top: 46px;}

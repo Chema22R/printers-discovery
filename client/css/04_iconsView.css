@@ -1,7 +1,8 @@
 #iconsView {
     height: calc(100vh - 50px);
     display: none;
-    overflow-y: scroll;
+    position: relative;
+    overflow: hidden;
 }
 
 #iconsView > div.wrapper {

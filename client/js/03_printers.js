@@ -187,6 +187,12 @@ $(function() {
         $(iconsViewPrinters).appendTo('#iconsView');
         $(listViewPrinters).appendTo('#listView table.wrapper');
         $(columnsViewPrinters).appendTo('#columnsViewPrintersColumn');
+
+        psIconsView.update();
+        psListView.update();
+
+        psColumnsViewPopulation.destroy();
+        psColumnsViewPopulation = new PerfectScrollbar('#columnsViewPopulation', psOptions);
     }
 
 
@@ -228,22 +234,22 @@ $(function() {
             $(details).appendTo('#columnsViewPrinterDetailsWrapper');
             $(information).appendTo('#columnsViewPrinterInformationWrapper');
 
-            $('#columnsViewPrinterDataColumn button.actionButton').attr('name', e.currentTarget.id);
+            $('#columnsViewPrinterWrapper button.actionButton').attr('name', e.currentTarget.id);
 
             $('#columnsViewPopulation div.current').removeClass('current');
             $(e.currentTarget).addClass('current');
 
 
-            $('#columnsViewPrinterDataColumn *').fadeIn('slow');
-            $('#columnsViewPrinterDataColumn').scrollTop(0);
-            psColumnsViewPrinterDataColumn.update();
+            $('#columnsViewPrinterWrapper').fadeIn('slow');
+            $('#columnsViewPrinterWrapper').scrollTop(0);
+            psColumnsViewPrinterWrapper.update();
         });
     }
 
 
     /* This function defines the behaviour of the 'Edit' button, placed into the infoMenu, which fills the fields of the editMenu
     ============================================================================================================================= */
-    $('#infoMenu button.actionButton, #columnsViewPrinterDataColumn button.actionButton').on('click touchstart', function(e) {
+    $('#infoMenu button.actionButton, #columnsViewPrinterWrapper button.actionButton').on('click touchstart', function(e) {
         e.preventDefault();
 
         var details = fillDetailsFields('<div id="editMenuDetails" class="wrapper right">', printersPersistent[e.currentTarget.name]);
@@ -304,7 +310,7 @@ $(function() {
                 if ($('#editMenu button.actionButton').attr('name') == $('#columnsViewPrinterDataColumn button.actionButton').attr('name')) {
                     $('#columnsViewPrinterInformation').remove();
                     $(fillInformationFields('<div id="columnsViewPrinterInformation" class="wrapper right">', metadata)).appendTo('#columnsViewPrinterInformationWrapper');
-                    $('#columnsViewPrinterDataColumn *').fadeIn('slow');
+                    $('#columnsViewPrinterWrapper').fadeIn('slow');
                 }
 
                 $('#menus, #editMenu').fadeOut('slow');
