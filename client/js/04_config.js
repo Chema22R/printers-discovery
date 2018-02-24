@@ -2,7 +2,7 @@
 
 $(function() {
     /* Update the configuration inputs and fade in the config menu
-    ============================================================== */
+    ========================================================================== */
     $('#configMenuTrigger').on('click touchstart', function(e) {
         e.preventDefault();
         

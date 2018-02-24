@@ -44,12 +44,12 @@ $(function() {
         for (var i=0; i<printersList.length; i++) {
             id = uuid();
 
-            iconsViewPrinters += '<div id="' + id +'" class="printer';
-            listViewPrinters += '<tr id="' + id +'" class="printer';
-            columnsViewPrinters += '<div id="' + id +'" class="printer';
+            iconsViewPrinters += '<div name="' + id +'" class="printer';
+            listViewPrinters += '<tr name="' + id +'" class="printer';
+            columnsViewPrinters += '<div name="' + id +'" class="printer';
 
             if (printersList[i].detailedInfo.status) {
-                switch (printersList[i].detailedInfo.status.toLowerCase()) {
+                switch (printersList[i].detailedInfo.status.toLowerCase().trim()) {
                     case 'awake':
                         iconsViewPrinters += ' connected';
                         listViewPrinters += ' connected';
@@ -119,25 +119,25 @@ $(function() {
             columnsViewPrinters += '<div class="info">';
 
             if (printersList[i].basicInfo.ip) {
-                iconsViewPrinters += '<p>' + printersList[i].basicInfo.ip.replace(/\s/g, '&nbsp;') + '</p>';
+                iconsViewPrinters += '<p>' + printersList[i].basicInfo.ip.trim().replace(/\s/g, '&nbsp;') + '</p>';
                 listViewPrinters += '<td>' + printersList[i].basicInfo.ip + '</td>';
-                columnsViewPrinters += '<p>' + printersList[i].basicInfo.ip.replace(/\s/g, '&nbsp;') + '</p>';
+                columnsViewPrinters += '<p>' + printersList[i].basicInfo.ip.trim().replace(/\s/g, '&nbsp;') + '</p>';
             } else {
                 iconsViewPrinters += '<p>&mdash;</p>';
                 listViewPrinters += '<td>&mdash;</td>';
             }
 
             if (printersList[i].basicInfo.modelname) {
-                iconsViewPrinters += '<p>' + printersList[i].basicInfo.modelname.replace(/\s/g, '&nbsp;') + '</p>';
+                iconsViewPrinters += '<p>' + printersList[i].basicInfo.modelname.trim().replace(/\s/g, '&nbsp;') + '</p>';
                 listViewPrinters += '<td>' + printersList[i].basicInfo.modelname + '</td>';
-                columnsViewPrinters += '<p>' + printersList[i].basicInfo.modelname.replace(/\s/g, '&nbsp;') + '</p>';
+                columnsViewPrinters += '<p>' + printersList[i].basicInfo.modelname.trim().replace(/\s/g, '&nbsp;') + '</p>';
             } else {
                 iconsViewPrinters += '<p>&mdash;</p>';
                 listViewPrinters += '<td>&mdash;</td>';
             }
 
             if (printersList[i].detailedInfo.firmwareVersion) {
-                iconsViewPrinters += '<p>' + printersList[i].detailedInfo.firmwareVersion.replace(/\s/g, '&nbsp;') + '</p>';
+                iconsViewPrinters += '<p>' + printersList[i].detailedInfo.firmwareVersion.trim().replace(/\s/g, '&nbsp;') + '</p>';
                 listViewPrinters += '<td>' + printersList[i].detailedInfo.firmwareVersion + '</td>';
             } else {
                 iconsViewPrinters += '<p>&mdash;</p>';
@@ -202,8 +202,8 @@ $(function() {
         $('#iconsViewPopulation div.printer, #listViewPopulation tr.printer').off().on('click touchstart', function(e) {
             e.preventDefault();
 
-            var details = fillDetailsFields('<div id="infoMenuDetails" class="wrapper right">', printersPersistent[e.currentTarget.id]);
-            var information = fillInformationFields('<div id="infoMenuInformation" class="wrapper right">', printersPersistent[e.currentTarget.id].metadata);
+            var details = fillDetailsFields('<div id="infoMenuDetails" class="wrapper right">', printersPersistent[$(e.currentTarget).attr('name')]);
+            var information = fillInformationFields('<div id="infoMenuInformation" class="wrapper right">', printersPersistent[$(e.currentTarget).attr('name')].metadata);
 
             $('#infoMenuDetails').remove();
             $('#infoMenuInformation').remove();
@@ -211,7 +211,7 @@ $(function() {
             $(details).appendTo('#infoMenuDetailsWrapper');
             $(information).appendTo('#infoMenuInformationWrapper');
             
-            $('#infoMenu button.actionButton').attr('name', e.currentTarget.id);
+            $('#infoMenu button.actionButton').attr('name', $(e.currentTarget).attr('name'));
 
 
             if ($('#infoMenu').is(':hidden')) {
@@ -224,8 +224,8 @@ $(function() {
         $('#columnsViewPopulation div.printer').off().on('click touchstart', function(e) {
             e.preventDefault();
 
-            var details = fillDetailsFields('<div id="columnsViewPrinterDetails" class="wrapper right">', printersPersistent[e.currentTarget.id]);
-            var information = fillInformationFields('<div id="columnsViewPrinterInformation" class="wrapper right">', printersPersistent[e.currentTarget.id].metadata);
+            var details = fillDetailsFields('<div id="columnsViewPrinterDetails" class="wrapper right">', printersPersistent[$(e.currentTarget).attr('name')]);
+            var information = fillInformationFields('<div id="columnsViewPrinterInformation" class="wrapper right">', printersPersistent[$(e.currentTarget).attr('name')].metadata);
 
             $('#columnsViewPrinterDetails').remove();
             $('#columnsViewPrinterInformation').remove();
@@ -233,7 +233,7 @@ $(function() {
             $(details).appendTo('#columnsViewPrinterDetailsWrapper');
             $(information).appendTo('#columnsViewPrinterInformationWrapper');
 
-            $('#columnsViewPrinterWrapper button.actionButton').attr('name', e.currentTarget.id);
+            $('#columnsViewPrinterWrapper button.actionButton').attr('name', $(e.currentTarget).attr('name'));
 
             $('#columnsViewPopulation div.current').removeClass('current');
             $(e.currentTarget).addClass('current');
@@ -282,13 +282,13 @@ $(function() {
     $('#editForm').on('submit', function(e) {
         e.preventDefault();
 
-        var dateTime = $('#editForm input[name="reservedUntil"]').val().replace(/\s\s+/g, ' ').trim().split(/\/|\s|\:/);
+        var dateTime = $('#editForm input[name="reservedUntil"]').val().trim().replace(/\s\s+/g, ' ').split(/\/|\s|\:/);
         var printer = printersPersistent[$('#editMenu button.actionButton').attr('name')];
         var metadata = {
-            alias: $('#editForm input[name="alias"]').val().replace(/\s\s+/g, ' ').trim(),
-            location: $('#editForm input[name="location"]').val().replace(/\s\s+/g, ' ').trim(),
-            workteam: $('#editForm input[name="workteam"]').val().replace(/\s\s+/g, ' ').trim(),
-            reservedBy: $('#editForm input[name="reservedBy"]').val().replace(/\s\s+/g, ' ').trim(),
+            alias: $('#editForm input[name="alias"]').val().trim().replace(/\s\s+/g, ' '),
+            location: $('#editForm input[name="location"]').val().trim().replace(/\s\s+/g, ' '),
+            workteam: $('#editForm input[name="workteam"]').val().trim().replace(/\s\s+/g, ' '),
+            reservedBy: $('#editForm input[name="reservedBy"]').val().trim().replace(/\s\s+/g, ' '),
             reservedUntil: new Date(dateTime[2], dateTime[1]-1, dateTime[0], dateTime[3], dateTime[4], dateTime[5]).getTime(),
             calendar: []
         };
@@ -326,29 +326,29 @@ $(function() {
 
     
     /* Secondary functions
-    ====================== */
+    ========================================================================== */
 
     function fillDetailsFields(details, printer) {
         if (printer.basicInfo.hostname) {
-            details += '<p>' + printer.basicInfo.hostname.replace(/\s/g, '&nbsp;') + '</p>';
+            details += '<p>' + printer.basicInfo.hostname.trim().replace(/\s/g, '&nbsp;') + '</p>';
         } else {
             details += '<p>&mdash;</p>';
         }
 
         if (printer.basicInfo.ip) {
-            details += '<p>' + printer.basicInfo.ip.replace(/\s/g, '&nbsp;') + '</p>';
+            details += '<p>' + printer.basicInfo.ip.trim().replace(/\s/g, '&nbsp;') + '</p>';
         } else {
             details += '<p>&mdash;</p>';
         }
 
         if (printer.basicInfo.modelname) {
-            details += '<p>' + printer.basicInfo.modelname.replace(/\s/g, '&nbsp;') + '</p>';
+            details += '<p>' + printer.basicInfo.modelname.trim().replace(/\s/g, '&nbsp;') + '</p>';
         } else {
             details += '<p>&mdash;</p>';
         }
 
         if (printer.detailedInfo.firmwareVersion) {
-            details += '<p>' + printer.detailedInfo.firmwareVersion.replace(/\s/g, '&nbsp;') + '</p>';
+            details += '<p>' + printer.detailedInfo.firmwareVersion.trim().replace(/\s/g, '&nbsp;') + '</p>';
         } else {
             details += '<p>&mdash;</p>';
         }
@@ -356,7 +356,7 @@ $(function() {
         if (printer.detailedInfo.status) {
             details += '<p class="state';
 
-            switch (printer.detailedInfo.status.toLowerCase()) {
+            switch (printer.detailedInfo.status.toLowerCase().trim()) {
                 case 'awake': details += ' connected';break;
                 case 'sleep': details += ' missing';break;
                 case 'unreachable': details += ' missing';break;
@@ -368,7 +368,7 @@ $(function() {
                 default: details += ' missing';
             }
 
-            details += '">' + printer.detailedInfo.status.replace(/\s/g, '&nbsp;') + '</p>';
+            details += '">' + printer.detailedInfo.status.trim().replace(/\s/g, '&nbsp;') + '</p>';
         } else {
             details += '<p class="state missing">Unknown</p>';
         }
@@ -394,25 +394,25 @@ $(function() {
 
     function fillInformationFields(information, metadata) {
         if (metadata.alias) {
-            information += '<p>' + metadata.alias.replace(/\s/g, '&nbsp;') + '</p>';
+            information += '<p>' + metadata.alias.trim().replace(/\s/g, '&nbsp;') + '</p>';
         } else {
             information += '<p>&mdash;</p>';
         }
 
         if (metadata.location) {
-            information += '<p>' + metadata.location.replace(/\s/g, '&nbsp;') + '</p>';
+            information += '<p>' + metadata.location.trim().replace(/\s/g, '&nbsp;') + '</p>';
         } else {
             information += '<p>&mdash;</p>';
         }
 
         if (metadata.workteam) {
-            information += '<p>' + metadata.workteam.replace(/\s/g, '&nbsp;') + '</p>';
+            information += '<p>' + metadata.workteam.trim().replace(/\s/g, '&nbsp;') + '</p>';
         } else {
             information += '<p>&mdash;</p>';
         }
 
         if (metadata.reservedBy) {
-            information += '<p>' + metadata.reservedBy.replace(/\s/g, '&nbsp;') + '</p>';
+            information += '<p>' + metadata.reservedBy.trim().replace(/\s/g, '&nbsp;') + '</p>';
         } else {
             information += '<p>&mdash;</p>';
         }
@@ -431,25 +431,25 @@ $(function() {
 
     function fillEditForm(metadata) {
         if (metadata.alias) {
-            $('#editForm input[name="alias"]').val(metadata.alias);
+            $('#editForm input[name="alias"]').val(metadata.alias.trim());
         } else {
             $('#editForm input[name="alias"]').val('');
         }
 
         if (metadata.location) {
-            $('#editForm input[name="location"]').val(metadata.location);
+            $('#editForm input[name="location"]').val(metadata.location.trim());
         } else {
             $('#editForm input[name="location"]').val('');
         }
 
         if (metadata.workteam) {
-            $('#editForm input[name="workteam"]').val(metadata.workteam);
+            $('#editForm input[name="workteam"]').val(metadata.workteam.trim());
         } else {
             $('#editForm input[name="workteam"]').val('');
         }
 
         if (metadata.reservedBy) {
-            $('#editForm input[name="reservedBy"]').val(metadata.reservedBy);
+            $('#editForm input[name="reservedBy"]').val(metadata.reservedBy.trim());
         } else {
             $('#editForm input[name="reservedBy"]').val('');
         }

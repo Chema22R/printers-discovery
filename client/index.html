@@ -29,15 +29,20 @@
                 <button id='listViewTrigger' class='marked borderRight icon-listView icon' type='button' title='List View' tabindex='2' accesskey='l'></button>
                 <button id='columnsViewTrigger' class='marked borderRight icon-columnsView icon' type='button' title='Columns View' tabindex='3' accesskey='c'></button>
             </div>
-            <div id='headerBar-search'>
-                <input type='text' maxlength='100' placeholder='Search for printers...' tabindex='4' accesskey='s'>
+            <div id='headerBarSearch'>
+                <input id='headerBarSearchInput' type='text' maxlength='100' placeholder='Search for printers...' tabindex='4' accesskey='s'>
                 <div class='dropdown'>
                     <button class='icon-dropdown icon' type='button' accesskey='f'></button>
-                    <div>
-                        <button>All&nbsp;printers</button>
-                        <button>filter&nbsp;2</button>
-                        <button>filter&nbsp;3&nbsp;filter&nbsp;3&nbsp;filter&nbsp;filter&nbsp;3&nbsp;filter&nbsp;3&nbsp;filter&nbsp;filter&nbsp;3&nbsp;filter&nbsp;3&nbsp;filter&nbsp;</button>
-                        <button>filter&nbsp;4</button>
+                    <div id='headerBarSearchBasicFilters'>
+                        <button name='hostname'>Hostname</button>
+                        <button name='ip'>IP&nbsp;Address</button>
+                        <button name='modelname'>Modelname</button>
+                        <button name='firmware'>Firmware</button>
+                        <button name='status'>State</button>
+                        <button name='alias'>Alias</button>
+                        <button name='location'>Location</button>
+                        <button name='workteam'>Workteam</button>
+                        <button name='reservedBy'>Reserved&nbsp;By</button>
                     </div>
                 </div>
             </div>
@@ -228,7 +233,7 @@
                             <input type='text' value='' name='hostname' maxlength='100' placeholder='hostname'>
                             <input type='text' value='' name='ip' maxlength='100' placeholder='ip address'>
                             <input type='text' value='' name='modelname' maxlength='100' placeholder='modelname'>
-                            <input type='text' value='' name='firmwareVersion' maxlength='100' placeholder='firmware version'>
+                            <input type='text' value='' name='firmware' maxlength='100' placeholder='firmware version'>
                             <input type='text' value='' name='status' maxlength='100' placeholder='state'>
                             <input class='datetimepicker' type='text' value='' name='creationDate' maxlength='100' placeholder='creation date'>
                             <input class='datetimepicker' type='text' value='' name='lastUpdateStatus' maxlength='100' placeholder='last state change'>
