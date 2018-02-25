@@ -40,7 +40,7 @@ $(function() {
             columnsViewPrinters += '<div name="' + id +'" class="printer';
 
             if (printersList[i].detailedInfo.status) {
-                switch (printersList[i].detailedInfo.status.toLowerCase().trim()) {
+                switch (printersList[i].detailedInfo.status.toLowerCase().trim().replace(/\s\s+/g, ' ')) {
                     case 'awake':
                         iconsViewPrinters += ' connected';
                         listViewPrinters += ' connected';
@@ -110,26 +110,26 @@ $(function() {
             columnsViewPrinters += '<div class="info">';
 
             if (printersList[i].basicInfo.ip) {
-                iconsViewPrinters += '<p>' + printersList[i].basicInfo.ip.trim().replace(/\s/g, '&nbsp;') + '</p>';
-                listViewPrinters += '<td>' + printersList[i].basicInfo.ip + '</td>';
-                columnsViewPrinters += '<p>' + printersList[i].basicInfo.ip.trim().replace(/\s/g, '&nbsp;') + '</p>';
+                iconsViewPrinters += '<p>' + printersList[i].basicInfo.ip.trim().replace(/\s\s+/g, ' ') + '</p>';
+                listViewPrinters += '<td title="' + printersList[i].basicInfo.ip.trim().replace(/\s\s+/g, ' ') + '">' + printersList[i].basicInfo.ip.trim().replace(/\s\s+/g, ' ') + '</td>';
+                columnsViewPrinters += '<p>' + printersList[i].basicInfo.ip.trim().replace(/\s\s+/g, ' ') + '</p>';
             } else {
                 iconsViewPrinters += '<p>&mdash;</p>';
                 listViewPrinters += '<td>&mdash;</td>';
             }
 
             if (printersList[i].basicInfo.modelname) {
-                iconsViewPrinters += '<p>' + printersList[i].basicInfo.modelname.trim().replace(/\s/g, '&nbsp;') + '</p>';
-                listViewPrinters += '<td>' + printersList[i].basicInfo.modelname + '</td>';
-                columnsViewPrinters += '<p>' + printersList[i].basicInfo.modelname.trim().replace(/\s/g, '&nbsp;') + '</p>';
+                iconsViewPrinters += '<p>' + printersList[i].basicInfo.modelname.trim().replace(/\s\s+/g, ' ') + '</p>';
+                listViewPrinters += '<td title="' + printersList[i].basicInfo.modelname.trim().replace(/\s\s+/g, ' ') + '">' + printersList[i].basicInfo.modelname.trim().replace(/\s\s+/g, ' ') + '</td>';
+                columnsViewPrinters += '<p>' + printersList[i].basicInfo.modelname.trim().replace(/\s\s+/g, ' ') + '</p>';
             } else {
                 iconsViewPrinters += '<p>&mdash;</p>';
                 listViewPrinters += '<td>&mdash;</td>';
             }
 
             if (printersList[i].detailedInfo.firmwareVersion) {
-                iconsViewPrinters += '<p>' + printersList[i].detailedInfo.firmwareVersion.trim().replace(/\s/g, '&nbsp;') + '</p>';
-                listViewPrinters += '<td>' + printersList[i].detailedInfo.firmwareVersion + '</td>';
+                iconsViewPrinters += '<p>' + printersList[i].detailedInfo.firmwareVersion.trim().replace(/\s\s+/g, ' ') + '</p>';
+                listViewPrinters += '<td title="' + printersList[i].detailedInfo.firmwareVersion.trim().replace(/\s\s+/g, ' ') + '">' + printersList[i].detailedInfo.firmwareVersion.trim().replace(/\s\s+/g, ' ') + '</td>';
             } else {
                 iconsViewPrinters += '<p>&mdash;</p>';
                 listViewPrinters += '<td>&mdash;</td>';
@@ -139,7 +139,7 @@ $(function() {
             columnsViewPrinters += '</div>';    // info div end
 
             iconsViewPrinters += '<div class="status">';
-            listViewPrinters += '<td class="status">' + title + '</td>';
+            listViewPrinters += '<td class="status" title="' + title + '">' + title + '</td>';
             columnsViewPrinters += '<div class="status">';
             
             if (printersList[i].metadata.reservedBy && printersList[i].metadata.reservedUntil) {
@@ -148,13 +148,13 @@ $(function() {
             }
 
             if (printersList[i].metadata.alias) {
-                listViewPrinters += '<td>' + printersList[i].metadata.alias + '</td>';
+                listViewPrinters += '<td title="' + printersList[i].metadata.alias.trim().replace(/\s\s+/g, ' ') + '">' + printersList[i].metadata.alias.trim().replace(/\s\s+/g, ' ') + '</td>';
             } else {
                 listViewPrinters += '<td>&mdash;</td>';
             }
 
             if (printersList[i].metadata.reservedBy) {
-                listViewPrinters += '<td>' + printersList[i].metadata.reservedBy + '</td>';
+                listViewPrinters += '<td title="' + printersList[i].metadata.reservedBy.trim().replace(/\s\s+/g, ' ') + '">' + printersList[i].metadata.reservedBy.trim().replace(/\s\s+/g, ' ') + '</td>';
             } else {
                 listViewPrinters += '<td>&mdash;</td>';
             }
@@ -325,25 +325,25 @@ $(function() {
 
     function fillDetailsFields(details, printer) {
         if (printer.basicInfo.hostname) {
-            details += '<p>' + printer.basicInfo.hostname.trim().replace(/\s/g, '&nbsp;') + '</p>';
+            details += '<p title="' + printer.basicInfo.hostname.trim().replace(/\s\s+/g, ' ') + '">' + printer.basicInfo.hostname.trim().replace(/\s\s+/g, ' ') + '</p>';
         } else {
             details += '<p>&mdash;</p>';
         }
 
         if (printer.basicInfo.ip) {
-            details += '<p>' + printer.basicInfo.ip.trim().replace(/\s/g, '&nbsp;') + '</p>';
+            details += '<p title="' + printer.basicInfo.ip.trim().replace(/\s\s+/g, ' ') + '">' + printer.basicInfo.ip.trim().replace(/\s\s+/g, ' ') + '</p>';
         } else {
             details += '<p>&mdash;</p>';
         }
 
         if (printer.basicInfo.modelname) {
-            details += '<p>' + printer.basicInfo.modelname.trim().replace(/\s/g, '&nbsp;') + '</p>';
+            details += '<p title="' + printer.basicInfo.modelname.trim().replace(/\s\s+/g, ' ') + '">' + printer.basicInfo.modelname.trim().replace(/\s\s+/g, ' ') + '</p>';
         } else {
             details += '<p>&mdash;</p>';
         }
 
         if (printer.detailedInfo.firmwareVersion) {
-            details += '<p>' + printer.detailedInfo.firmwareVersion.trim().replace(/\s/g, '&nbsp;') + '</p>';
+            details += '<p title="' + printer.detailedInfo.firmwareVersion.trim().replace(/\s\s+/g, ' ') + '">' + printer.detailedInfo.firmwareVersion.trim().replace(/\s\s+/g, ' ') + '</p>';
         } else {
             details += '<p>&mdash;</p>';
         }
@@ -351,7 +351,7 @@ $(function() {
         if (printer.detailedInfo.status) {
             details += '<p class="status';
 
-            switch (printer.detailedInfo.status.toLowerCase().trim()) {
+            switch (printer.detailedInfo.status.toLowerCase().trim().replace(/\s\s+/g, ' ')) {
                 case 'awake': details += ' connected';break;
                 case 'sleep': details += ' missing';break;
                 case 'unreachable': details += ' missing';break;
@@ -363,21 +363,21 @@ $(function() {
                 default: details += ' missing';
             }
 
-            details += '">' + printer.detailedInfo.status.trim().replace(/\s/g, '&nbsp;') + '</p>';
+            details += '" title="' + printer.detailedInfo.status.trim().replace(/\s\s+/g, ' ') + '">' + printer.detailedInfo.status.trim().replace(/\s\s+/g, ' ') + '</p>';
         } else {
             details += '<p class="status missing">Unknown</p>';
         }
 
         if (printer.creationDate) {
             var date = new Date(printer.creationDate);
-            details += '<p>' + ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + ':' + ('0' + (date.getSeconds())).slice(-2) + '</p>';
+            details += '<p title="' + date + '">' + ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + ':' + ('0' + (date.getSeconds())).slice(-2) + '</p>';
         } else {
             details += '<p>&mdash;</p>';
         }
 
         if (printer.lastUpdate.status) {
             var date = new Date(printer.lastUpdate.status);
-            details += '<p>' + ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + ':' + ('0' + (date.getSeconds())).slice(-2) + '</p>';
+            details += '<p title="' + date + '">' + ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + ':' + ('0' + (date.getSeconds())).slice(-2) + '</p>';
         } else {
             details += '<p>&mdash;</p>';
         }
@@ -389,32 +389,32 @@ $(function() {
 
     function fillInformationFields(information, metadata) {
         if (metadata.alias) {
-            information += '<p>' + metadata.alias.trim().replace(/\s/g, '&nbsp;') + '</p>';
+            information += '<p title="' + metadata.alias.trim().replace(/\s\s+/g, ' ') + '">' + metadata.alias.trim().replace(/\s\s+/g, ' ') + '</p>';
         } else {
             information += '<p>&mdash;</p>';
         }
 
         if (metadata.location) {
-            information += '<p>' + metadata.location.trim().replace(/\s/g, '&nbsp;') + '</p>';
+            information += '<p title="' + metadata.location.trim().replace(/\s\s+/g, ' ') + '">' + metadata.location.trim().replace(/\s\s+/g, ' ') + '</p>';
         } else {
             information += '<p>&mdash;</p>';
         }
 
         if (metadata.workteam) {
-            information += '<p>' + metadata.workteam.trim().replace(/\s/g, '&nbsp;') + '</p>';
+            information += '<p title="' + metadata.workteam.trim().replace(/\s\s+/g, ' ') + '">' + metadata.workteam.trim().replace(/\s\s+/g, ' ') + '</p>';
         } else {
             information += '<p>&mdash;</p>';
         }
 
         if (metadata.reservedBy) {
-            information += '<p>' + metadata.reservedBy.trim().replace(/\s/g, '&nbsp;') + '</p>';
+            information += '<p title="' + metadata.reservedBy.trim().replace(/\s\s+/g, ' ') + '">' + metadata.reservedBy.trim().replace(/\s\s+/g, ' ') + '</p>';
         } else {
             information += '<p>&mdash;</p>';
         }
 
         if (metadata.reservedUntil) {
             var date = new Date(metadata.reservedUntil);
-            information += '<p>' + ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + ':' + ('0' + (date.getSeconds())).slice(-2) + '</p>';
+            information += '<p title="' + date + '">' + ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + ':' + ('0' + (date.getSeconds())).slice(-2) + '</p>';
         } else {
             information += '<p>&mdash;</p>';
         }
@@ -426,25 +426,25 @@ $(function() {
 
     function fillEditForm(metadata) {
         if (metadata.alias) {
-            $('#editForm input[name="alias"]').val(metadata.alias.trim());
+            $('#editForm input[name="alias"]').val(metadata.alias.trim().replace(/\s\s+/g, ' '));
         } else {
             $('#editForm input[name="alias"]').val('');
         }
 
         if (metadata.location) {
-            $('#editForm input[name="location"]').val(metadata.location.trim());
+            $('#editForm input[name="location"]').val(metadata.location.trim().replace(/\s\s+/g, ' '));
         } else {
             $('#editForm input[name="location"]').val('');
         }
 
         if (metadata.workteam) {
-            $('#editForm input[name="workteam"]').val(metadata.workteam.trim());
+            $('#editForm input[name="workteam"]').val(metadata.workteam.trim().replace(/\s\s+/g, ' '));
         } else {
             $('#editForm input[name="workteam"]').val('');
         }
 
         if (metadata.reservedBy) {
-            $('#editForm input[name="reservedBy"]').val(metadata.reservedBy.trim());
+            $('#editForm input[name="reservedBy"]').val(metadata.reservedBy.trim().replace(/\s\s+/g, ' '));
         } else {
             $('#editForm input[name="reservedBy"]').val('');
         }
