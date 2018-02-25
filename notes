@@ -7,31 +7,17 @@ notes:
 
 frontend:
     opciones:
-        -poner todos los campos del archivo de configuracion del servidor
-        -el delete timeout en minutos y el update frequency en segundos
         configuracion de que columnas mostrar en la vista de lista
+        añadir algo para decir en funcion de que se ordena
+        poner en la configuracion un selector de idioma
 
     vista iconos:
-        añadir algo para decir en funcion de que se ordena
         boton para liberar una impresora y que quede en blanco el reservedBy y el reservedUntil
         boton derecho y muestra opciones con el boton para liberar impresora
 
     vista lista:
         que la lista se ordene en funcion de cada columna al pinchar en el title superior
 
-    vista columna
-        redefinir filtros en vista columna
-            la primera columna muestra los filtros creados y permite seleccionar entre ellos
-            la ventana de filtros avanzados, realiza el filtrado y almacena en cookies los filtros, mostrandolos en la columna
-
-    -añadir campo reserved until para que la impresora se libere automaticamente
-    -location = string maximo 100
-    poner el tiempo que le queda a una impresora unreachable para ser eliminada (en base al lastupdate.state y el deleteTimeout)
-    tener cuidado con las impresoras en el frontend, el usuario puede acceder y/o editar una que ya no exista o haya sido editada, por lo que al pinchar en una impresora, se debe actualizar
-    poner en la configuracion un selector de idioma
-    -todos los p deben estar con &nbsp;
-    poner title en todos los p en los que no haya info ya al ponerse encima
-    poner en config menu una opcion para elegir en funcion de que campo se ordenan las impresoras
     al hacer el put de edit, el calendar va vacio ([]), si se implementa el calendario, tener mucho cuidado con esto, pues lo reseteara
 
 links:
