@@ -142,7 +142,7 @@ $(function() {
             listViewPrinters += '<td class="status">' + title + '</td>';
             columnsViewPrinters += '<div class="status">';
             
-            if (printersList[i].metadata.reservedBy != null && printersList[i].metadata.reservedUntil != null) {
+            if (printersList[i].metadata.reservedBy && printersList[i].metadata.reservedUntil) {
                 iconsViewPrinters += '<p>RESERVED</p>';
                 columnsViewPrinters += '<p>R</p>';
             }
@@ -283,6 +283,10 @@ $(function() {
             reservedUntil: new Date(dateTime[2], dateTime[1]-1, dateTime[0], dateTime[3], dateTime[4], dateTime[5]).getTime(),
             calendar: []
         };
+
+        for (var key in metadata) {
+            if (metadata[key] == '') {metadata[key] = null}
+        }
 
         $.ajax({
             async: true,

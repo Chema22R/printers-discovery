@@ -97,6 +97,13 @@
     line-height: 18px;
 }
 
+#filterFormName > input {
+    width: 50%;
+    margin: 0 25%;
+
+    text-align: center;
+}
+
 #configForm > input {width: 50px;}
 
 #menus > div.wrapper > div > div.wrapper > form.wrapper {padding-bottom: 5px;}    /* to compensate the behaviour of inputs */

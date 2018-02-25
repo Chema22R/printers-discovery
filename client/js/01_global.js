@@ -4,6 +4,17 @@
 ========================================================================== */
 
 var printersPersistent = new Object();
+var basicFilters = {
+    hostname: false,
+    ip: false,
+    modelname: false,
+    firmware: false,
+    status: false,
+    alias: false,
+    location: false,
+    workteam: false,
+    reservedBy: false
+};
 
 
 /* Server Connections

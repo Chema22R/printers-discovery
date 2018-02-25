@@ -1,19 +1,6 @@
 'use strict';
 
 $(function() {
-    var basicFilters = {
-        hostname: false,
-        ip: false,
-        modelname: false,
-        firmware: false,
-        status: false,
-        alias: false,
-        location: false,
-        workteam: false,
-        reservedBy: false
-    };
-
-
     /* Execute the filter function when the user writes into the input search
     ========================================================================== */
     $('#headerBarSearchInput').on('keyup', function(e) {
@@ -24,8 +11,10 @@ $(function() {
 
     /* Execute the filter function when the user changes the basic filters
     ========================================================================== */
-    $('#headerBarSearchBasicFilters button').on('click touchstart', function(e) {
+    $('#headerBarSearchBasicFilters button.basic').on('click touchstart', function(e) {
         e.preventDefault();
+
+        $('#headerBarSearchBasicFilters button.advanced').removeClass('current');
         
         if ($(this).hasClass('current')) {
             $(this).removeClass('current');

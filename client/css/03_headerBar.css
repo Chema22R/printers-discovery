@@ -121,3 +121,9 @@
     font-weight: bold;
     background-color: #EFEFEF;
 }
+
+#headerBar > div > div.dropdown > div > span.separator {
+    margin: 6px 10px;
+    display: block;
+    border-top: 2px solid #95989A;
+}

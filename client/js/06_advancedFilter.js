@@ -1,6 +1,30 @@
 'use strict';
 
 $(function() {
+    activateFiltersTriggers();
+
+
+    /* Execute the filter function when the user changes the advanced filters
+    ========================================================================== */
+    function activateFiltersTriggers() {
+        $('#headerBarSearchBasicFilters button.advanced').off().on('click touchstart', function(e) {
+            e.preventDefault();
+
+            if ($(this).hasClass('current')) {
+                $(this).removeClass('current');
+            } else {
+                $('#headerBarSearchInput').val('');
+                for (var filter in basicFilters) {basicFilters[filter] = false;}
+                $('#headerBarSearchBasicFilters button').removeClass('current');
+
+                $(this).addClass('current');
+            }
+    
+            //filterPrinters({});
+        });
+    }
+
+
     /* Fade in the advanced filter menu
     ========================================================================== */
     $('#advancedFiltersMenuTrigger').on('click touchstart', function(e) {
@@ -8,6 +32,7 @@ $(function() {
 
         $('#filterFormDetails input').val('');
         $('#filterFormInfo input').val('');
+        $('#filterFormName input').val('');
 
         $('#filterFormDetails input.datetimepicker, #filterFormInfo input.datetimepicker').datetimepicker(dateTimePickerOptions);
 
@@ -22,29 +47,46 @@ $(function() {
 
     /* This function defines the behaviour of the 'Filter' button, placed into the advancedFiltersMenu
     ================================================================================================== */
-    $('#filterFormDetails').on('submit', function(e) {
+    $('#filterFormName').on('submit', function(e) {
         e.preventDefault();
 
+        var filterName = $('#filterFormName input[name="filterName"]').val().trim().replace(/\s\s+/g, ' ');
         var dateTime1 = $('#filterFormDetails input[name="creationDate"]').val().trim().replace(/\s\s+/g, ' ').split(/\/|\s|\:/);
         var dateTime2 = $('#filterFormDetails input[name="lastUpdateStatus"]').val().trim().replace(/\s\s+/g, ' ').split(/\/|\s|\:/);
         var dateTime3 = $('#filterFormInfo input[name="reservedUntil"]').val().trim().replace(/\s\s+/g, ' ').split(/\/|\s|\:/);
 
-        filterPrinters({
-            hostname: $('#filterFormDetails input[name="hostname"]').val().trim().replace(/\s\s+/g, ' '),
-            ip: $('#filterFormDetails input[name="ip"]').val().trim().replace(/\s\s+/g, ' '),
-            modelname: $('#filterFormDetails input[name="modelname"]').val().trim().replace(/\s\s+/g, ' '),
-            firmware: $('#filterFormDetails input[name="firmware"]').val().trim().replace(/\s\s+/g, ' '),
-            status: $('#filterFormDetails input[name="status"]').val().trim().replace(/\s\s+/g, ' '),
-            creationDate: new Date(dateTime1[2], dateTime1[1]-1, dateTime1[0], dateTime1[3], dateTime1[4], dateTime1[5]).getTime(),
-            lastUpdateStatus: new Date(dateTime2[2], dateTime2[1]-1, dateTime2[0], dateTime2[3], dateTime2[4], dateTime2[5]).getTime(),
-            alias: $('#filterFormInfo input[name="alias"]').val().trim().replace(/\s\s+/g, ' '),
-            location: $('#filterFormInfo input[name="location"]').val().trim().replace(/\s\s+/g, ' '),
-            workteam: $('#filterFormInfo input[name="workteam"]').val().trim().replace(/\s\s+/g, ' '),
-            reservedBy: $('#filterFormInfo input[name="reservedBy"]').val().trim().replace(/\s\s+/g, ' '),
-            reservedUntil: new Date(dateTime3[2], dateTime3[1]-1, dateTime3[0], dateTime3[3], dateTime3[4], dateTime3[5]).getTime()
-        });
+        if (filterName) {
+            var data = {
+                //filterName: filterName,
+                hostname: $('#filterFormDetails input[name="hostname"]').val().trim().replace(/\s\s+/g, ' '),
+                ip: $('#filterFormDetails input[name="ip"]').val().trim().replace(/\s\s+/g, ' '),
+                modelname: $('#filterFormDetails input[name="modelname"]').val().trim().replace(/\s\s+/g, ' '),
+                firmware: $('#filterFormDetails input[name="firmware"]').val().trim().replace(/\s\s+/g, ' '),
+                status: $('#filterFormDetails input[name="status"]').val().trim().replace(/\s\s+/g, ' '),
+                creationDate: new Date(dateTime1[2], dateTime1[1]-1, dateTime1[0], dateTime1[3], dateTime1[4], dateTime1[5]).getTime(),
+                lastUpdateStatus: new Date(dateTime2[2], dateTime2[1]-1, dateTime2[0], dateTime2[3], dateTime2[4], dateTime2[5]).getTime(),
+                alias: $('#filterFormInfo input[name="alias"]').val().trim().replace(/\s\s+/g, ' '),
+                location: $('#filterFormInfo input[name="location"]').val().trim().replace(/\s\s+/g, ' '),
+                workteam: $('#filterFormInfo input[name="workteam"]').val().trim().replace(/\s\s+/g, ' '),
+                reservedBy: $('#filterFormInfo input[name="reservedBy"]').val().trim().replace(/\s\s+/g, ' '),
+                reservedUntil: new Date(dateTime3[2], dateTime3[1]-1, dateTime3[0], dateTime3[3], dateTime3[4], dateTime3[5]).getTime()
+            };
 
-        $('#menus, #advancedFiltersMenu').fadeOut('slow');
+            $('#headerBarSearchInput').val('');
+            for (var filter in basicFilters) {basicFilters[filter] = false;}
+            $('#headerBarSearchBasicFilters button').removeClass('current');
+
+            $('#headerBarSearchBasicFilters button[name="' + filterName + '"]').remove();
+            $('<button class="advanced current" name="' + filterName + '">' + filterName + '</button>').appendTo('#headerBarSearchBasicFilters');
+            activateFiltersTriggers();
+
+            filterPrinters(data);
+
+            $('#menus, #advancedFiltersMenu').fadeOut('slow');
+        } else {
+            $('#filterFormName input[name="filterName"]').focus();
+            showMessage('Filter name is mandatory', 'red');
+        }
     });
 
 
