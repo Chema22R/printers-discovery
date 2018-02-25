@@ -31,6 +31,18 @@ var psAdvancedFiltersMenu = new PerfectScrollbar('#advancedFiltersMenu', psOptio
 var psConfigMenu = new PerfectScrollbar('#configMenu', psOptions);
 
 
+/* Datetimepicker
+========================================================================== */
+
+var dateTimePickerOptions = {
+    controlType: 'select',
+    oneLine: true,
+    timeInput: true,
+    dateFormat: 'dd/mm/yy',
+    timeFormat: 'HH:mm:ss'
+};
+
+
 /* Log Function
 ========================================================================== */
 

@@ -38,7 +38,7 @@
                         <button name='ip'>IP&nbsp;Address</button>
                         <button name='modelname'>Modelname</button>
                         <button name='firmware'>Firmware</button>
-                        <button name='status'>State</button>
+                        <button name='status'>Status</button>
                         <button name='alias'>Alias</button>
                         <button name='location'>Location</button>
                         <button name='workteam'>Workteam</button>
@@ -62,7 +62,7 @@
                             <th>IP</th>
                             <th>Modelname</th>
                             <th>Firmware</th>
-                            <th>State</th>
+                            <th>Status</th>
                             <th>Alias</th>
                             <th>Reserved&nbsp;By</th>
                         </tr>
@@ -111,9 +111,9 @@
                                     <p>IP&nbsp;Address</p>
                                     <p>Modelname</p>
                                     <p>Firmware&nbsp;Version</p>
-                                    <p>State</p>
+                                    <p>Status</p>
                                     <p>Creation&nbsp;Date</p>
-                                    <p>Last&nbsp;State&nbsp;Change</p>
+                                    <p>Last&nbsp;Status&nbsp;Change</p>
                                 </div>
                             </div>
 
@@ -146,9 +146,9 @@
                             <p>IP&nbsp;Address</p>
                             <p>Modelname</p>
                             <p>Firmware&nbsp;Version</p>
-                            <p>State</p>
+                            <p>Status</p>
                             <p>Creation&nbsp;Date</p>
-                            <p>Last&nbsp;State&nbsp;Change</p>
+                            <p>Last&nbsp;Status&nbsp;Change</p>
                         </div>
                     </div>
 
@@ -182,9 +182,9 @@
                             <p>IP&nbsp;Address</p>
                             <p>Modelname</p>
                             <p>Firmware&nbsp;Version</p>
-                            <p>State</p>
+                            <p>Status</p>
                             <p>Creation&nbsp;Date</p>
-                            <p>Last&nbsp;State&nbsp;Change</p>
+                            <p>Last&nbsp;Status&nbsp;Change</p>
                         </div>
                     </div>
 
@@ -225,18 +225,18 @@
                             <p>IP&nbsp;Address</p>
                             <p>Modelname</p>
                             <p>Firmware&nbsp;Version</p>
-                            <p>State</p>
+                            <p>Status</p>
                             <p>Creation&nbsp;Date</p>
-                            <p>Last&nbsp;State&nbsp;Change</p>
+                            <p>Last&nbsp;Status&nbsp;Change</p>
                         </div>
                         <form id='filterFormDetails' class='wrapper right'>
                             <input type='text' value='' name='hostname' maxlength='100' placeholder='hostname'>
                             <input type='text' value='' name='ip' maxlength='100' placeholder='ip address'>
                             <input type='text' value='' name='modelname' maxlength='100' placeholder='modelname'>
                             <input type='text' value='' name='firmware' maxlength='100' placeholder='firmware version'>
-                            <input type='text' value='' name='status' maxlength='100' placeholder='state'>
+                            <input type='text' value='' name='status' maxlength='100' placeholder='status'>
                             <input class='datetimepicker' type='text' value='' name='creationDate' maxlength='100' placeholder='creation date'>
-                            <input class='datetimepicker' type='text' value='' name='lastUpdateStatus' maxlength='100' placeholder='last state change'>
+                            <input class='datetimepicker' type='text' value='' name='lastUpdateStatus' maxlength='100' placeholder='last status change'>
                         </form>
                     </div>
 
@@ -258,7 +258,7 @@
                         </form>
                     </div>
 
-                    <button class='actionButton' type='submit' title='Filter'>Filter</button>
+                    <button class='actionButton' type='submit' form='filterFormDetails' title='Filter'>Filter</button>
                     <button class='closeButton icon-close icon' type='button' title='Close Window'></button>
 
                     <div class='dropdown'>

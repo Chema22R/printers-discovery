@@ -1,3 +1,7 @@
+preguntas:
+    pongo el state default a unknown, es correcto? si se filtra por estado unknown, no coincide a menos que sea "unknown"
+
+
 notes:
     manual de usuario para entender los logs
 

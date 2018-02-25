@@ -1,15 +1,6 @@
 'use strict';
 
 $(function() {
-    var dateTimePickerOptions = {
-        controlType: 'select',
-        oneLine: true,
-        timeInput: true,
-        dateFormat: 'dd/mm/yy',
-        timeFormat: 'HH:mm:ss'
-    };
-
-
     /* Update the list of printers, populate the three views and activate the printers triggers
     =========================================================================================== */
     $.ajax({
@@ -147,9 +138,9 @@ $(function() {
             iconsViewPrinters += '</div>';      // info div end
             columnsViewPrinters += '</div>';    // info div end
 
-            iconsViewPrinters += '<div class="state">';
-            listViewPrinters += '<td class="state">' + title + '</td>';
-            columnsViewPrinters += '<div class="state">';
+            iconsViewPrinters += '<div class="status">';
+            listViewPrinters += '<td class="status">' + title + '</td>';
+            columnsViewPrinters += '<div class="status">';
             
             if (printersList[i].metadata.reservedBy != null && printersList[i].metadata.reservedUntil != null) {
                 iconsViewPrinters += '<p>RESERVED</p>';
@@ -168,9 +159,9 @@ $(function() {
                 listViewPrinters += '<td>&mdash;</td>';
             }
 
-            iconsViewPrinters += '</div></div>';    // state div and printer end
+            iconsViewPrinters += '</div></div>';    // status div and printer end
             listViewPrinters += '</tr>';             // printer end
-            columnsViewPrinters += '</div></div>';  // state div and printer end
+            columnsViewPrinters += '</div></div>';  // status div and printer end
 
             printersPersistent[id] = printersList[i];
         }
@@ -354,7 +345,7 @@ $(function() {
         }
 
         if (printer.detailedInfo.status) {
-            details += '<p class="state';
+            details += '<p class="status';
 
             switch (printer.detailedInfo.status.toLowerCase().trim()) {
                 case 'awake': details += ' connected';break;
@@ -370,7 +361,7 @@ $(function() {
 
             details += '">' + printer.detailedInfo.status.trim().replace(/\s/g, '&nbsp;') + '</p>';
         } else {
-            details += '<p class="state missing">Unknown</p>';
+            details += '<p class="status missing">Unknown</p>';
         }
 
         if (printer.creationDate) {

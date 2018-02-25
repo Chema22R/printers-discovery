@@ -61,24 +61,24 @@
     line-height: 30px;
 }
 
-#iconsView > div.wrapper > div.printer > div.state {
+#iconsView > div.wrapper > div.printer > div.status {
     width: 30px;
     height: 100%;
 
     float: left;
 }
 
-#iconsView > div.wrapper > div.printer.connected > div.state {background-color: #1DBE00;}
-#iconsView > div.wrapper > div.printer.warning > div.state {background-color: #EBD000;}
-#iconsView > div.wrapper > div.printer.error > div.state {background-color: #E40000;}
-#iconsView > div.wrapper > div.printer.missing > div.state {background-color: #A8A8A8;}
-#iconsView > div.wrapper > div.printer.connected:hover > div.state {background-color: #009E00;}
-#iconsView > div.wrapper > div.printer.warning:hover > div.state {background-color: #CBB000;}
-#iconsView > div.wrapper > div.printer.error:hover > div.state {background-color: #C40000;}
-#iconsView > div.wrapper > div.printer.missing:hover > div.state {background-color: #888888;}
-#iconsView > div.wrapper > div.printer > div.state > p {display: none;}
+#iconsView > div.wrapper > div.printer.connected > div.status {background-color: #1DBE00;}
+#iconsView > div.wrapper > div.printer.warning > div.status {background-color: #EBD000;}
+#iconsView > div.wrapper > div.printer.error > div.status {background-color: #E40000;}
+#iconsView > div.wrapper > div.printer.missing > div.status {background-color: #A8A8A8;}
+#iconsView > div.wrapper > div.printer.connected:hover > div.status {background-color: #009E00;}
+#iconsView > div.wrapper > div.printer.warning:hover > div.status {background-color: #CBB000;}
+#iconsView > div.wrapper > div.printer.error:hover > div.status {background-color: #C40000;}
+#iconsView > div.wrapper > div.printer.missing:hover > div.status {background-color: #888888;}
+#iconsView > div.wrapper > div.printer > div.status > p {display: none;}
 
-#iconsView > div.wrapper > div.printer > div.state > p {
+#iconsView > div.wrapper > div.printer > div.status > p {
     width: 100px;
     margin-left: -99px;
 

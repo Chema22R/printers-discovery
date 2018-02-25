@@ -48,7 +48,7 @@
 #listView > table.wrapper > tbody > tr.printer:hover > td {font-weight: bold;}
 #listView > table.wrapper > tbody > tr.printer:hover > td:first-child {border-left: 3px solid #0099D8;}
 
-#listView > table.wrapper > tbody > tr.printer.connected > td.state {color: #1DBE00;}
-#listView > table.wrapper > tbody > tr.printer.warning > td.state {color: #EBD000;}
-#listView > table.wrapper > tbody > tr.printer.error > td.state {color: #E40000;}
-#listView > table.wrapper > tbody > tr.printer.missing > td.state {color: #A8A8A8;}
+#listView > table.wrapper > tbody > tr.printer.connected > td.status {color: #1DBE00;}
+#listView > table.wrapper > tbody > tr.printer.warning > td.status {color: #EBD000;}
+#listView > table.wrapper > tbody > tr.printer.error > td.status {color: #E40000;}
+#listView > table.wrapper > tbody > tr.printer.missing > td.status {color: #A8A8A8;}

@@ -106,19 +106,19 @@
     text-align: left;
 }
 
-#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer > div.state {
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer > div.status {
     width: 20px;
     height: 100%;
 }
 
-#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer.connected > div.state {background-color: #1DBE00;}
-#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer.warning > div.state {background-color: #EBD000;}
-#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer.error > div.state {background-color: #E40000;}
-#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer.missing > div.state {background-color: #A8A8A8;}
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer.connected > div.status {background-color: #1DBE00;}
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer.warning > div.status {background-color: #EBD000;}
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer.error > div.status {background-color: #E40000;}
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer.missing > div.status {background-color: #A8A8A8;}
 
-#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer > div.state > p {display: none;}
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer > div.status > p {display: none;}
 
-#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer > div.state > p {
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.printer > div.status > p {
     display: block;
     padding: 0 0 0 1px;
     
@@ -166,10 +166,10 @@
     line-height: 30px;
 }
 
-#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > div.wrapper > p.state.connected {color: #1DBE00;}
-#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > div.wrapper > p.state.warning {color: #EBD000;}
-#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > div.wrapper > p.state.error {color: #E40000;}
-#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > div.wrapper > p.state.missing {color: #A8A8A8;}
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > div.wrapper > p.status.connected {color: #1DBE00;}
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > div.wrapper > p.status.warning {color: #EBD000;}
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > div.wrapper > p.status.error {color: #E40000;}
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > div.wrapper > p.status.missing {color: #A8A8A8;}
 
 #columnsView > div.wrapper > div.column.big > div.wrapper > button {
     margin: 8px 0 24px 0;

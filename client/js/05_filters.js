@@ -14,8 +14,33 @@ $(function() {
     };
 
 
-    /* Function to filter the printers and show or hide them according to the filters
-    ================================================================================= */
+    /* Execute the filter function when the user writes into the input search
+    ========================================================================== */
+    $('#headerBarSearchInput').on('keyup', function(e) {
+        e.preventDefault();
+        filterPrinters($('#headerBarSearchInput').val());
+    });
+
+
+    /* Execute the filter function when the user changes the basic filters
+    ========================================================================== */
+    $('#headerBarSearchBasicFilters button').on('click touchstart', function(e) {
+        e.preventDefault();
+        
+        if ($(this).hasClass('current')) {
+            $(this).removeClass('current');
+        } else {
+            $(this).addClass('current');
+        }
+
+        basicFilters[$(this).attr('name')] = !basicFilters[$(this).attr('name')];
+
+        filterPrinters($('#headerBarSearchInput').val());
+    });
+
+
+    /* This function filter the printers and show or hide them according to the filters
+    =================================================================================== */
     function filterPrinters(inputSearch) {
         var allFilters = true;
         var coincident;
@@ -70,50 +95,8 @@ $(function() {
     }
 
 
-    /* Execute the filter function when the user writes into the input search
+    /* This function compare two variables and return the result (true/false)
     ========================================================================== */
-    $('#headerBarSearchInput').on('keyup', function(e) {
-        e.preventDefault();
-        filterPrinters($('#headerBarSearchInput').val());
-    });
-
-
-    /* Execute the filter function when the user changes the basic filters
-    ========================================================================== */
-    $('#headerBarSearchBasicFilters button').on('click touchstart', function(e) {
-        e.preventDefault();
-        
-        if ($(this).hasClass('current')) {
-            $(this).removeClass('current');
-        } else {
-            $(this).addClass('current');
-        }
-
-        basicFilters[$(this).attr('name')] = !basicFilters[$(this).attr('name')];
-
-        filterPrinters($('#headerBarSearchInput').val());
-    });
-
-
-    /* Fade in the advanced filters menu
-    ========================================================================== */
-    $('#advancedFiltersMenuTrigger').on('click touchstart', function(e) {
-        e.preventDefault();
-        
-        if ($('#advancedFiltersMenu').is(':hidden')) {
-            $('#filterFormDetails input').val('');
-            $('#filterFormInfo input').val('');
-
-            $('#menus, #advancedFiltersMenu').fadeIn('slow');
-            $('#advancedFiltersMenu').scrollTop(0);
-            psAdvancedFiltersMenu.update();
-        }
-    });
-
-
-    /* Secondary functions
-    ========================================================================== */
-    
     function compare(var1, var2) {
         var mapReplace = {'á':'a', 'é':'e', 'í':'i', 'ó':'o', 'ú':'u', 'à':'a', 'è':'e', 'ì':'i', 'ò':'o', 'ú':'u', 'ä':'a', 'ë':'e', 'ï':'i', 'ö':'o', 'ü':'u'};
 
