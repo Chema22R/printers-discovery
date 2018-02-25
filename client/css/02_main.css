@@ -19,6 +19,8 @@ p, th, td {
     white-space: nowrap;
 }
 
+p.noPrinters {white-space: initial;}
+
 .icon {
     font-size: 25px;
     color: #6A6A6A;
