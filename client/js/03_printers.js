@@ -25,9 +25,9 @@ $(function() {
     /* This function populates the three views (iconsView, listView and columnsView)
     ================================================================================ */
     function populateViews(printersList) {
-        var iconsViewPrinters = '<div id="iconsViewPopulation" class="wrapper">';
+        var iconsViewPrinters = '<div id="iconsViewPopulation" class="wrapper"><p class="noPrinters">No printers to show with selected filters</p>';
         var listViewPrinters = '<tbody id="listViewPopulation">';
-        var columnsViewPrinters = '<div id="columnsViewPopulation" class="wrapper">';
+        var columnsViewPrinters = '<div id="columnsViewPopulation" class="wrapper"><p class="noPrinters">No printers to show with selected filters</p>';
         var id, title;
 
         printersPersistent = new Object();

@@ -124,6 +124,7 @@ $(function() {
     /* This function filter the printers and show or hide them according to the filters
     =================================================================================== */
     function filterPrinters(data) {
+        var noPrinters = true;
         var coincident;
 
         for (var printer in printersPersistent) {
@@ -155,6 +156,7 @@ $(function() {
             }
 
             if (coincident) {
+                noPrinters = false;
                 $('#iconsViewPopulation div.printer[name="' + printer + '"]').show();
                 $('#listViewPopulation tr.printer[name="' + printer + '"]').show();
                 $('#columnsViewPopulation div.printer[name="' + printer + '"]').show();
@@ -163,6 +165,12 @@ $(function() {
                 $('#listViewPopulation tr.printer[name="' + printer + '"]').hide();
                 $('#columnsViewPopulation div.printer[name="' + printer + '"]').hide();
             }
+        }
+
+        if (noPrinters) {
+            $('p.noPrinters').show();
+        } else {
+            $('p.noPrinters').hide();
         }
 
         $('#iconsView').scrollTop(0);

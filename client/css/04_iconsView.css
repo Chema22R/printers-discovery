@@ -19,6 +19,11 @@
     padding: 30px 5%;
 }
 
+#iconsView > div.wrapper > p.noPrinters {
+    display: none;
+    text-align: center;
+}
+
 #iconsView > div.wrapper > div.printer {
     width: 250px;
     height: 100px;

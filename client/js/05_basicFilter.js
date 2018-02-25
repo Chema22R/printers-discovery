@@ -32,6 +32,7 @@ $(function() {
     =================================================================================== */
     function filterPrinters(inputSearch) {
         var allFilters = true;
+        var noPrinters = true;
         var coincident;
         
         for (var filter in basicFilters) {
@@ -63,6 +64,7 @@ $(function() {
             }
 
             if (coincident) {
+                noPrinters = false;
                 $('#iconsViewPopulation div.printer[name="' + printer + '"]').show();
                 $('#listViewPopulation tr.printer[name="' + printer + '"]').show();
                 $('#columnsViewPopulation div.printer[name="' + printer + '"]').show();
@@ -71,6 +73,12 @@ $(function() {
                 $('#listViewPopulation tr.printer[name="' + printer + '"]').hide();
                 $('#columnsViewPopulation div.printer[name="' + printer + '"]').hide();
             }
+        }
+
+        if (noPrinters) {
+            $('p.noPrinters').show();
+        } else {
+            $('p.noPrinters').hide();
         }
 
         $('#iconsView').scrollTop(0);
