@@ -12,7 +12,7 @@ $(function() {
         var cookies = document.cookie.split(/\;|\=/);
 
         for (var i=0; i<cookies.length-1; i+=2) {
-            if (cookies[i] != 'defaultView') {
+            if (cookies[i].trim() != 'defaultView') {
                 $('<button class="advanced" name="' + cookies[i].trim() + '" title="' + generateTitle(JSON.parse(cookies[i+1].trim())) + '">' + cookies[i].trim() + '</button>').insertAfter('#headerBarSearchBasicFilters span.separator');
                 advancedFilters[cookies[i].trim()] = JSON.parse(cookies[i+1].trim());
             }
