@@ -27,7 +27,9 @@ $(function() {
     /* Execute the filter function when the user changes the advanced filters
     ========================================================================== */
     function activateFiltersTriggers() {
-        $('#headerBarSearchBasicFilters button.advanced').off().on('click touchstart', function(e) {
+        $('#headerBarSearchBasicFilters button.advanced').off();
+
+        $('#headerBarSearchBasicFilters button.advanced').on('click touchstart', function(e) {
             e.preventDefault();
 
             if ($(this).hasClass('current')) {
@@ -40,6 +42,23 @@ $(function() {
 
                 $(this).addClass('current');
                 filterPrinters(advancedFilters[$(this).attr('name')]);
+            }
+        });
+
+        $('#headerBarSearchBasicFilters button.advanced').on('contextmenu', function(e) {
+            e.preventDefault();
+
+            var res = confirm('Are you sure you want to delete the filter "' + $(this).attr('name') + '"?\n' + $(this).attr('title'));
+
+            if (res) {
+                if ($(this).hasClass('current')) {filterPrinters({});}
+
+                $(this).remove();
+                document.cookie = $(this).attr('name') + '=;max-age=0';
+
+                $('#headerBarSearchBasicFilters').show().scrollTop(0);
+                psHeaderBarSearchBasicFilters.update();
+                $('#headerBarSearchBasicFilters').hide();
             }
         });
     }

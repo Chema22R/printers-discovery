@@ -2,7 +2,7 @@
 
 $(function() {
     updatePrinters();
-    
+
     /* Update the list of printers, populate the three views and activate the printers triggers
     =========================================================================================== */
     function updatePrinters() {
@@ -25,7 +25,7 @@ $(function() {
         });
     }
 
-    
+
     /* This function populates the three views (iconsView, listView and columnsView)
     ================================================================================ */
     function populateViews(printersList) {
