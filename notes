@@ -13,12 +13,12 @@ frontend:
         poner en la configuracion un selector de idioma
 
     vista iconos:
-        boton para liberar una impresora y que quede en blanco el reservedBy y el reservedUntil
-        boton derecho y muestra opciones con el boton para liberar impresora
+        boton para liberar una impresora y que quede en blanco el reservedBy y el reservedUntil (boton derecho)
 
     vista lista:
         que la lista se ordene en funcion de cada columna al pinchar en el title superior
 
+    añadir eliminador de filtros
     al hacer el put de edit, el calendar va vacio ([]), si se implementa el calendario, tener mucho cuidado con esto, pues lo reseteara
 
 links:

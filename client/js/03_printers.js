@@ -1,25 +1,29 @@
 'use strict';
 
 $(function() {
+    updatePrinters();
+    
     /* Update the list of printers, populate the three views and activate the printers triggers
     =========================================================================================== */
-    $.ajax({
-        async: true,
-        crossDomain: true,
-        url: 'http://'+serverAddress+':'+serverPort+'/printers/list',
-        method: 'GET',
-        success: function(res, status) {
-            populateViews(sortJSON(res, 'basicInfo', 'modelname', true));
-            activatePrintersTriggers();
-        },
-        error: function(jqXHR, status, err) {
-            if (!err) {
-                showMessage('Unable to connect to server', 'red');
-            } else {
-                showMessage(jqXHR.responseText, 'red');
+    function updatePrinters() {
+        $.ajax({
+            async: true,
+            crossDomain: true,
+            url: 'http://'+serverAddress+':'+serverPort+'/printers/list',
+            method: 'GET',
+            success: function(res, status) {
+                populateViews(sortJSON(res, 'basicInfo', 'modelname', true));
+                activatePrintersTriggers();
+            },
+            error: function(jqXHR, status, err) {
+                if (!err) {
+                    showMessage('Unable to connect to server', 'red');
+                } else {
+                    showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
+                }
             }
-        }
-    });
+        });
+    }
 
     
     /* This function populates the three views (iconsView, listView and columnsView)
@@ -190,7 +194,9 @@ $(function() {
        into those views and to define the behaviour of the triggers, which fill the fields of the infoMenu
     ====================================================================================================== */
     function activatePrintersTriggers() {
-        $('#iconsViewPopulation div.printer, #listViewPopulation tr.printer').off().on('click touchstart', function(e) {
+        $('#iconsViewPopulation div.printer, #listViewPopulation tr.printer, #columnsViewPopulation div.printer').off();
+
+        $('#iconsViewPopulation div.printer, #listViewPopulation tr.printer').on('click touchstart', function(e) {
             e.preventDefault();
 
             var details = fillDetailsFields('<div id="infoMenuDetails" class="wrapper right">', printersPersistent[$(e.currentTarget).attr('name')]);
@@ -212,7 +218,7 @@ $(function() {
             }
         });
 
-        $('#columnsViewPopulation div.printer').off().on('click touchstart', function(e) {
+        $('#columnsViewPopulation div.printer').on('click touchstart', function(e) {
             e.preventDefault();
 
             var details = fillDetailsFields('<div id="columnsViewPrinterDetails" class="wrapper right">', printersPersistent[$(e.currentTarget).attr('name')]);
@@ -233,6 +239,76 @@ $(function() {
             $('#columnsViewPrinterWrapper').fadeIn('slow');
             $('#columnsViewPrinterWrapper').scrollTop(0);
             psColumnsViewPrinterWrapper.update();
+        });
+
+        $('#iconsViewPopulation div.printer, #listViewPopulation tr.printer, #columnsViewPopulation div.printer').on('contextmenu', function(e) {
+            e.preventDefault();
+
+            var printerId = $(e.currentTarget).attr('name');
+
+            $('#contextMenuPrinters').css({
+                top: e.pageY + 'px',
+                left: e.pageX + 'px'
+            }).show();
+
+            $(document).off().on('mousedown', function(e) {
+                e.preventDefault();
+
+                if ($(e.target).is('#contextMenuPrinters button[name="removeRes"]')) {
+                    var printer = printersPersistent[printerId];
+                    var metadata = printer.metadata;
+                    metadata.reservedBy = null;
+                    metadata.reservedUntil = null;
+                    
+                    $.ajax({
+                        async: true,
+                        crossDomain: true,
+                        url: 'http://'+serverAddress+':'+serverPort+'/printers/update?ip=' + printer.basicInfo.ip + '&hostname=' + printer.basicInfo.hostname,
+                        method: 'PUT',
+                        headers: {'Content-Type': 'application/json'},
+                        processData: false,
+                        data: JSON.stringify(metadata),
+                        success: function(res, status) {
+                            showMessage('Reserve successfully removed', 'green');
+
+                            updatePrinters();
+                            $('#columnsViewPrinterWrapper').hide();
+                        },
+                        error: function(jqXHR, status, err) {
+                            if (!err) {
+                                showMessage('Unable to connect to server', 'red');
+                            } else {
+                                showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
+                            }
+                        }
+                    });
+                } else if ($(e.target).is('#contextMenuPrinters button[name="forceUpdate"]')) {
+                    var printer = printersPersistent[printerId];
+                    
+                    $.ajax({
+                        async: true,
+                        crossDomain: true,
+                        url: 'http://'+serverAddress+':'+serverPort+'/printers/update?ip=' + printer.basicInfo.ip + '&hostname=' + printer.basicInfo.hostname,
+                        method: 'GET',
+                        success: function(res, status) {
+                            showMessage('Printer successfully updated (force mode)', 'green');
+
+                            updatePrinters();
+                            $('#columnsViewPrinterWrapper').hide();
+                        },
+                        error: function(jqXHR, status, err) {
+                            if (!err) {
+                                showMessage('Unable to connect to server', 'red');
+                            } else {
+                                showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
+                            }
+                        }
+                    });
+                }
+
+                $('#contextMenuPrinters').hide();
+                $(document).off();
+            });
         });
     }
 
@@ -299,13 +375,16 @@ $(function() {
             success: function(res, status) {
                 showMessage('Information successfully updated', 'green');
 
-                printersPersistent[$('#editMenu button.actionButton').attr('name')].metadata = metadata;
+                updatePrinters();
+                $('#columnsViewPrinterWrapper').hide();
+
+                /*printersPersistent[$('#editMenu button.actionButton').attr('name')].metadata = metadata;
 
                 if ($('#editMenu button.actionButton').attr('name') == $('#columnsViewPrinterDataColumn button.actionButton').attr('name')) {
                     $('#columnsViewPrinterInformation').remove();
                     $(fillInformationFields('<div id="columnsViewPrinterInformation" class="wrapper right">', metadata)).appendTo('#columnsViewPrinterInformationWrapper');
                     $('#columnsViewPrinterWrapper').fadeIn('slow');
-                }
+                }*/
 
                 $('#menus, #editMenu').fadeOut('slow');
             },
@@ -313,7 +392,7 @@ $(function() {
                 if (!err) {
                     showMessage('Unable to connect to server', 'red');
                 } else {
-                    showMessage(jqXHR.responseText, 'red');
+                    showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
                 }
             }
         });

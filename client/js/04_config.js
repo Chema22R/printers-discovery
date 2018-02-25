@@ -45,7 +45,7 @@ $(function() {
                     if (!err) {
                         showMessage('Unable to connect to server', 'red');
                     } else {
-                        showMessage(jqXHR.responseText, 'red');
+                        showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
                     }
                 }
             });
@@ -79,7 +79,7 @@ $(function() {
                 if (!err) {
                     showMessage('Unable to connect to server', 'red');
                 } else {
-                    showMessage(jqXHR.responseText, 'red');
+                    showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
                 }
             }
         });
