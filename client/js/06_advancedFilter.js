@@ -57,28 +57,28 @@ $(function() {
             coincident = true;
 
             if (coincident && printersPersistent[printer].basicInfo) {
-                if (coincident && data.hostname && !compare(printersPersistent[printer].basicInfo.hostname, data.hostname)) {coincident = false;}
-                if (coincident && data.ip && !compare(printersPersistent[printer].basicInfo.ip, data.ip)) {coincident = false;}
-                if (coincident && data.modelname && !compare(printersPersistent[printer].basicInfo.modelname, data.modelname)) {coincident = false;}
+                if (coincident && data.hostname && !compareValues(printersPersistent[printer].basicInfo.hostname, data.hostname)) {coincident = false;}
+                if (coincident && data.ip && !compareValues(printersPersistent[printer].basicInfo.ip, data.ip)) {coincident = false;}
+                if (coincident && data.modelname && !compareValues(printersPersistent[printer].basicInfo.modelname, data.modelname)) {coincident = false;}
             }
 
             if (coincident && printersPersistent[printer].detailedInfo) {
-                if (coincident && data.firmware && !compare(printersPersistent[printer].detailedInfo.firmwareVersion, data.firmware)) {coincident = false;}
-                if (coincident && data.status && !compare(printersPersistent[printer].detailedInfo.status, data.status)) {coincident = false;}
+                if (coincident && data.firmware && !compareValues(printersPersistent[printer].detailedInfo.firmwareVersion, data.firmware)) {coincident = false;}
+                if (coincident && data.status && !compareValues(printersPersistent[printer].detailedInfo.status, data.status)) {coincident = false;}
             }
 
-            if (coincident && data.creationDate && !compare(printersPersistent[printer].creationDate, data.creationDate)) {coincident = false;}
+            if (coincident && data.creationDate && !compareValues(printersPersistent[printer].creationDate, data.creationDate)) {coincident = false;}
 
             if (coincident && printersPersistent[printer].lastUpdate) {
-                if (coincident && data.lastUpdateStatus && !compare(printersPersistent[printer].lastUpdate.status, data.lastUpdateStatus)) {coincident = false;}
+                if (coincident && data.lastUpdateStatus && !compareValues(printersPersistent[printer].lastUpdate.status, data.lastUpdateStatus)) {coincident = false;}
             }
 
             if (coincident && printersPersistent[printer].metadata) {
-                if (coincident && data.alias && !compare(printersPersistent[printer].metadata.alias, data.alias)) {coincident = false;}
-                if (coincident && data.location && !compare(printersPersistent[printer].metadata.location, data.location)) {coincident = false;}
-                if (coincident && data.workteam && !compare(printersPersistent[printer].metadata.workteam, data.workteam)) {coincident = false;}
-                if (coincident && data.reservedBy && !compare(printersPersistent[printer].metadata.reservedBy, data.reservedBy)) {coincident = false;}
-                if (coincident && data.reservedUntil && !compare(printersPersistent[printer].metadata.reservedUntil, data.reservedUntil)) {coincident = false;}
+                if (coincident && data.alias && !compareValues(printersPersistent[printer].metadata.alias, data.alias)) {coincident = false;}
+                if (coincident && data.location && !compareValues(printersPersistent[printer].metadata.location, data.location)) {coincident = false;}
+                if (coincident && data.workteam && !compareValues(printersPersistent[printer].metadata.workteam, data.workteam)) {coincident = false;}
+                if (coincident && data.reservedBy && !compareValues(printersPersistent[printer].metadata.reservedBy, data.reservedBy)) {coincident = false;}
+                if (coincident && data.reservedUntil && !compareValues(printersPersistent[printer].metadata.reservedUntil, data.reservedUntil)) {coincident = false;}
             }
 
             if (coincident) {
@@ -100,21 +100,5 @@ $(function() {
 
         $('#columnsViewPopulation').scrollTop(0);
         psColumnsViewPopulation.update();
-    }
-
-
-    /* This function compare two variables and return the result (true/false)
-    ========================================================================== */
-    function compare(var1, var2) {
-        var mapReplace = {'á':'a', 'é':'e', 'í':'i', 'ó':'o', 'ú':'u', 'à':'a', 'è':'e', 'ì':'i', 'ò':'o', 'ú':'u', 'ä':'a', 'ë':'e', 'ï':'i', 'ö':'o', 'ü':'u'};
-
-        var1 = String(var1).toLowerCase().trim().replace(/\s\s+/g, ' ').replace(/[áéíóúàèìòùäëïöü]/g, function(match) {return mapReplace[match];});
-        var2 = String(var2).toLowerCase().trim().replace(/\s\s+/g, ' ').replace(/[áéíóúàèìòùäëïöü]/g, function(match) {return mapReplace[match];});
-
-        if (var1.includes(var2)) {
-            return true;
-        } else {
-            return false;
-        }
     }
 });
