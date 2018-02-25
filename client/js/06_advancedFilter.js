@@ -1,7 +1,23 @@
 'use strict';
 
 $(function() {
-    activateFiltersTriggers();
+    var advancedFilters = new Object();
+
+    retrieveFiltersFromCookies();
+    
+
+    /* This funtion retrieves the filters stored into cookies and populate the filters list with them
+    ================================================================================================= */
+    function retrieveFiltersFromCookies() {
+        var cookies = document.cookie.split(/\;|\=/);
+
+        for (var i=0; i<cookies.length-1; i+=2) {
+            $('<button class="advanced" name="' + cookies[i].trim() + '">' + cookies[i].trim() + '</button>').insertAfter('#headerBarSearchBasicFilters span.separator');
+            advancedFilters[cookies[i].trim()] = JSON.parse(cookies[i+1].trim());
+        }
+
+        activateFiltersTriggers();
+    }
 
 
     /* Execute the filter function when the user changes the advanced filters
@@ -12,15 +28,15 @@ $(function() {
 
             if ($(this).hasClass('current')) {
                 $(this).removeClass('current');
+                filterPrinters({});
             } else {
                 $('#headerBarSearchInput').val('');
                 for (var filter in basicFilters) {basicFilters[filter] = false;}
                 $('#headerBarSearchBasicFilters button').removeClass('current');
 
                 $(this).addClass('current');
+                filterPrinters(advancedFilters[$(this).attr('name')]);
             }
-    
-            //filterPrinters({});
         });
     }
 
@@ -51,13 +67,12 @@ $(function() {
         e.preventDefault();
 
         var filterName = $('#filterFormName input[name="filterName"]').val().trim().replace(/\s\s+/g, ' ');
-        var dateTime1 = $('#filterFormDetails input[name="creationDate"]').val().trim().replace(/\s\s+/g, ' ').split(/\/|\s|\:/);
-        var dateTime2 = $('#filterFormDetails input[name="lastUpdateStatus"]').val().trim().replace(/\s\s+/g, ' ').split(/\/|\s|\:/);
-        var dateTime3 = $('#filterFormInfo input[name="reservedUntil"]').val().trim().replace(/\s\s+/g, ' ').split(/\/|\s|\:/);
 
         if (filterName) {
+            var dateTime1 = $('#filterFormDetails input[name="creationDate"]').val().trim().replace(/\s\s+/g, ' ').split(/\/|\s|\:/);
+            var dateTime2 = $('#filterFormDetails input[name="lastUpdateStatus"]').val().trim().replace(/\s\s+/g, ' ').split(/\/|\s|\:/);
+            var dateTime3 = $('#filterFormInfo input[name="reservedUntil"]').val().trim().replace(/\s\s+/g, ' ').split(/\/|\s|\:/);
             var data = {
-                //filterName: filterName,
                 hostname: $('#filterFormDetails input[name="hostname"]').val().trim().replace(/\s\s+/g, ' '),
                 ip: $('#filterFormDetails input[name="ip"]').val().trim().replace(/\s\s+/g, ' '),
                 modelname: $('#filterFormDetails input[name="modelname"]').val().trim().replace(/\s\s+/g, ' '),
@@ -72,12 +87,20 @@ $(function() {
                 reservedUntil: new Date(dateTime3[2], dateTime3[1]-1, dateTime3[0], dateTime3[3], dateTime3[4], dateTime3[5]).getTime()
             };
 
+            for (var key in data) {
+                if (data[key] == '') {data[key] = null}
+            }
+
             $('#headerBarSearchInput').val('');
             for (var filter in basicFilters) {basicFilters[filter] = false;}
             $('#headerBarSearchBasicFilters button').removeClass('current');
 
             $('#headerBarSearchBasicFilters button[name="' + filterName + '"]').remove();
-            $('<button class="advanced current" name="' + filterName + '">' + filterName + '</button>').appendTo('#headerBarSearchBasicFilters');
+            $('<button class="advanced current" name="' + filterName + '">' + filterName + '</button>').insertAfter('#headerBarSearchBasicFilters span.separator');
+
+            advancedFilters[filterName] = data;
+            document.cookie = filterName + '=' + JSON.stringify(data) + ';max-age=315360000';   // 315360000s are 10 years
+
             activateFiltersTriggers();
 
             filterPrinters(data);

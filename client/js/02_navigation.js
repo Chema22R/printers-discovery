@@ -3,7 +3,6 @@
 $(function() {
     /* Views Triggers
     ========================================================================== */
-
     $('#iconsViewTrigger').on('click touchstart', function(e) {
         e.preventDefault();
         
@@ -56,7 +55,6 @@ $(function() {
 
     /* Exit Menus Triggers
     ========================================================================== */
-
     $('#menusLeftover, #menusWrapper').on('click touchstart', function(e) {
         if ($('#infoMenu').is(':visible') && (!$(e.target).is('#infoMenu, #infoMenu *') || $(e.target).is('.closeButton'))) {
             e.preventDefault();
@@ -82,8 +80,9 @@ $(function() {
 
     /* Window Resize
     ========================================================================== */
-
     $(window).on('resize', function(e) {
+        psHeaderBarSearchBasicFilters.update();
+
         psIconsView.update();
         psListView.update();
 

@@ -84,6 +84,9 @@
 #headerBar > div > div.dropdown > div {
     width: 120px;
     max-width: 300px;
+    max-height: calc(100vh - 52px);
+    max-height: -moz-calc(100vh - 52px);
+    max-height: -webkit-calc(100vh - 52px);
 
     display: none;
     position: absolute;

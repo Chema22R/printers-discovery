@@ -29,6 +29,8 @@ var serverPort = 8080;
 
 var psOptions = {minScrollbarLength: 20};
 
+var psHeaderBarSearchBasicFilters = new PerfectScrollbar('#headerBarSearchBasicFilters', psOptions);
+
 var psIconsView = new PerfectScrollbar('#iconsView', psOptions);
 var psListView = new PerfectScrollbar('#listView', psOptions);
 
