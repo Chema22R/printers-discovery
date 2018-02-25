@@ -1,12 +1,29 @@
 'use strict';
 
 $(function() {
-    /* Views Triggers
+    /* Views Triggers and Cookies
     ========================================================================== */
-    $('#iconsViewTrigger').on('click touchstart', function(e) {
-        e.preventDefault();
-        
+    var cookies = document.cookie.split(/\;|\=/);
+
+    for (var i=0; i<cookies.length-1; i+=2) {
+        if (cookies[i] == 'defaultView') {
+            switch(cookies[i+1]) {
+                case '0': fadeInIconsView();break;
+                case '1': fadeInListView();break;
+                case '2': fadeInColumnsView();break;
+                default: fadeInIconsView();
+            }
+        }
+    }
+
+    $('#iconsViewTrigger').on('click touchstart', fadeInIconsView);
+    $('#listViewTrigger').on('click touchstart', fadeInListView);
+    $('#columnsViewTrigger').on('click touchstart', fadeInColumnsView);
+
+    function fadeInIconsView() {
         if ($('#iconsView').is(':hidden')) {
+            document.cookie = 'defaultView=0;max-age=315360000';   // 315360000s are 10 years
+
             $('#listView, #columnsView').hide();
             $('#iconsView').show();
 
@@ -16,12 +33,12 @@ $(function() {
             $('#listViewTrigger, #columnsViewTrigger').removeClass('current');
             $('#iconsViewTrigger').addClass('current');
         }
-    });
+    }
 
-    $('#listViewTrigger').on('click touchstart', function(e) {
-        e.preventDefault();
-        
+    function fadeInListView() {
         if ($('#listView').is(':hidden')) {
+            document.cookie = 'defaultView=1;max-age=315360000';   // 315360000s are 10 years
+
             $('#iconsView, #columnsView').hide();
             $('#listView').show();
             
@@ -31,12 +48,12 @@ $(function() {
             $('#iconsViewTrigger, #columnsViewTrigger').removeClass('current');
             $('#listViewTrigger').addClass('current');
         }
-    });
+    }
 
-    $('#columnsViewTrigger').on('click touchstart', function(e) {
-        e.preventDefault();
-        
+    function fadeInColumnsView() {
         if ($('#columnsView').is(':hidden')) {
+            document.cookie = 'defaultView=2;max-age=315360000';   // 315360000s are 10 years
+
             $('#iconsView, #listView').hide();
             $('#columnsView').show();
             
@@ -50,7 +67,7 @@ $(function() {
             $('#iconsViewTrigger, #listViewTrigger').removeClass('current');
             $('#columnsViewTrigger').addClass('current');
         }
-    });
+    }
 
 
     /* Exit Menus Triggers

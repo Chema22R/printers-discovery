@@ -12,8 +12,10 @@ $(function() {
         var cookies = document.cookie.split(/\;|\=/);
 
         for (var i=0; i<cookies.length-1; i+=2) {
-            $('<button class="advanced" name="' + cookies[i].trim() + '" title="' + generateTitle(JSON.parse(cookies[i+1].trim())) + '">' + cookies[i].trim() + '</button>').insertAfter('#headerBarSearchBasicFilters span.separator');
-            advancedFilters[cookies[i].trim()] = JSON.parse(cookies[i+1].trim());
+            if (cookies[i] != 'defaultView') {
+                $('<button class="advanced" name="' + cookies[i].trim() + '" title="' + generateTitle(JSON.parse(cookies[i+1].trim())) + '">' + cookies[i].trim() + '</button>').insertAfter('#headerBarSearchBasicFilters span.separator');
+                advancedFilters[cookies[i].trim()] = JSON.parse(cookies[i+1].trim());
+            }
         }
 
         $('#headerBarSearchBasicFilters').show().scrollTop(0);
