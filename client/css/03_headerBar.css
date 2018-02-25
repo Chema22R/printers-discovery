@@ -102,7 +102,7 @@
 @media (max-width: 402px) {#headerBar > div > div.dropdown > div {max-width: 250px;}}
 @media (max-width: 352px) {#headerBar > div > div.dropdown > div {max-width: 200px;}}
 @media (max-width: 302px) {#headerBar > div > div.dropdown > div {max-width: 150px;}}
-#headerBar > div > div.dropdown:hover > div {display: block;}
+#headerBar > div > div.dropdown:hover > div {display: block!important;}
 
 #headerBar > div > div.dropdown > div > button {
     width: 100%;

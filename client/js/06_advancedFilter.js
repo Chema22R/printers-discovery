@@ -16,6 +16,10 @@ $(function() {
             advancedFilters[cookies[i].trim()] = JSON.parse(cookies[i+1].trim());
         }
 
+        $('#headerBarSearchBasicFilters').show().scrollTop(0);
+        psHeaderBarSearchBasicFilters.update();
+        $('#headerBarSearchBasicFilters').hide();
+
         activateFiltersTriggers();
     }
 
@@ -97,6 +101,10 @@ $(function() {
 
             $('#headerBarSearchBasicFilters button[name="' + filterName + '"]').remove();
             $('<button class="advanced current" name="' + filterName + '">' + filterName + '</button>').insertAfter('#headerBarSearchBasicFilters span.separator');
+
+            $('#headerBarSearchBasicFilters').show().scrollTop(0);
+            psHeaderBarSearchBasicFilters.update();
+            $('#headerBarSearchBasicFilters').hide();
 
             advancedFilters[filterName] = data;
             document.cookie = filterName + '=' + JSON.stringify(data) + ';max-age=315360000';   // 315360000s are 10 years
