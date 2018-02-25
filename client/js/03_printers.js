@@ -9,7 +9,7 @@ $(function() {
         url: 'http://'+serverAddress+':'+serverPort+'/printers/list',
         method: 'GET',
         success: function(res, status) {
-            populateViews(res);
+            populateViews(sortJSON(res, 'basicInfo', 'modelname', true));
             activatePrintersTriggers();
         },
         error: function(jqXHR, status, err) {
@@ -455,6 +455,24 @@ $(function() {
         } else {
             $('#editForm input[name="reservedUntil"]').val('');
         }
+    }
+
+    function sortJSON(obj, param1, param2, order) {
+        return obj.sort(function(a, b) {
+            if (order) {
+                if (param2) {
+                    return (a[param1][param2] > b[param1][param2]) ? 1 : ((a[param1][param2] < b[param1][param2]) ? -1 : 0);
+                } else {
+                    return (a[param1] > b[param1]) ? 1 : ((a[param1] < b[param1]) ? -1 : 0);
+                }
+            } else {
+                if (param2) {
+                    return (b[param1][param2] > a[param1][param2]) ? 1 : ((b[param1][param2] < a[param1][param2]) ? -1 : 0);
+                } else {
+                    return (b[param1] > a[param1]) ? 1 : ((b[param1] < a[param1]) ? -1 : 0);
+                }
+            }
+        });
     }
 
     function uuid() {
