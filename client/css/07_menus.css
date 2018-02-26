@@ -206,6 +206,7 @@
 
 #menus > div.wrapper > div > div.dropdown:hover > div {display: block;}
 
+#menus > div.wrapper > div > div.dropdown > div > p {white-space: initial;}
 #menus > div.wrapper > div > div.dropdown > div > p.withIndentation {
     padding-left: 25px;
     text-indent: -10px;

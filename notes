@@ -1,7 +1,7 @@
 preguntas:
     pongo el state default a unknown, es correcto? si se filtra por estado unknown, no coincide a menos que sea "unknown"
     al entrar a la pagina, que vista debo mostrar?
-
+    cuando edito, para actualizar los valores hago una peticion de listado de impresoras al servidor, es correcto? otra opcion es editarlo a mano
 
 notes:
     manual de usuario para entender los logs

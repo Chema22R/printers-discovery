@@ -62,7 +62,10 @@
 
 /* filters & printers */
 
-#columnsView > div.wrapper > div.column.small > div.wrapper > p.noPrinters {display: none;}
+#columnsView > div.wrapper > div.column.small > div.wrapper > p.noPrinters {
+    display: none;
+    white-space: initial;
+}
 
 #columnsView > div.wrapper > div.column.small > div.wrapper > div.filter {height: 35px;}
 #columnsView > div.wrapper > div.column.small > div.wrapper > div.printer {height: 71px;}

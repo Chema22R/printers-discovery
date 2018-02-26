@@ -22,6 +22,7 @@
 #iconsView > div.wrapper > p.noPrinters {
     display: none;
     text-align: center;
+    white-space: initial;
 }
 
 #iconsView > div.wrapper > div.printer {

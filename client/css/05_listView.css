@@ -13,6 +13,7 @@
     top: 36px;
 
     text-align: center;
+    white-space: initial;
 }
 
 #listView > table.wrapper {
