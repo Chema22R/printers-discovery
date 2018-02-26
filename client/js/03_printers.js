@@ -12,7 +12,64 @@ $(function() {
             url: 'http://'+serverAddress+':'+serverPort+'/printers/list',
             method: 'GET',
             success: function(res, status) {
-                populateViews(sortJSON(res, 'basicInfo', 'modelname', true));
+                var param1, param2;
+
+                switch (sortingParam) {
+                    case 'hostname':
+                        param1 = 'basicInfo';
+                        param2 = 'hostname';
+                        break;
+                    case 'ip':
+                        param1 = 'basicInfo';
+                        param2 = 'ip';
+                        break;
+                    case 'modelname':
+                        param1 = 'basicInfo';
+                        param2 = 'modelname';
+                        break;
+                    case 'firmware':
+                        param1 = 'detailedInfo';
+                        param2 = 'firmwareVersion';
+                        break;
+                    case 'status':
+                        param1 = 'detailedInfo';
+                        param2 = 'status';
+                        break;
+                    case 'creationDate':
+                        param1 = 'creationDate';
+                        param2 = null;
+                        break;
+                    case 'lastUpdateStatus':
+                        param1 = 'lastUpdate';
+                        param2 = 'status';
+                        break;
+                    case 'alias':
+                        param1 = 'metadata';
+                        param2 = 'alias';
+                        break;
+                    case 'location':
+                        param1 = 'metadata';
+                        param2 = 'location';
+                        break;
+                    case 'workteam':
+                        param1 = 'metadata';
+                        param2 = 'workteam';
+                        break;
+                    case 'reservedBy':
+                        param1 = 'metadata';
+                        param2 = 'reservedBy';
+                        break;
+                    case 'reservedUntil':
+                        param1 = 'metadata';
+                        param2 = 'reservedUntil';
+                        break;
+                    default:
+                        param1 = 'basicInfo';
+                        param2 = 'modelname';
+                        break;
+                }
+
+                populateViews(sortJSON(res, param1, param2, true));
                 activatePrintersTriggers();
             },
             error: function(jqXHR, status, err) {
@@ -539,16 +596,40 @@ $(function() {
     function sortJSON(obj, param1, param2, order) {
         return obj.sort(function(a, b) {
             if (order) {
-                if (param2) {
-                    return (a[param1][param2] > b[param1][param2]) ? 1 : ((a[param1][param2] < b[param1][param2]) ? -1 : 0);
+                if (param1 && param2) {
+                    if (!a[param1][param2]) {
+                        return false;
+                    } else if (!b[param1][param2]) {
+                        return true;
+                    } else {
+                        return (a[param1][param2] > b[param1][param2]) ? 1 : ((a[param1][param2] < b[param1][param2]) ? -1 : 0);
+                    }
                 } else {
-                    return (a[param1] > b[param1]) ? 1 : ((a[param1] < b[param1]) ? -1 : 0);
+                    if (!a[param1]) {
+                        return false;
+                    } else if (!b[param1]) {
+                        return true;
+                    } else {
+                        return (a[param1] > b[param1]) ? 1 : ((a[param1] < b[param1]) ? -1 : 0);
+                    }
                 }
             } else {
-                if (param2) {
-                    return (b[param1][param2] > a[param1][param2]) ? 1 : ((b[param1][param2] < a[param1][param2]) ? -1 : 0);
+                if (param1 && param2) {
+                    if (!a[param1][param2]) {
+                        return true;
+                    } else if (!b[param1][param2]) {
+                        return false;
+                    } else {
+                        return (b[param1][param2] > a[param1][param2]) ? 1 : ((b[param1][param2] < a[param1][param2]) ? -1 : 0);
+                    }
                 } else {
-                    return (b[param1] > a[param1]) ? 1 : ((b[param1] < a[param1]) ? -1 : 0);
+                    if (!a[param1]) {
+                        return true;
+                    } else if (!b[param1]) {
+                        return false;
+                    } else {
+                        return (b[param1] > a[param1]) ? 1 : ((b[param1] < a[param1]) ? -1 : 0);
+                    }
                 }
             }
         });

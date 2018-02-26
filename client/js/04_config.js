@@ -7,6 +7,9 @@ $(function() {
         e.preventDefault();
         
         if ($('#configMenu').is(':hidden')) {
+            $('#configOpts select[name="language"] option[name="' + language + '"]').attr('selected', true);
+            $('#configOpts select[name="sortingParam"] option[name="' + sortingParam + '"]').attr('selected', true);
+
             $.ajax({
                 async: true,
                 crossDomain: true,
@@ -50,6 +53,33 @@ $(function() {
                 }
             });
         }
+    });
+
+
+    /* 
+    ========================================================================== */
+    $('#configOpts select[name="language"]').on('click touchstart', function(e) {
+        e.preventDefault();
+
+        language = $(e.target).attr('name');
+        document.cookie = 'language=' + language + ';max-age=315360000';   // 315360000s are 10 years
+    });
+
+
+    /* 
+    ========================================================================== */
+    $('#configOpts select[name="sortingParam"]').on('click touchstart', function(e) {
+        e.preventDefault();
+
+        sortingParam = $(e.target).attr('name');
+        document.cookie = 'sortingParam=' + sortingParam + ';max-age=315360000';   // 315360000s are 10 years
+    });
+
+
+    /* 
+    ========================================================================== */
+    $('#listViewColsButton').on('click touchstart', function(e) {
+        e.preventDefault();
     });
 
 

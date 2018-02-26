@@ -1,19 +1,13 @@
 'use strict';
 
 $(function() {
-    /* Views Triggers and Cookies
+    /* Views Triggers
     ========================================================================== */
-    var cookies = document.cookie.split(/\;|\=/);
-
-    for (var i=0; i<cookies.length-1; i+=2) {
-        if (cookies[i].trim() == 'defaultView') {
-            switch(cookies[i+1].trim()) {
-                case '0': fadeInIconsView();break;
-                case '1': fadeInListView();break;
-                case '2': fadeInColumnsView();break;
-                default: fadeInIconsView();
-            }
-        }
+    switch(defaultView) {
+        case 'iconsView': fadeInIconsView();break;
+        case 'listView': fadeInListView();break;
+        case 'columnsView': fadeInColumnsView();break;
+        default: fadeInIconsView();
     }
 
     $('#iconsViewTrigger').on('click touchstart', fadeInIconsView);
@@ -22,7 +16,7 @@ $(function() {
 
     function fadeInIconsView() {
         if ($('#iconsView').is(':hidden')) {
-            document.cookie = 'defaultView=0;max-age=315360000';   // 315360000s are 10 years
+            document.cookie = 'defaultView=iconsView;max-age=315360000';   // 315360000s are 10 years
 
             $('#listView, #columnsView').hide();
             $('#iconsView').show();
@@ -37,7 +31,7 @@ $(function() {
 
     function fadeInListView() {
         if ($('#listView').is(':hidden')) {
-            document.cookie = 'defaultView=1;max-age=315360000';   // 315360000s are 10 years
+            document.cookie = 'defaultView=listView;max-age=315360000';   // 315360000s are 10 years
 
             $('#iconsView, #columnsView').hide();
             $('#listView').show();
@@ -52,7 +46,7 @@ $(function() {
 
     function fadeInColumnsView() {
         if ($('#columnsView').is(':hidden')) {
-            document.cookie = 'defaultView=2;max-age=315360000';   // 315360000s are 10 years
+            document.cookie = 'defaultView=columnsView;max-age=315360000';   // 315360000s are 10 years
 
             $('#iconsView, #listView').hide();
             $('#columnsView').show();

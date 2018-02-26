@@ -3,7 +3,12 @@
 /* Various
 ========================================================================== */
 
+var defaultView = 'iconsView';
+var language = 'english';
+var sortingParam = 'modelname';
+
 var printersPersistent = new Object();
+var advancedFilters = new Object();
 var basicFilters = {
     hostname: false,
     ip: false,
@@ -56,7 +61,7 @@ var dateTimePickerOptions = {
 };
 
 
-/* Log Function
+/* Functions
 ========================================================================== */
 
 function compareValues(var1, var2) {

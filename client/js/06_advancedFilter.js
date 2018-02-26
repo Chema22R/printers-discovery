@@ -1,21 +1,13 @@
 'use strict';
 
 $(function() {
-    var advancedFilters = new Object();
-
-    retrieveFiltersFromCookies();
-    
+    populateFiltersList();
 
     /* This funtion retrieves the filters stored into cookies and populate the filters list with them
     ================================================================================================= */
-    function retrieveFiltersFromCookies() {
-        var cookies = document.cookie.split(/\;|\=/);
-
-        for (var i=0; i<cookies.length-1; i+=2) {
-            if (cookies[i].trim() != 'defaultView') {
-                $('<button class="advanced" name="' + cookies[i].trim() + '" title="' + generateTitle(JSON.parse(cookies[i+1].trim())) + '">' + cookies[i].trim() + '</button>').insertAfter('#headerBarSearchBasicFilters span.separator');
-                advancedFilters[cookies[i].trim()] = JSON.parse(cookies[i+1].trim());
-            }
+    function populateFiltersList() {
+        for (var filter in advancedFilters) {
+            $('<button class="advanced" name="' + filter + '" title="' + generateTitle(advancedFilters[filter]) + '">' + filter + '</button>').insertAfter('#headerBarSearchBasicFilters span.separator');
         }
 
         $('#headerBarSearchBasicFilters').show().scrollTop(0);

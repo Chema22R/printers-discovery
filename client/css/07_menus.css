@@ -66,7 +66,7 @@
     text-align: right;
 }
 
-#menus > div.wrapper > div > div.wrapper > div.wrapper.right {text-align: left;}
+#menus > div.wrapper > div > div.wrapper > div.wrapper.right,
 #menus > div.wrapper > div > div.wrapper > form.wrapper.right {text-align: left;}
 
 #menus > div.wrapper > div > div.wrapper > p.title {
@@ -104,6 +104,30 @@
     text-align: center;
 }
 
+#configOpts > select {
+    width: 150px;
+    max-width: calc(100% - 16px);
+    max-width: -moz-calc(100% - 16px);
+    max-width: -webkit-calc(100% - 16px);
+    height: 30px;
+
+    display: block;
+    cursor: pointer;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    text-align: left;
+}
+
+#listViewColsButton {
+    height: 30px;
+    margin: 2px 0 8px 0;
+    border-bottom: 1px solid #95989A;
+    text-align: center;
+}
+
+#listViewColsButton:hover {border-color: #0099D8;} 
 #configForm > input {width: 50px;}
 
 #menus > div.wrapper > div > div.wrapper > form.wrapper {padding-bottom: 5px;}    /* to compensate the behaviour of inputs */
