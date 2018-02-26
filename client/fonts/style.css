@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?lj87zr');
-  src:  url('fonts/icomoon.eot?lj87zr#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?lj87zr') format('truetype'),
-    url('fonts/icomoon.woff?lj87zr') format('woff'),
-    url('fonts/icomoon.svg?lj87zr#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?9vgqva');
+  src:  url('fonts/icomoon.eot?9vgqva#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?9vgqva') format('truetype'),
+    url('fonts/icomoon.woff?9vgqva') format('woff'),
+    url('fonts/icomoon.svg?9vgqva#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -25,26 +25,29 @@
 }
 
 .icon-dropdown:before {
-  content: "\e906";
+  content: "\22c1";
+}
+.icon-delete:before {
+  content: "\2715";
 }
 .icon-config:before {
-  content: "\e903";
+  content: "\270e";
 }
 .icon-advancedFilter:before {
-  content: "\e904";
+  content: "\2711";
 }
 .icon-help:before {
-  content: "\e907";
+  content: "\2700";
 }
 .icon-close:before {
-  content: "\e905";
+  content: "\2716";
 }
 .icon-listView:before {
-  content: "\e900";
+  content: "\2263";
 }
 .icon-columnsView:before {
-  content: "\e902";
+  content: "\25a5";
 }
 .icon-iconsView:before {
-  content: "\e901";
+  content: "\25a6";
 }

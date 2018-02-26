@@ -277,24 +277,29 @@ $(function() {
         $('#columnsViewPopulation div.printer').on('click touchstart', function(e) {
             e.preventDefault();
 
-            var details = fillDetailsFields('<div id="columnsViewPrinterDetails" class="wrapper right">', printersPersistent[$(e.currentTarget).attr('name')]);
-            var information = fillInformationFields('<div id="columnsViewPrinterInformation" class="wrapper right">', printersPersistent[$(e.currentTarget).attr('name')].metadata);
+            if ($(e.currentTarget).hasClass('current')) {
+                $(e.currentTarget).removeClass('current');
+                $('#columnsViewPrinterWrapper').hide();
+            } else {
+                var details = fillDetailsFields('<div id="columnsViewPrinterDetails" class="wrapper right">', printersPersistent[$(e.currentTarget).attr('name')]);
+                var information = fillInformationFields('<div id="columnsViewPrinterInformation" class="wrapper right">', printersPersistent[$(e.currentTarget).attr('name')].metadata);
 
-            $('#columnsViewPrinterDetails').remove();
-            $('#columnsViewPrinterInformation').remove();
+                $('#columnsViewPrinterDetails').remove();
+                $('#columnsViewPrinterInformation').remove();
 
-            $(details).appendTo('#columnsViewPrinterDetailsWrapper');
-            $(information).appendTo('#columnsViewPrinterInformationWrapper');
+                $(details).appendTo('#columnsViewPrinterDetailsWrapper');
+                $(information).appendTo('#columnsViewPrinterInformationWrapper');
 
-            $('#columnsViewPrinterWrapper button.actionButton').attr('name', $(e.currentTarget).attr('name'));
+                $('#columnsViewPrinterWrapper button.actionButton').attr('name', $(e.currentTarget).attr('name'));
 
-            $('#columnsViewPopulation div.current').removeClass('current');
-            $(e.currentTarget).addClass('current');
+                $('#columnsViewPopulation div.current').removeClass('current');
+                $(e.currentTarget).addClass('current');
 
 
-            $('#columnsViewPrinterWrapper').fadeIn('slow');
-            $('#columnsViewPrinterWrapper').scrollTop(0);
-            psColumnsViewPrinterWrapper.update();
+                $('#columnsViewPrinterWrapper').fadeIn('slow');
+                $('#columnsViewPrinterWrapper').scrollTop(0);
+                psColumnsViewPrinterWrapper.update();
+            }
         });
 
         $('#iconsViewPopulation div.printer, #listViewPopulation tr.printer, #columnsViewPopulation div.printer').on('contextmenu', function(e) {

@@ -20,14 +20,51 @@
         {}
       ],
       "properties": {
-        "order": 1,
+        "order": 13,
         "id": 0,
         "name": "dropdown",
         "prevSize": 24,
-        "code": 59654
+        "code": 8897
       },
       "setIdx": 0,
       "setId": 2,
+      "iconIdx": 0
+    },
+    {
+      "icon": {
+        "paths": [
+          "M128 320v640c0 35.2 28.8 64 64 64h576c35.2 0 64-28.8 64-64v-640h-704zM320 896h-64v-448h64v448zM448 896h-64v-448h64v448zM576 896h-64v-448h64v448zM704 896h-64v-448h64v448z",
+          "M848 128h-208v-80c0-26.4-21.6-48-48-48h-224c-26.4 0-48 21.6-48 48v80h-208c-26.4 0-48 21.6-48 48v80h832v-80c0-26.4-21.6-48-48-48zM576 128h-192v-63.198h192v63.198z"
+        ],
+        "attrs": [
+          {},
+          {}
+        ],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "tags": [
+          "bin",
+          "trashcan",
+          "remove",
+          "delete",
+          "recycle",
+          "dispose"
+        ],
+        "grid": 32
+      },
+      "attrs": [
+        {},
+        {}
+      ],
+      "properties": {
+        "order": 1,
+        "id": 2,
+        "name": "delete",
+        "prevSize": 24,
+        "code": 10005
+      },
+      "setIdx": 1,
+      "setId": 1,
       "iconIdx": 0
     },
     {
@@ -59,11 +96,11 @@
         "id": 1,
         "name": "config",
         "prevSize": 24,
-        "code": 59651
+        "code": 9998
       },
       "setIdx": 1,
       "setId": 1,
-      "iconIdx": 0
+      "iconIdx": 1
     },
     {
       "icon": {
@@ -93,11 +130,11 @@
         "id": 0,
         "name": "advancedFilter",
         "prevSize": 24,
-        "code": 59652
+        "code": 10001
       },
       "setIdx": 1,
       "setId": 1,
-      "iconIdx": 1
+      "iconIdx": 2
     },
     {
       "icon": {
@@ -122,7 +159,7 @@
         "id": 5,
         "name": "help",
         "prevSize": 24,
-        "code": 59655
+        "code": 9984
       },
       "setIdx": 2,
       "setId": 0,
@@ -151,7 +188,7 @@
         "id": 4,
         "name": "close",
         "prevSize": 24,
-        "code": 59653
+        "code": 10006
       },
       "setIdx": 2,
       "setId": 0,
@@ -180,7 +217,7 @@
         "id": 3,
         "name": "listView",
         "prevSize": 24,
-        "code": 59648
+        "code": 8803
       },
       "setIdx": 2,
       "setId": 0,
@@ -209,7 +246,7 @@
         "id": 2,
         "name": "columnsView",
         "prevSize": 24,
-        "code": 59650
+        "code": 9637
       },
       "setIdx": 2,
       "setId": 0,
@@ -238,7 +275,7 @@
         "id": 1,
         "name": "iconsView",
         "prevSize": 24,
-        "code": 59649
+        "code": 9638
       },
       "setIdx": 2,
       "setId": 0,

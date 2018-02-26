@@ -133,6 +133,19 @@
     line-height: 71px;
 }
 
+/* filters */
+
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.filter > * {display: inline-block;}
+
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.filter > button {
+    float: right;
+    padding: 8px;
+
+    font-size: 19px;
+}
+
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.filter > button:hover {color: #F00;}
+
 /* details & information */
 
 #columnsView > div.wrapper > div.column.big > div.wrapper {

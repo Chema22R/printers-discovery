@@ -8,6 +8,7 @@ $(function() {
     function populateFiltersList() {
         for (var filter in advancedFilters) {
             $('<button class="advanced" name="' + filter + '" title="' + generateTitle(advancedFilters[filter]) + '">' + filter + '</button>').insertAfter('#headerBarSearchBasicFilters span.separator');
+            $('<div class="filter" name="' + filter + '" title="' + generateTitle(advancedFilters[filter]) + '"><p>' + filter + '</p><button class="delete icon-delete icon" title="remove filter"></button></div>').insertAfter('#columnsViewFiltersWrapper span.separator');
         }
 
         $('#headerBarSearchBasicFilters').show().scrollTop(0);
@@ -21,21 +22,60 @@ $(function() {
     /* Execute the filter function when the user changes the advanced filters
     ========================================================================== */
     function activateFiltersTriggers() {
-        $('#headerBarSearchBasicFilters button.advanced').off();
+        $('#headerBarSearchBasicFilters button.advanced, #columnsViewFiltersWrapper div.filter').off();
 
         $('#headerBarSearchBasicFilters button.advanced').on('click touchstart', function(e) {
             e.preventDefault();
 
             if ($(this).hasClass('current')) {
                 $(this).removeClass('current');
+                $('#columnsViewFiltersWrapper div[name="' + $(this).attr('name') + '"]').removeClass('current');
                 filterPrinters({});
             } else {
                 $('#headerBarSearchInput').val('');
                 for (var filter in basicFilters) {basicFilters[filter] = false;}
                 $('#headerBarSearchBasicFilters button').removeClass('current');
+                $('#columnsViewFiltersWrapper div').removeClass('current');
 
                 $(this).addClass('current');
+                $('#columnsViewFiltersWrapper div[name="' + $(this).attr('name') + '"]').addClass('current');
                 filterPrinters(advancedFilters[$(this).attr('name')]);
+            }
+        });
+
+        $('#columnsViewFiltersWrapper div.filter').on('click touchstart', function(e) {
+            e.preventDefault();
+            
+            if ($(e.target).hasClass('delete')) {
+                var res = confirm('Are you sure you want to delete the filter "' + $(this).attr('name') + '"?\n' + $(this).attr('title'));
+
+                if (res) {
+                    if ($(this).hasClass('current')) {filterPrinters({});}
+
+                    $(this).remove();
+                    $('#headerBarSearchBasicFilters button[name="' + $(this).attr('name') + '"]').remove();
+
+                    document.cookie = $(this).attr('name') + '=;max-age=0';
+
+                    $('#headerBarSearchBasicFilters').show().scrollTop(0);
+                    psHeaderBarSearchBasicFilters.update();
+                    $('#headerBarSearchBasicFilters').hide();
+                }
+            } else {
+                if ($(this).hasClass('current')) {
+                    $(this).removeClass('current');
+                    $('#headerBarSearchBasicFilters button[name="' + $(this).attr('name') + '"]').removeClass('current');
+                    filterPrinters({});
+                } else {
+                    $('#headerBarSearchInput').val('');
+                    for (var filter in basicFilters) {basicFilters[filter] = false;}
+                    $('#headerBarSearchBasicFilters button').removeClass('current');
+                    $('#columnsViewFiltersWrapper div').removeClass('current');
+
+                    $(this).addClass('current');
+                    $('#headerBarSearchBasicFilters button[name="' + $(this).attr('name') + '"]').addClass('current');
+                    filterPrinters(advancedFilters[$(this).attr('name')]);
+                }
             }
         });
 
@@ -48,6 +88,8 @@ $(function() {
                 if ($(this).hasClass('current')) {filterPrinters({});}
 
                 $(this).remove();
+                $('#columnsViewFiltersWrapper div[name="' + $(this).attr('name') + '"]').remove();
+
                 document.cookie = $(this).attr('name') + '=;max-age=0';
 
                 $('#headerBarSearchBasicFilters').show().scrollTop(0);
@@ -111,13 +153,19 @@ $(function() {
             $('#headerBarSearchInput').val('');
             for (var filter in basicFilters) {basicFilters[filter] = false;}
             $('#headerBarSearchBasicFilters button').removeClass('current');
+            $('#columnsViewFiltersWrapper div').removeClass('current');
 
             $('#headerBarSearchBasicFilters button[name="' + filterName + '"]').remove();
+            $('#columnsViewFiltersWrapper div[name="' + filterName + '"]').remove();
             $('<button class="advanced current" name="' + filterName + '" title="' + generateTitle(data) + '">' + filterName + '</button>').insertAfter('#headerBarSearchBasicFilters span.separator');
+            $('<div class="filter current" name="' + filterName + '" title="' + generateTitle(data) + '"><p>' + filterName + '</p><button class="delete icon-delete icon" title="remove filter"></button></div>').insertAfter('#columnsViewFiltersWrapper span.separator');
 
             $('#headerBarSearchBasicFilters').show().scrollTop(0);
             psHeaderBarSearchBasicFilters.update();
             $('#headerBarSearchBasicFilters').hide();
+            
+            $('#columnsViewFiltersWrapper').scrollTop(0);
+            psColumnsViewFiltersWrapper.update();
 
             advancedFilters[filterName] = data;
             document.cookie = filterName + '=' + JSON.stringify(data) + ';max-age=315360000';   // 315360000s are 10 years
