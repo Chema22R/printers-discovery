@@ -66,7 +66,6 @@ $(function() {
                     default:
                         param1 = 'basicInfo';
                         param2 = 'modelname';
-                        break;
                 }
 
                 populateViews(sortJSON(res, param1, param2, true));
