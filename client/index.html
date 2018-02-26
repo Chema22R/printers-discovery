@@ -286,10 +286,10 @@
                     <div class='wrapper'>
                         <p class='title'>Configuration</p>
                         <div class='wrapper left'>
-                            <p>Log&nbsp;Level</p>
-                            <p>Log&nbsp;Separator</p>
-                            <p>Update&nbsp;Frequency&nbsp;(sec)</p>
-                            <p>Delete&nbsp;Timeout&nbsp;(min)</p>
+                            <p title='Log Level indicates the messages to be stored (0=null, 1=error, 2=warning, 3=info)'>Log&nbsp;Level</p>
+                            <p title='Log Separator indicates the level to be used as a separator in log files (messages from lower levels will be stored in error.log and the rest in info.log)'>Log&nbsp;Separator</p>
+                            <p title='Update Frequency indicates how often the server updates the printers'>Update&nbsp;Frequency&nbsp;(sec)</p>
+                            <p title='Delete Timeout indicates how often the server deletes the printers with Unreachable status'>Delete&nbsp;Timeout&nbsp;(min)</p>
                         </div>
                         <form id='configForm' class='wrapper right'>
                             <input type='number' value='' name='logLevel' min='0' max='3' placeholder='log level' required>
@@ -302,14 +302,10 @@
                     <button class='actionButton' type='submit' form='configForm' title='Update Configuration'>Send</button>
                     <button class='closeButton icon-close icon' type='button' title='Close Window'></button>
 
-                    <div class='dropdown large'>
+                    <div class='dropdown'>
                         <button class='icon-help icon' type='button' accesskey='f'></button>
                         <div>
-                            <p>This menu allows the user to edit the server configuration (all fields must be filled in):</p>
-                            <p class='withIndentation'>Log Level indicates the messages to be stored (0=null, 1=error, 2=warning, 3=info)</p>
-                            <p class='withIndentation'>Log Separator indicates the level to be used as a separator in log files (messages from lower levels will be stored in <em>error.log</em> and the rest in <em>info.log)</em></p>
-                            <p class='withIndentation'>Update Frequency indicates how often the server updates the printers</p>
-                            <p class='withIndentation'>Delete Timeout indicates how often the server deletes the printers with <em>Unreachable</em> status</p>
+                            <p>This menu allows the user to edit the server configuration and all fields must be filled in (place over the variables for further information)</p>
                         </div>
                     </div>
                 </div>

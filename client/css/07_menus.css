@@ -194,15 +194,9 @@
     background-color: #FFF;
 }
 
-#menus > div.wrapper > div > div.dropdown.large > div {max-width: 500px;}
-
 @media (max-width: 400px) {#menus > div.wrapper > div > div.dropdown > div {max-width: 200px;}}
 @media (max-width: 300px) {#menus > div.wrapper > div > div.dropdown > div {max-width: 150px;}}
 @media (max-width: 200px) {#menus > div.wrapper > div > div.dropdown > div {max-width: 100px;}}
-@media (max-width: 600px) {#menus > div.wrapper > div > div.dropdown.large > div {max-width: 400px;}}
-@media (max-width: 500px) {#menus > div.wrapper > div > div.dropdown.large > div {max-width: 300px;}}
-@media (max-width: 400px) {#menus > div.wrapper > div > div.dropdown.large > div {max-width: 250px;}}
-@media (max-width: 350px) {#menus > div.wrapper > div > div.dropdown.large > div {max-width: 200px;}}
 
 #menus > div.wrapper > div > div.dropdown:hover > div {display: block;}
 
