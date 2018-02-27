@@ -68,7 +68,7 @@ $(function() {
                         param2 = 'modelname';
                 }
 
-                populateViews(sortJSON(res, param1, param2, true));
+                populateViews(sortPrinters(res, param1, param2, true));
                 activatePrintersTriggers();
             },
             error: function(jqXHR, status, err) {
@@ -459,6 +459,19 @@ $(function() {
         });
     });
 
+
+    /* This function controls the sorting selector in the config menu, updating the printers with the new sorting parameter
+    ======================================================================================================================== */
+    $('#configOpts select[name="sortingParam"]').on('click touchstart', function(e) {
+        e.preventDefault();
+
+        sortingParam = $(e.target).attr('name');
+        document.cookie = 'sortingParam=' + sortingParam + ';max-age=315360000';   // 315360000s are 10 years
+
+        updatePrinters();
+        $('#columnsViewPrinterWrapper').hide();
+    });
+
     
     /* Secondary functions
     ========================================================================== */
@@ -597,7 +610,7 @@ $(function() {
         }
     }
 
-    function sortJSON(obj, param1, param2, order) {
+    function sortPrinters(obj, param1, param2, order) {
         return obj.sort(function(a, b) {
             if (order) {
                 if (param1 && param2) {

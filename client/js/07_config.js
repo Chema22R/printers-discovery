@@ -68,16 +68,6 @@ $(function() {
 
     /* 
     ========================================================================== */
-    $('#configOpts select[name="sortingParam"]').on('click touchstart', function(e) {
-        e.preventDefault();
-
-        sortingParam = $(e.target).attr('name');
-        document.cookie = 'sortingParam=' + sortingParam + ';max-age=315360000';   // 315360000s are 10 years
-    });
-
-
-    /* 
-    ========================================================================== */
     $('#listViewColsButton').on('click touchstart', function(e) {
         e.preventDefault();
     });
