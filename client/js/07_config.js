@@ -10,6 +10,8 @@ $(function() {
             $('#configOpts select[name="language"] option[name="' + language + '"]').attr('selected', true);
             $('#configOpts select[name="sortingParam"] option[name="' + sortingParam + '"]').attr('selected', true);
 
+            $('#loadingBar').show();
+
             $.ajax({
                 async: true,
                 crossDomain: true,
@@ -40,11 +42,14 @@ $(function() {
                         $('#configForm input[name="deleteTimeout"]').val('');
                     }
                     
+                    $('#loadingBar').hide();
                     $('#menus, #configMenu').fadeIn('slow');
                     $('#configMenu').scrollTop(0);
                     psConfigMenu.update();
                 },
                 error: function(jqXHR, status, err) {
+                    $('#loadingBar').hide();
+
                     if (!err) {
                         showMessage('Unable to connect to server', 'red');
                     } else {
@@ -77,6 +82,7 @@ $(function() {
     ================================================================================================================================== */
     $('#configForm').on('submit', function(e) {
         e.preventDefault();
+        $('#loadingBar').show();
 
         $.ajax({
             async: true,
@@ -93,9 +99,12 @@ $(function() {
             }),
             success: function(res, status) {
                 showMessage('Configuration successfully updated', 'green');
+                $('#loadingBar').hide();
                 $('#menus, #configMenu').fadeOut('slow');
             },
             error: function(jqXHR, status, err) {
+                $('#loadingBar').hide();
+
                 if (!err) {
                     showMessage('Unable to connect to server', 'red');
                 } else {

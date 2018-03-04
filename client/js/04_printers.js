@@ -6,6 +6,8 @@ $(function() {
     /* Update the list of printers, populate the three views and activate the printers triggers
     =========================================================================================== */
     function updatePrinters() {
+        $('#loadingBar').show();
+
         $.ajax({
             async: true,
             crossDomain: true,
@@ -70,8 +72,12 @@ $(function() {
 
                 populateViews(sortPrinters(res, param1, param2, true));
                 activatePrintersTriggers();
+
+                $('#loadingBar').hide();
             },
             error: function(jqXHR, status, err) {
+                $('#loadingBar').hide();
+
                 if (!err) {
                     showMessage('Unable to connect to server', 'red');
                 } else {
@@ -314,6 +320,7 @@ $(function() {
 
             $(document).off().on('mousedown', function(e) {
                 e.preventDefault();
+                $('#loadingBar').show();
 
                 if ($(e.target).is('#contextMenuPrinters button[name="removeRes"]')) {
                     var printer = printersPersistent[printerId];
@@ -333,9 +340,11 @@ $(function() {
                             showMessage('Reserve successfully removed', 'green');
 
                             updatePrinters();
-                            $('#columnsViewPrinterWrapper').hide();
+                            $('#columnsViewPrinterWrapper, #loadingBar').hide();
                         },
                         error: function(jqXHR, status, err) {
+                            $('#loadingBar').hide();
+            
                             if (!err) {
                                 showMessage('Unable to connect to server', 'red');
                             } else {
@@ -355,9 +364,11 @@ $(function() {
                             showMessage('Printer successfully updated (force mode)', 'green');
 
                             updatePrinters();
-                            $('#columnsViewPrinterWrapper').hide();
+                            $('#columnsViewPrinterWrapper, #loadingBar').hide();
                         },
                         error: function(jqXHR, status, err) {
+                            $('#loadingBar').hide();
+            
                             if (!err) {
                                 showMessage('Unable to connect to server', 'red');
                             } else {
@@ -425,6 +436,8 @@ $(function() {
             if (metadata[key] == '') {metadata[key] = null}
         }
 
+        $('#loadingBar').show();
+
         $.ajax({
             async: true,
             crossDomain: true,
@@ -437,7 +450,7 @@ $(function() {
                 showMessage('Information successfully updated', 'green');
 
                 updatePrinters();
-                $('#columnsViewPrinterWrapper').hide();
+                $('#columnsViewPrinterWrapper, #loadingBar').hide();
 
                 /*printersPersistent[$('#editMenu button.actionButton').attr('name')].metadata = metadata;
 
@@ -450,6 +463,8 @@ $(function() {
                 $('#menus, #editMenu').fadeOut('slow');
             },
             error: function(jqXHR, status, err) {
+                $('#loadingBar').hide();
+
                 if (!err) {
                     showMessage('Unable to connect to server', 'red');
                 } else {
