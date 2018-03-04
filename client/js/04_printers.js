@@ -320,14 +320,15 @@ $(function() {
 
             $(document).off().on('mousedown', function(e) {
                 e.preventDefault();
-                $('#loadingBar').show();
 
                 if ($(e.target).is('#contextMenuPrinters button[name="removeRes"]')) {
                     var printer = printersPersistent[printerId];
                     var metadata = printer.metadata;
                     metadata.reservedBy = null;
                     metadata.reservedUntil = null;
-                    
+
+                    $('#loadingBar').show();
+
                     $.ajax({
                         async: true,
                         crossDomain: true,
@@ -354,6 +355,8 @@ $(function() {
                     });
                 } else if ($(e.target).is('#contextMenuPrinters button[name="forceUpdate"]')) {
                     var printer = printersPersistent[printerId];
+
+                    $('#loadingBar').show();
                     
                     $.ajax({
                         async: true,
