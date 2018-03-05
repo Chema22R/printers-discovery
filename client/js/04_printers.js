@@ -1,7 +1,14 @@
 'use strict';
 
 $(function() {
+    if (sortingParam) {
+        $('#listViewHeaders th[name=' + sortingParam + ']').addClass('current');
+    } else {
+        $('#listViewHeaders th[name=modelname]').addClass('current');
+    }
+
     updatePrinters();
+
 
     /* Update the list of printers, populate the three views and activate the printers triggers
     =========================================================================================== */
@@ -478,16 +485,45 @@ $(function() {
     });
 
 
-    /* This function controls the sorting selector in the config menu, updating the printers with the new sorting parameter
-    ======================================================================================================================== */
-    $('#configOpts select[name="sortingParam"]').on('click touchstart', function(e) {
+    /* This function controls the listView headers (click), updating the printers with the new sorting parameter
+    ============================================================================================================ */
+    $('#listViewHeaders th').on('click touchstart', function(e) {
         e.preventDefault();
 
         sortingParam = $(e.target).attr('name');
         document.cookie = 'sortingParam=' + sortingParam + ';max-age=315360000';   // 315360000s are 10 years
 
+        $('#listViewHeaders th').removeClass('current');
+        $('#listViewHeaders th[name=' + sortingParam + ']').addClass('current');
         updatePrinters();
         $('#columnsViewPrinterWrapper').hide();
+    });
+
+
+    /* This function controls the listView headers (contextmenu), fading in the columns configuration menu
+    ====================================================================================================== */
+    $('#listViewHeaders').on('contextmenu', function(e) {
+        e.preventDefault();
+
+        $('#contextMenuHeaders').css({
+            top: e.pageY + 'px',
+            left: e.pageX + 'px'
+        }).show();
+
+        $(document).off().on('mousedown', function(e) {
+            e.preventDefault();
+
+            if ($(e.target).is('#contextMenuHeaders button[name="configCols"]')) {
+                if ($('#listViewConfigMenu').is(':hidden')) {
+                    $('#menus, #listViewConfigMenu').fadeIn('slow');
+                    $('#listViewConfigMenu').scrollTop(0);
+                    pslistViewConfigMenu.update();
+                }
+            }
+
+            $('#contextMenuHeaders').hide();
+            $(document).off();
+        });
     });
 
     
@@ -637,7 +673,7 @@ $(function() {
                     } else if (!b[param1][param2]) {
                         return true;
                     } else {
-                        return (a[param1][param2] > b[param1][param2]) ? 1 : ((a[param1][param2] < b[param1][param2]) ? -1 : 0);
+                        return (a[param1][param2].trim().toLowerCase() > b[param1][param2].trim().toLowerCase()) ? 1 : ((a[param1][param2].trim().toLowerCase() < b[param1][param2].trim().toLowerCase()) ? -1 : 0);
                     }
                 } else {
                     if (!a[param1]) {
@@ -645,7 +681,7 @@ $(function() {
                     } else if (!b[param1]) {
                         return true;
                     } else {
-                        return (a[param1] > b[param1]) ? 1 : ((a[param1] < b[param1]) ? -1 : 0);
+                        return (a[param1].trim().toLowerCase() > b[param1].trim().toLowerCase()) ? 1 : ((a[param1].trim().toLowerCase() < b[param1].trim().toLowerCase()) ? -1 : 0);
                     }
                 }
             } else {
@@ -655,7 +691,7 @@ $(function() {
                     } else if (!b[param1][param2]) {
                         return false;
                     } else {
-                        return (b[param1][param2] > a[param1][param2]) ? 1 : ((b[param1][param2] < a[param1][param2]) ? -1 : 0);
+                        return (b[param1][param2].trim().toLowerCase() > a[param1][param2].trim().toLowerCase()) ? 1 : ((b[param1][param2].trim().toLowerCase() < a[param1][param2].trim().toLowerCase()) ? -1 : 0);
                     }
                 } else {
                     if (!a[param1]) {
@@ -663,7 +699,7 @@ $(function() {
                     } else if (!b[param1]) {
                         return false;
                     } else {
-                        return (b[param1] > a[param1]) ? 1 : ((b[param1] < a[param1]) ? -1 : 0);
+                        return (b[param1].trim().toLowerCase() > a[param1].trim().toLowerCase()) ? 1 : ((b[param1].trim().toLowerCase() < a[param1].trim().toLowerCase()) ? -1 : 0);
                     }
                 }
             }

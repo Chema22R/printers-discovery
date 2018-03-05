@@ -82,7 +82,8 @@
     line-height: 30px;
 }
 
-#menus > div.wrapper > div > div.wrapper > form.wrapper > input {
+#menus > div.wrapper > div > div.wrapper > form.wrapper > input[type='text'],
+#menus > div.wrapper > div > div.wrapper > form.wrapper > input[type='number'] {
     max-width: calc(50% - 16px);
     max-width: -moz-calc(50% - 16px);
     max-width: -webkit-calc(50% - 16px);
@@ -104,23 +105,15 @@
     text-align: center;
 }
 
-#configOpts > select {
-    width: 150px;
-    max-width: calc(100% - 16px);
-    max-width: -moz-calc(100% - 16px);
-    max-width: -webkit-calc(100% - 16px);
-    height: 30px;
+#configForm > input {width: 80px;}
 
-    display: block;
+#listViewConfigForm > input {display: inline-block!important;}
+#listViewConfigForm > input[type='number'] {width: 40px;}
+
+#listViewConfigForm > input[type='checkbox'] {
+    margin: 0 8px;
     cursor: pointer;
-
-    text-overflow: ellipsis;
-    overflow: hidden;
-
-    text-align: left;
 }
-
-#configForm > input {width: 50px;}
 
 #menus > div.wrapper > div > div.wrapper > form.wrapper {padding-bottom: 5px;}    /* to compensate the behaviour of inputs */
 #menus > div.wrapper > div > div.wrapper > form.wrapper > input:focus {border-bottom: 1px solid #0099D8;}

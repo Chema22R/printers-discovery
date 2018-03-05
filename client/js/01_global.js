@@ -46,6 +46,7 @@ var psInfoMenu = new PerfectScrollbar('#infoMenu', psOptions);
 var psEditMenu = new PerfectScrollbar('#editMenu', psOptions);
 var psAdvancedFiltersMenu = new PerfectScrollbar('#advancedFiltersMenu', psOptions);
 var psConfigMenu = new PerfectScrollbar('#configMenu', psOptions);
+var pslistViewConfigMenu = new PerfectScrollbar('#listViewConfigMenu', psOptions);
 
 
 /* Datetimepicker

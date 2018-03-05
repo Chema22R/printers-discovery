@@ -86,6 +86,11 @@ $(function() {
             e.preventDefault();
             $('#menus, #configMenu').fadeOut('slow');
         }
+
+        if ($('#listViewConfigMenu').is(':visible') && (!$(e.target).is('#listViewConfigMenu, #listViewConfigMenu *') || $(e.target).is('.closeButton'))) {
+            e.preventDefault();
+            $('#menus, #listViewConfigMenu').fadeOut('slow');
+        }
     });
 
 

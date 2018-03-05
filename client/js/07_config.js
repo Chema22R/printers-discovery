@@ -7,8 +7,6 @@ $(function() {
         e.preventDefault();
         
         if ($('#configMenu').is(':hidden')) {
-            $('#configOpts select[name="sortingParam"] option[name="' + sortingParam + '"]').attr('selected', true);
-
             $('#loadingBar').show();
 
             $.ajax({

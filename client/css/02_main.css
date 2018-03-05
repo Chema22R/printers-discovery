@@ -84,7 +84,8 @@ p, th, td {
 
 /* context menus */
 
-#contextMenuPrinters {
+#contextMenuPrinters,
+#contextMenuHeaders {
     display: none;
     position: absolute;
 
@@ -99,7 +100,8 @@ p, th, td {
     background-color: #FFF;
 }
 
-#contextMenuPrinters button {
+#contextMenuPrinters button,
+#contextMenuHeaders button {
     width: 100%;
 
     padding: 8px;
@@ -109,7 +111,8 @@ p, th, td {
     font-size: .9em;
 }
 
-#contextMenuPrinters button:hover {
+#contextMenuPrinters button:hover,
+#contextMenuHeaders button:hover {
     padding-left: 6px;
     border-left: 2px solid #0099D8;
 

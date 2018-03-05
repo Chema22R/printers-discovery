@@ -22,14 +22,21 @@
     </head>
     <body>
         <div id='fixedLog'><p></p></div>
+
         <div id='loadingBar'>
 			<div class='leftover'></div>
 			<div class='loader'></div>
-		</div>
+        </div>
+        
         <div id='contextMenuPrinters'>
             <button name='removeRes' type='button'>Remove Reservation</button>
             <button name='forceUpdate' type='button'>Force Update</button>
         </div>
+
+        <div id='contextMenuHeaders'>
+            <button name='configCols' type='button'>Configure Columns</button>
+        </div>
+
 
         <header id='headerBar'>
             <div>
@@ -67,13 +74,13 @@
             <div id='listView'>
                 <table class='wrapper'>
                     <thead>
-                        <tr>
-                            <th>IP</th>
-                            <th>Modelname</th>
-                            <th>Firmware</th>
-                            <th>Status</th>
-                            <th>Alias</th>
-                            <th>Reserved&nbsp;By</th>
+                        <tr id='listViewHeaders'>
+                            <th name='ip'>IP</th>
+                            <th name='modelname'>Modelname</th>
+                            <th name='firmware'>Firmware</th>
+                            <th name='status'>Status</th>
+                            <th name='alias'>Alias</th>
+                            <th name='reservedBy'>Reserved&nbsp;By</th>
                         </tr>
                     </thead>
                 </table>
@@ -270,29 +277,6 @@
 
                 <div id='configMenu'>
                     <div class='wrapper'>
-                        <p class='title'>Client Configuration</p>
-                        <div class='wrapper left'>
-                            <p title='Sorting Param indicates the parameter to sort the printers'>Sorting Param</p>
-                        </div>
-                        <div id='configOpts' class='wrapper right'>
-                            <select name='sortingParam' title='Change the sorting parameter'>
-                                <option name='hostname'>Hostname</option>
-                                <option name='ip'>IP Address</option>
-                                <option name='modelname'>Modelname</option>
-                                <option name='firmware'>Firmware Version</option>
-                                <option name='status'>Status</option>
-                                <option name='creationDate'>Creation Date</option>
-                                <option name='lastUpdateStatus'>Last Status Change</option>
-                                <option name='alias'>Alias</option>
-                                <option name='location'>Location</option>
-                                <option name='workteam'>Workteam</option>
-                                <option name='reservedBy'>Reserved By</option>
-                                <option name='reservedUntil'>Reserved Until</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class='wrapper'>
                         <p class='title'>Server Configuration</p>
                         <div class='wrapper left'>
                             <p title='Log Level indicates the messages to be stored (0=null, 1=error, 2=warning, 3=info)'>Log&nbsp;Level</p>
@@ -315,6 +299,62 @@
                         <button class='icon-help icon' type='button' accesskey='f'></button>
                         <div>
                             <p>This menu allows the user to edit the client and server configuration (place over the variables for further information)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id='listViewConfigMenu'>
+                    <div class='wrapper'>
+                        <p class='title'>List View Columns Configuration</p>
+                        <div class='wrapper left'>
+                            <p>Hostname</p>
+                            <p>IP Address</p>
+                            <p>Modelname</p>
+                            <p>Firmware Version</p>
+                            <p>Status</p>
+                            <p>Creation Date</p>
+                            <p>Last Status Change</p>
+                            <p>Alias</p>
+                            <p>Location</p>
+                            <p>Workteam</p>
+                            <p>Reserved By</p>
+                            <p>Reserved Until</p>
+                        </div>
+                        <form id='listViewConfigForm' class='wrapper right'>
+                                <input type='checkbox' name='hostname'>
+                                <input type='number' name='hostname' value='' min='1' max='12' placeholder='nº'><br>
+                                <input type='checkbox' name='ip'>
+                                <input type='number' name='ip' value='' min='1' max='12' placeholder='nº'><br>
+                                <input type='checkbox' name='modelname'>
+                                <input type='number' name='modelname' value='' min='1' max='12' placeholder='nº'><br>
+                                <input type='checkbox' name='firmware'>
+                                <input type='number' name='firmware' value='' min='1' max='12' placeholder='nº'><br>
+                                <input type='checkbox' name='status'>
+                                <input type='number' name='status' value='' min='1' max='12' placeholder='nº'><br>
+                                <input type='checkbox' name='creationDate'>
+                                <input type='number' name='creationDate' value='' min='1' max='12' placeholder='nº'><br>
+                                <input type='checkbox' name='lastUpdateStatus'>
+                                <input type='number' name='lastUpdateStatus' value='' min='1' max='12' placeholder='nº'><br>
+                                <input type='checkbox' name='alias'>
+                                <input type='number' name='alias' value='' min='1' max='12' placeholder='nº'><br>
+                                <input type='checkbox' name='location'>
+                                <input type='number' name='location' value='' min='1' max='12' placeholder='nº'><br>
+                                <input type='checkbox' name='workteam'>
+                                <input type='number' name='workteam' value='' min='1' max='12' placeholder='nº'><br>
+                                <input type='checkbox' name='reservedBy'>
+                                <input type='number' name='reservedBy' value='' min='1' max='12' placeholder='nº'><br>
+                                <input type='checkbox' name='reservedUntil'>
+                                <input type='number' name='reservedUntil' value='' min='1' max='12' placeholder='nº'><br>
+                        </form>
+                    </div>
+
+                    <button class='actionButton' type='button' form='listViewConfigForm' title='Save Columns Order'>Save</button>
+                    <button class='closeButton icon-close icon' type='button' title='Close Window'></button>
+
+                    <div class='dropdown'>
+                        <button class='icon-help icon' type='button' accesskey='f'></button>
+                        <div>
+                            <p>This menu allows the user to select the columns to display into the list view, as well as their order</p>
                         </div>
                     </div>
                 </div>
