@@ -1,5 +1,6 @@
 #listView {
-    height: calc(100vh - 50px);
+    height: calc(100vh - 86px);
+    padding-top: 36px;
     display: none;
     position: relative;
     overflow: hidden;
@@ -41,9 +42,6 @@
 }
 
 #listView > table.wrapper > tbody {
-    position: relative;
-    top: 36px;
-
     cursor: pointer;
 
     font-weight: normal;
