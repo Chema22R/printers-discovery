@@ -7,7 +7,6 @@ $(function() {
         e.preventDefault();
         
         if ($('#configMenu').is(':hidden')) {
-            $('#configOpts select[name="language"] option[name="' + language + '"]').attr('selected', true);
             $('#configOpts select[name="sortingParam"] option[name="' + sortingParam + '"]').attr('selected', true);
 
             $('#loadingBar').show();
