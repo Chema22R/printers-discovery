@@ -120,14 +120,6 @@
     text-align: left;
 }
 
-#listViewColsButton {
-    height: 30px;
-    margin: 2px 0 8px 0;
-    border-bottom: 1px solid #95989A;
-    text-align: center;
-}
-
-#listViewColsButton:hover {border-color: #0099D8;} 
 #configForm > input {width: 50px;}
 
 #menus > div.wrapper > div > div.wrapper > form.wrapper {padding-bottom: 5px;}    /* to compensate the behaviour of inputs */

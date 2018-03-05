@@ -61,13 +61,6 @@ $(function() {
     });
 
 
-    /* 
-    ========================================================================== */
-    $('#listViewColsButton').on('click touchstart', function(e) {
-        e.preventDefault();
-    });
-
-
     /* This function defines the behaviour of the 'Send' button, placed into the configMenu, which puts the input values to the server
     ================================================================================================================================== */
     $('#configForm').on('submit', function(e) {
