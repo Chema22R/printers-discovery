@@ -4,7 +4,6 @@
 ========================================================================== */
 
 var defaultView = 'iconsView';
-var language = 'en';
 var sortingParam = 'modelname';
 
 var printersPersistent = new Object();

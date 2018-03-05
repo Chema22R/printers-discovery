@@ -63,16 +63,6 @@ $(function() {
 
     /* 
     ========================================================================== */
-    $('#configOpts select[name="language"]').on('click touchstart', function(e) {
-        e.preventDefault();
-
-        language = $(e.target).attr('name');
-        document.cookie = 'language=' + language + ';max-age=315360000';   // 315360000s are 10 years
-    });
-
-
-    /* 
-    ========================================================================== */
     $('#listViewColsButton').on('click touchstart', function(e) {
         e.preventDefault();
     });
