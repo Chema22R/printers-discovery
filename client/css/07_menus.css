@@ -107,11 +107,9 @@
 
 #configForm > input {width: 80px;}
 
-#listViewConfigForm > input {display: inline-block!important;}
-#listViewConfigForm > input[type='number'] {width: 40px;}
-
-#listViewConfigForm > input[type='checkbox'] {
-    margin: 0 8px;
+#listViewConfigMenu > div.wrapper > div.wrapper {padding-bottom: 16px;}
+#listViewConfigMenu > div.wrapper > div.wrapper > input[type='checkbox'] {
+    margin: 8px;
     cursor: pointer;
 }
 

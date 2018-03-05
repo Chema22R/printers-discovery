@@ -110,5 +110,6 @@ $(function() {
         psEditMenu.update();
         psAdvancedFiltersMenu.update();
         psConfigMenu.update();
+        pslistViewConfigMenu.update();
     });
 });

@@ -19,6 +19,20 @@ var basicFilters = {
     workteam: false,
     reservedBy: false
 };
+var listViewHeaders = {
+    hostname: false,
+    ip: true,
+    modelname: true,
+    firmware: true,
+    status: true,
+    creationDate: false,
+    lastUpdateStatus: false,
+    alias: true,
+    location: false,
+    workteam: false,
+    reservedBy: true,
+    reservedUntil: false
+};
 
 
 /* Server Connections

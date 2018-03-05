@@ -75,12 +75,18 @@
                 <table class='wrapper'>
                     <thead>
                         <tr id='listViewHeaders'>
+                            <th name='hostname'>Hostname</th>
                             <th name='ip'>IP</th>
                             <th name='modelname'>Modelname</th>
                             <th name='firmware'>Firmware</th>
                             <th name='status'>Status</th>
+                            <th name='creationDate'>Creation&nbsp;Date</th>
+                            <th name='lastUpdateStatus'>Last&nbsp;Status&nbsp;Change</th>
                             <th name='alias'>Alias</th>
+                            <th name='location'>Location</th>
+                            <th name='workteam'>Workteam</th>
                             <th name='reservedBy'>Reserved&nbsp;By</th>
+                            <th name='reservedUntil'>Reserved&nbsp;Until</th>
                         </tr>
                     </thead>
                 </table>
@@ -307,54 +313,29 @@
                     <div class='wrapper'>
                         <p class='title'>List View Columns Configuration</p>
                         <div class='wrapper left'>
-                            <p>Hostname</p>
-                            <p>IP Address</p>
-                            <p>Modelname</p>
-                            <p>Firmware Version</p>
-                            <p>Status</p>
-                            <p>Creation Date</p>
-                            <p>Last Status Change</p>
-                            <p>Alias</p>
-                            <p>Location</p>
-                            <p>Workteam</p>
-                            <p>Reserved By</p>
-                            <p>Reserved Until</p>
+                            Hostname<input type='checkbox' name='hostname'><br>
+                            IP Address<input type='checkbox' name='ip'><br>
+                            Modelname<input type='checkbox' name='modelname'><br>
+                            Firmware Version<input type='checkbox' name='firmware'><br>
+                            Status<input type='checkbox' name='status'><br>
+                            Creation Date<input type='checkbox' name='creationDate'><br>
+                            Last Status Change<input type='checkbox' name='lastUpdateStatus'><br>
                         </div>
-                        <form id='listViewConfigForm' class='wrapper right'>
-                                <input type='checkbox' name='hostname'>
-                                <input type='number' name='hostname' value='' min='1' max='12' placeholder='nº'><br>
-                                <input type='checkbox' name='ip'>
-                                <input type='number' name='ip' value='' min='1' max='12' placeholder='nº'><br>
-                                <input type='checkbox' name='modelname'>
-                                <input type='number' name='modelname' value='' min='1' max='12' placeholder='nº'><br>
-                                <input type='checkbox' name='firmware'>
-                                <input type='number' name='firmware' value='' min='1' max='12' placeholder='nº'><br>
-                                <input type='checkbox' name='status'>
-                                <input type='number' name='status' value='' min='1' max='12' placeholder='nº'><br>
-                                <input type='checkbox' name='creationDate'>
-                                <input type='number' name='creationDate' value='' min='1' max='12' placeholder='nº'><br>
-                                <input type='checkbox' name='lastUpdateStatus'>
-                                <input type='number' name='lastUpdateStatus' value='' min='1' max='12' placeholder='nº'><br>
-                                <input type='checkbox' name='alias'>
-                                <input type='number' name='alias' value='' min='1' max='12' placeholder='nº'><br>
-                                <input type='checkbox' name='location'>
-                                <input type='number' name='location' value='' min='1' max='12' placeholder='nº'><br>
-                                <input type='checkbox' name='workteam'>
-                                <input type='number' name='workteam' value='' min='1' max='12' placeholder='nº'><br>
-                                <input type='checkbox' name='reservedBy'>
-                                <input type='number' name='reservedBy' value='' min='1' max='12' placeholder='nº'><br>
-                                <input type='checkbox' name='reservedUntil'>
-                                <input type='number' name='reservedUntil' value='' min='1' max='12' placeholder='nº'><br>
-                        </form>
+                        <div class='wrapper right'>
+                            <input type='checkbox' name='alias'>Alias<br>
+                            <input type='checkbox' name='location'>Location<br>
+                            <input type='checkbox' name='workteam'>Workteam<br>
+                            <input type='checkbox' name='reservedBy'>Reserved By<br>
+                            <input type='checkbox' name='reservedUntil'>Reserved Until<br>
+                        </div>
                     </div>
 
-                    <button class='actionButton' type='button' form='listViewConfigForm' title='Save Columns Order'>Save</button>
                     <button class='closeButton icon-close icon' type='button' title='Close Window'></button>
 
                     <div class='dropdown'>
                         <button class='icon-help icon' type='button' accesskey='f'></button>
                         <div>
-                            <p>This menu allows the user to select the columns to display into the list view, as well as their order</p>
+                            <p>This menu allows the user to select the columns to display into the list view</p>
                         </div>
                     </div>
                 </div>

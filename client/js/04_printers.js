@@ -80,6 +80,16 @@ $(function() {
                 populateViews(sortPrinters(res, param1, param2, true));
                 activatePrintersTriggers();
 
+                for (var key in listViewHeaders) {
+                    if (listViewHeaders[key]) {
+                        $('#listViewHeaders th[name="' + key + '"]').show();
+                        $('#listViewPopulation td[name="' + key + '"]').show();
+                    } else {
+                        $('#listViewHeaders th[name="' + key + '"]').hide();
+                        $('#listViewPopulation td[name="' + key + '"]').hide();
+                    }
+                }
+
                 $('#loadingBar').hide();
             },
             error: function(jqXHR, status, err) {
@@ -182,37 +192,45 @@ $(function() {
             iconsViewPrinters += '<div class="info">';
             columnsViewPrinters += '<div class="info">';
 
+            if (printersList[i].basicInfo.hostname) {
+                listViewPrinters += '<td name="hostname" title="' + printersList[i].basicInfo.hostname.trim().replace(/\s\s+/g, ' ') + '">' + printersList[i].basicInfo.hostname.trim().replace(/\s\s+/g, ' ') + '</td>';
+            } else {
+                listViewPrinters += '<td name="hostname">&mdash;</td>';
+            }
+
             if (printersList[i].basicInfo.ip) {
                 iconsViewPrinters += '<p>' + printersList[i].basicInfo.ip.trim().replace(/\s\s+/g, ' ') + '</p>';
-                listViewPrinters += '<td title="' + printersList[i].basicInfo.ip.trim().replace(/\s\s+/g, ' ') + '">' + printersList[i].basicInfo.ip.trim().replace(/\s\s+/g, ' ') + '</td>';
+                listViewPrinters += '<td name="ip" title="' + printersList[i].basicInfo.ip.trim().replace(/\s\s+/g, ' ') + '">' + printersList[i].basicInfo.ip.trim().replace(/\s\s+/g, ' ') + '</td>';
                 columnsViewPrinters += '<p>' + printersList[i].basicInfo.ip.trim().replace(/\s\s+/g, ' ') + '</p>';
             } else {
                 iconsViewPrinters += '<p>&mdash;</p>';
-                listViewPrinters += '<td>&mdash;</td>';
+                listViewPrinters += '<td name="ip">&mdash;</td>';
+                columnsViewPrinters += '<p>&mdash;</p>';
             }
 
             if (printersList[i].basicInfo.modelname) {
                 iconsViewPrinters += '<p>' + printersList[i].basicInfo.modelname.trim().replace(/\s\s+/g, ' ') + '</p>';
-                listViewPrinters += '<td title="' + printersList[i].basicInfo.modelname.trim().replace(/\s\s+/g, ' ') + '">' + printersList[i].basicInfo.modelname.trim().replace(/\s\s+/g, ' ') + '</td>';
+                listViewPrinters += '<td name="modelname" title="' + printersList[i].basicInfo.modelname.trim().replace(/\s\s+/g, ' ') + '">' + printersList[i].basicInfo.modelname.trim().replace(/\s\s+/g, ' ') + '</td>';
                 columnsViewPrinters += '<p>' + printersList[i].basicInfo.modelname.trim().replace(/\s\s+/g, ' ') + '</p>';
             } else {
                 iconsViewPrinters += '<p>&mdash;</p>';
-                listViewPrinters += '<td>&mdash;</td>';
+                listViewPrinters += '<td name="modelname">&mdash;</td>';
+                columnsViewPrinters += '<p>&mdash;</p>';
             }
 
             if (printersList[i].detailedInfo.firmwareVersion) {
                 iconsViewPrinters += '<p>' + printersList[i].detailedInfo.firmwareVersion.trim().replace(/\s\s+/g, ' ') + '</p>';
-                listViewPrinters += '<td title="' + printersList[i].detailedInfo.firmwareVersion.trim().replace(/\s\s+/g, ' ') + '">' + printersList[i].detailedInfo.firmwareVersion.trim().replace(/\s\s+/g, ' ') + '</td>';
+                listViewPrinters += '<td name="firmware" title="' + printersList[i].detailedInfo.firmwareVersion.trim().replace(/\s\s+/g, ' ') + '">' + printersList[i].detailedInfo.firmwareVersion.trim().replace(/\s\s+/g, ' ') + '</td>';
             } else {
                 iconsViewPrinters += '<p>&mdash;</p>';
-                listViewPrinters += '<td>&mdash;</td>';
+                listViewPrinters += '<td name="firmware">&mdash;</td>';
             }
 
             iconsViewPrinters += '</div>';      // info div end
             columnsViewPrinters += '</div>';    // info div end
 
             iconsViewPrinters += '<div class="status">';
-            listViewPrinters += '<td class="status" title="' + title + '">' + title + '</td>';
+            listViewPrinters += '<td class="status" name="status" title="' + title + '">' + title + '</td>';
             columnsViewPrinters += '<div class="status">';
             
             if (printersList[i].metadata.reservedBy && printersList[i].metadata.reservedUntil) {
@@ -220,16 +238,46 @@ $(function() {
                 columnsViewPrinters += '<p>R</p>';
             }
 
-            if (printersList[i].metadata.alias) {
-                listViewPrinters += '<td title="' + printersList[i].metadata.alias.trim().replace(/\s\s+/g, ' ') + '">' + printersList[i].metadata.alias.trim().replace(/\s\s+/g, ' ') + '</td>';
+            if (printersList[i].creationDate) {
+                listViewPrinters += '<td name="creationDate" title="' + new Date(printersList[i].creationDate).toLocaleString() + '">' + new Date(printersList[i].creationDate).toLocaleString() + '</td>';
             } else {
-                listViewPrinters += '<td>&mdash;</td>';
+                listViewPrinters += '<td name="creationDate">&mdash;</td>';
+            }
+
+            if (printersList[i].lastUpdate.status) {
+                listViewPrinters += '<td name="lastUpdateStatus" title="' + new Date(printersList[i].lastUpdate.status).toLocaleString() + '">' + new Date(printersList[i].lastUpdate.status).toLocaleString() + '</td>';
+            } else {
+                listViewPrinters += '<td name="lastUpdateStatus">&mdash;</td>';
+            }
+
+            if (printersList[i].metadata.alias) {
+                listViewPrinters += '<td name="alias" title="' + printersList[i].metadata.alias.trim().replace(/\s\s+/g, ' ') + '">' + printersList[i].metadata.alias.trim().replace(/\s\s+/g, ' ') + '</td>';
+            } else {
+                listViewPrinters += '<td name="alias">&mdash;</td>';
+            }
+
+            if (printersList[i].metadata.location) {
+                listViewPrinters += '<td name="location" title="' + printersList[i].metadata.location.trim().replace(/\s\s+/g, ' ') + '">' + printersList[i].metadata.location.trim().replace(/\s\s+/g, ' ') + '</td>';
+            } else {
+                listViewPrinters += '<td name="location">&mdash;</td>';
+            }
+
+            if (printersList[i].metadata.workteam) {
+                listViewPrinters += '<td name="workteam" title="' + printersList[i].metadata.workteam.trim().replace(/\s\s+/g, ' ') + '">' + printersList[i].metadata.workteam.trim().replace(/\s\s+/g, ' ') + '</td>';
+            } else {
+                listViewPrinters += '<td name="workteam">&mdash;</td>';
             }
 
             if (printersList[i].metadata.reservedBy) {
-                listViewPrinters += '<td title="' + printersList[i].metadata.reservedBy.trim().replace(/\s\s+/g, ' ') + '">' + printersList[i].metadata.reservedBy.trim().replace(/\s\s+/g, ' ') + '</td>';
+                listViewPrinters += '<td name="reservedBy" title="' + printersList[i].metadata.reservedBy.trim().replace(/\s\s+/g, ' ') + '">' + printersList[i].metadata.reservedBy.trim().replace(/\s\s+/g, ' ') + '</td>';
             } else {
-                listViewPrinters += '<td>&mdash;</td>';
+                listViewPrinters += '<td name="reservedBy">&mdash;</td>';
+            }
+
+            if (printersList[i].metadata.reservedUntil) {
+                listViewPrinters += '<td name="reservedUntil" title="' + new Date(printersList[i].metadata.reservedUntil).toLocaleString() + '">' + new Date(printersList[i].metadata.reservedUntil).toLocaleString() + '</td>';
+            } else {
+                listViewPrinters += '<td name="reservedUntil">&mdash;</td>';
             }
 
             iconsViewPrinters += '</div></div>';    // status div and printer end
@@ -513,6 +561,14 @@ $(function() {
         $(document).off().on('mousedown', function(e) {
             e.preventDefault();
 
+            for (var key in listViewHeaders) {
+                if (listViewHeaders[key]) {
+                    $('#listViewConfigMenu input[type="checkbox"][name="' + key + '"]').prop('checked', true);
+                } else {
+                    $('#listViewConfigMenu input[type="checkbox"][name="' + key + '"]').prop('checked', false);
+                }
+            }
+
             if ($(e.target).is('#contextMenuHeaders button[name="configCols"]')) {
                 if ($('#listViewConfigMenu').is(':hidden')) {
                     $('#menus, #listViewConfigMenu').fadeIn('slow');
@@ -524,6 +580,24 @@ $(function() {
             $('#contextMenuHeaders').hide();
             $(document).off();
         });
+    });
+
+
+    /* 
+    ====================================================================================================== */
+    $('#listViewConfigMenu input[type="checkbox"]').on('click touchstart', function(e) {
+        var idCol = $(e.target).attr('name');
+
+        if (!$(e.target).is(':checked')) {
+            $('#listViewHeaders th[name="' + idCol + '"]').hide();
+            $('#listViewPopulation td[name="' + idCol + '"]').hide();
+        } else {
+            $('#listViewHeaders th[name="' + idCol + '"]').show();
+            $('#listViewPopulation td[name="' + idCol + '"]').show();
+        }
+
+        listViewHeaders[idCol] = !listViewHeaders[idCol];
+        document.cookie = 'listViewHeaders=' + JSON.stringify(listViewHeaders) + ';max-age=315360000';   // 315360000s are 10 years
     });
 
     
@@ -673,7 +747,11 @@ $(function() {
                     } else if (!b[param1][param2]) {
                         return true;
                     } else {
-                        return (a[param1][param2].trim().toLowerCase() > b[param1][param2].trim().toLowerCase()) ? 1 : ((a[param1][param2].trim().toLowerCase() < b[param1][param2].trim().toLowerCase()) ? -1 : 0);
+                        if (typeof a[param1][param2] == 'string' && typeof b[param1][param2] == 'string') {
+                            return (a[param1][param2].toLowerCase() > b[param1][param2].toLowerCase()) ? 1 : ((a[param1][param2].toLowerCase() < b[param1][param2].toLowerCase()) ? -1 : 0);
+                        } else {
+                            return (a[param1][param2] > b[param1][param2]) ? 1 : ((a[param1][param2] < b[param1][param2]) ? -1 : 0);
+                        }
                     }
                 } else {
                     if (!a[param1]) {
@@ -681,7 +759,11 @@ $(function() {
                     } else if (!b[param1]) {
                         return true;
                     } else {
-                        return (a[param1].trim().toLowerCase() > b[param1].trim().toLowerCase()) ? 1 : ((a[param1].trim().toLowerCase() < b[param1].trim().toLowerCase()) ? -1 : 0);
+                        if (typeof a[param1] == 'string' && typeof b[param1] == 'string') {
+                            return (a[param1].toLowerCase() > b[param1].toLowerCase()) ? 1 : ((a[param1].toLowerCase() < b[param1].toLowerCase()) ? -1 : 0);
+                        } else {
+                            return (a[param1] > b[param1]) ? 1 : ((a[param1] < b[param1]) ? -1 : 0);
+                        }
                     }
                 }
             } else {
@@ -691,7 +773,11 @@ $(function() {
                     } else if (!b[param1][param2]) {
                         return false;
                     } else {
-                        return (b[param1][param2].trim().toLowerCase() > a[param1][param2].trim().toLowerCase()) ? 1 : ((b[param1][param2].trim().toLowerCase() < a[param1][param2].trim().toLowerCase()) ? -1 : 0);
+                        if (typeof a[param1][param2] == 'string' && typeof b[param1][param2] == 'string') {
+                            return (b[param1][param2].toLowerCase() > a[param1][param2].toLowerCase()) ? 1 : ((b[param1][param2].toLowerCase() < a[param1][param2].toLowerCase()) ? -1 : 0);
+                        } else {
+                            return (b[param1][param2] > a[param1][param2]) ? 1 : ((b[param1][param2] < a[param1][param2]) ? -1 : 0);
+                        }
                     }
                 } else {
                     if (!a[param1]) {
@@ -699,7 +785,11 @@ $(function() {
                     } else if (!b[param1]) {
                         return false;
                     } else {
-                        return (b[param1].trim().toLowerCase() > a[param1].trim().toLowerCase()) ? 1 : ((b[param1].trim().toLowerCase() < a[param1].trim().toLowerCase()) ? -1 : 0);
+                        if (typeof a[param1] == 'string' && typeof b[param1] == 'string') {
+                            return (b[param1].toLowerCase() > a[param1].toLowerCase()) ? 1 : ((b[param1].toLowerCase() < a[param1].toLowerCase()) ? -1 : 0);
+                        } else {
+                            return (b[param1] > a[param1]) ? 1 : ((b[param1] < a[param1]) ? -1 : 0);
+                        }
                     }
                 }
             }
