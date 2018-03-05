@@ -31,6 +31,8 @@
     height: 36px;
     
     position: fixed;
+    top: 50px;
+    
     display: table;
     table-layout: fixed;
     z-index: 1;
