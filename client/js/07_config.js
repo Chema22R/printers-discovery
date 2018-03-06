@@ -62,35 +62,38 @@ $(function() {
     ================================================================================================================================== */
     $('#configForm').on('submit', function(e) {
         e.preventDefault();
-        $('#loadingBar').show();
 
-        $.ajax({
-            async: true,
-            crossDomain: true,
-            url: 'http://'+serverAddress+':'+serverPort+'/config/update',
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            processData: false,
-            data: JSON.stringify({
-                logLevel: parseInt($('#configForm input[name="logLevel"]').val()),
-                logSeparator: parseInt($('#configForm input[name="logSeparator"]').val()),
-                updateFrequency: parseInt($('#configForm input[name="updateFrequency"]').val()) * 1000,
-                deleteTimeout: parseInt($('#configForm input[name="deleteTimeout"]').val()) * 60000
-            }),
-            success: function(res, status) {
-                showMessage('Configuration successfully updated', 'green');
-                $('#loadingBar').hide();
-                $('#menus, #configMenu').fadeOut('slow');
-            },
-            error: function(jqXHR, status, err) {
-                $('#loadingBar').hide();
+        if (confirm('Are you sure you want to modify these options?')) {
+            $('#loadingBar').show();
 
-                if (!err) {
-                    showMessage('Unable to connect to server', 'red');
-                } else {
-                    showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
+            $.ajax({
+                async: true,
+                crossDomain: true,
+                url: 'http://'+serverAddress+':'+serverPort+'/config/update',
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                processData: false,
+                data: JSON.stringify({
+                    logLevel: parseInt($('#configForm input[name="logLevel"]').val()),
+                    logSeparator: parseInt($('#configForm input[name="logSeparator"]').val()),
+                    updateFrequency: parseInt($('#configForm input[name="updateFrequency"]').val()) * 1000,
+                    deleteTimeout: parseInt($('#configForm input[name="deleteTimeout"]').val()) * 60000
+                }),
+                success: function(res, status) {
+                    showMessage('Configuration successfully updated', 'green');
+                    $('#loadingBar').hide();
+                    $('#menus, #configMenu').fadeOut('slow');
+                },
+                error: function(jqXHR, status, err) {
+                    $('#loadingBar').hide();
+
+                    if (!err) {
+                        showMessage('Unable to connect to server', 'red');
+                    } else {
+                        showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
+                    }
                 }
-            }
-        });
+            });
+        }
     });
 });

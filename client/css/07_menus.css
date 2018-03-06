@@ -77,6 +77,11 @@
     font-weight: bold;
 }
 
+#menus > div.wrapper > div > div.wrapper > p.importantMsj {
+    margin-top: 4px;
+    color: #F00;
+}
+
 #menus > div.wrapper > div > div.wrapper > div.wrapper > p {
     cursor: default;
     line-height: 30px;

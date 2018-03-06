@@ -137,6 +137,12 @@
 
 #columnsView > div.wrapper > div.column.small > div.wrapper > div.filter > * {display: inline-block;}
 
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.filter > p {
+    width: calc(100% - 51px);
+    width: -moz-calc(100% - 51px);
+    width: -webkit-calc(100% - 51px);
+}
+
 #columnsView > div.wrapper > div.column.small > div.wrapper > div.filter > button {
     float: right;
     padding: 8px;

@@ -82,9 +82,7 @@ $(function() {
         $('#headerBarSearchBasicFilters button.advanced').on('contextmenu', function(e) {
             e.preventDefault();
 
-            var res = confirm('Are you sure you want to delete the filter "' + $(this).attr('name') + '"?\n' + $(this).attr('title'));
-
-            if (res) {
+            if (confirm('Are you sure you want to delete the filter "' + $(this).attr('name') + '"?\n' + $(this).attr('title'))) {
                 if ($(this).hasClass('current')) {filterPrinters({});}
 
                 $(this).remove();

@@ -378,37 +378,39 @@ $(function() {
                 e.preventDefault();
 
                 if ($(e.target).is('#contextMenuPrinters button[name="removeRes"]')) {
-                    var printer = printersPersistent[printerId];
-                    var metadata = printer.metadata;
-                    metadata.reservedBy = null;
-                    metadata.reservedUntil = null;
+                    if (confirm('Are you sure you want to remove the reservation?')) {
+                        var printer = printersPersistent[printerId];
+                        var metadata = printer.metadata;
+                        metadata.reservedBy = null;
+                        metadata.reservedUntil = null;
 
-                    $('#loadingBar').show();
+                        $('#loadingBar').show();
 
-                    $.ajax({
-                        async: true,
-                        crossDomain: true,
-                        url: 'http://'+serverAddress+':'+serverPort+'/printers/update?ip=' + printer.basicInfo.ip + '&hostname=' + printer.basicInfo.hostname,
-                        method: 'PUT',
-                        headers: {'Content-Type': 'application/json'},
-                        processData: false,
-                        data: JSON.stringify(metadata),
-                        success: function(res, status) {
-                            showMessage('Reserve successfully removed', 'green');
+                        $.ajax({
+                            async: true,
+                            crossDomain: true,
+                            url: 'http://'+serverAddress+':'+serverPort+'/printers/update?ip=' + printer.basicInfo.ip + '&hostname=' + printer.basicInfo.hostname,
+                            method: 'PUT',
+                            headers: {'Content-Type': 'application/json'},
+                            processData: false,
+                            data: JSON.stringify(metadata),
+                            success: function(res, status) {
+                                showMessage('Reserve successfully removed', 'green');
 
-                            updatePrinters();
-                            $('#columnsViewPrinterWrapper, #loadingBar').hide();
-                        },
-                        error: function(jqXHR, status, err) {
-                            $('#loadingBar').hide();
-            
-                            if (!err) {
-                                showMessage('Unable to connect to server', 'red');
-                            } else {
-                                showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
+                                updatePrinters();
+                                $('#columnsViewPrinterWrapper, #loadingBar').hide();
+                            },
+                            error: function(jqXHR, status, err) {
+                                $('#loadingBar').hide();
+                
+                                if (!err) {
+                                    showMessage('Unable to connect to server', 'red');
+                                } else {
+                                    showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 } else if ($(e.target).is('#contextMenuPrinters button[name="forceUpdate"]')) {
                     var printer = printersPersistent[printerId];
 
@@ -766,6 +768,8 @@ $(function() {
                         return false;
                     } else if (!b[param1][param2]) {
                         return true;
+                    } else if (param1 == 'basicInfo' && param2 == 'ip') {
+                        return (parseInt(a[param1][param2].replace(/\./g, '')) > parseInt(b[param1][param2].replace(/\./g, ''))) ? 1 : ((parseInt(a[param1][param2].replace(/\./g, '')) < parseInt(b[param1][param2].replace(/\./g, ''))) ? -1 : 0);
                     } else {
                         if (typeof a[param1][param2] == 'string' && typeof b[param1][param2] == 'string') {
                             return (a[param1][param2].toLowerCase() > b[param1][param2].toLowerCase()) ? 1 : ((a[param1][param2].toLowerCase() < b[param1][param2].toLowerCase()) ? -1 : 0);
@@ -792,6 +796,8 @@ $(function() {
                         return true;
                     } else if (!b[param1][param2]) {
                         return false;
+                    } else if (param1 == 'basicInfo' && param2 == 'ip') {
+                        return (parseInt(b[param1][param2].replace(/\./g, '')) > parseInt(a[param1][param2].replace(/\./g, ''))) ? 1 : ((parseInt(b[param1][param2].replace(/\./g, '')) < parseInt(a[param1][param2].replace(/\./g, ''))) ? -1 : 0);
                     } else {
                         if (typeof a[param1][param2] == 'string' && typeof b[param1][param2] == 'string') {
                             return (b[param1][param2].toLowerCase() > a[param1][param2].toLowerCase()) ? 1 : ((b[param1][param2].toLowerCase() < a[param1][param2].toLowerCase()) ? -1 : 0);
