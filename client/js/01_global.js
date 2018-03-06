@@ -4,7 +4,6 @@
 ========================================================================== */
 
 var defaultView = 'iconsView';
-var sortingParam = 'modelname';
 
 var printersPersistent = new Object();
 var advancedFilters = new Object();
@@ -18,6 +17,10 @@ var basicFilters = {
     location: false,
     workteam: false,
     reservedBy: false
+};
+var sortingConfig = {
+    param: 'modelname',
+    direction: true
 };
 var listViewHeaders = {
     hostname: false,

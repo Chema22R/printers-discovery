@@ -1,10 +1,11 @@
 'use strict';
 
 $(function() {
-    if (sortingParam) {
-        $('#listViewHeaders th[name=' + sortingParam + ']').addClass('current');
+    $('#listViewHeaders th[name=' + sortingConfig.param + ']').addClass('current');
+    if (sortingConfig.direction) {
+        $('#listViewHeaders th[name=' + sortingConfig.param + '] span').addClass('icon-arrowUp').show();
     } else {
-        $('#listViewHeaders th[name=modelname]').addClass('current');
+        $('#listViewHeaders th[name=' + sortingConfig.param + '] span').addClass('icon-arrowDown').show();
     }
 
     updatePrinters();
@@ -23,7 +24,7 @@ $(function() {
             success: function(res, status) {
                 var param1, param2;
 
-                switch (sortingParam) {
+                switch (sortingConfig.param) {
                     case 'hostname':
                         param1 = 'basicInfo';
                         param2 = 'hostname';
@@ -77,7 +78,7 @@ $(function() {
                         param2 = 'modelname';
                 }
 
-                populateViews(sortPrinters(res, param1, param2, true));
+                populateViews(sortPrinters(res, param1, param2, sortingConfig.direction));
                 activatePrintersTriggers();
 
                 for (var key in listViewHeaders) {
@@ -537,12 +538,31 @@ $(function() {
     ============================================================================================================ */
     $('#listViewHeaders th').on('click touchstart', function(e) {
         e.preventDefault();
+        
+        if (sortingConfig.param == $(e.currentTarget).attr('name')) {
+            if (sortingConfig.direction) {
+                sortingConfig.direction = false;
 
-        sortingParam = $(e.target).attr('name');
-        document.cookie = 'sortingParam=' + sortingParam + ';max-age=315360000';   // 315360000s are 10 years
+                $('#listViewHeaders th[name=' + sortingConfig.param + '] span').removeClass('icon-arrowUp');
+                $('#listViewHeaders th[name=' + sortingConfig.param + '] span').addClass('icon-arrowDown');
+            } else {
+                sortingConfig.direction = true;
 
-        $('#listViewHeaders th').removeClass('current');
-        $('#listViewHeaders th[name=' + sortingParam + ']').addClass('current');
+                $('#listViewHeaders th[name=' + sortingConfig.param + '] span').removeClass('icon-arrowDown');
+                $('#listViewHeaders th[name=' + sortingConfig.param + '] span').addClass('icon-arrowUp');
+            }
+        } else {
+            sortingConfig.param = $(e.currentTarget).attr('name');
+            sortingConfig.direction = true;
+
+            $('#listViewHeaders th').removeClass('current');
+            $('#listViewHeaders th[name=' + sortingConfig.param + ']').addClass('current');
+            $('#listViewHeaders th span').removeClass('icon-arrowUp icon-arrowDown').hide();
+            $('#listViewHeaders th[name=' + sortingConfig.param + '] span').addClass('icon-arrowUp').show();
+        }
+
+        document.cookie = 'sortingConfig=' + JSON.stringify(sortingConfig) + ';max-age=315360000';   // 315360000s are 10 years
+
         updatePrinters();
         $('#columnsViewPrinterWrapper').hide();
     });
@@ -583,8 +603,8 @@ $(function() {
     });
 
 
-    /* 
-    ====================================================================================================== */
+    /* This function controls the checkboxes of the listViewConfigMenu, showing and hiding the respective columns in the listView
+    ============================================================================================================================= */
     $('#listViewConfigMenu input[type="checkbox"]').on('click touchstart', function(e) {
         var idCol = $(e.target).attr('name');
 
