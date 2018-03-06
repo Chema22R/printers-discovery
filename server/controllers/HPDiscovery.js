@@ -120,11 +120,11 @@ function updatePrintersByTime() {
                 if (docs[i].detailedInfo && docs[i].detailedInfo.status && docs[i].detailedInfo.status.toLowerCase() == 'unreachable' && (new Date().getTime() - docs[i].lastUpdate.status) > configData.deleteTimeout) {
                     deletePrinter(docs[i].basicInfo.ip, docs[i].basicInfo.hostname, docs[i]._id);
                 } else {
-                    updatePrinterInfo(docs[i].basicInfo.ip, docs[i].basicInfo.hostname, docs[i]._id, docs[i].detailedInfo, docs[i].lastUpdate.status);
-
                     if (docs[i].metadata && docs[i].metadata.reservedUntil && docs[i].metadata.reservedUntil < new Date().getTime()) {
                         removeReservation(docs[i].basicInfo.ip, docs[i].basicInfo.hostname, docs[i]._id);
                     }
+
+                    updatePrinterInfo(docs[i].basicInfo.ip, docs[i].basicInfo.hostname, docs[i]._id, docs[i].detailedInfo, docs[i].lastUpdate.status);
                 }
             }
             closeLog(logEntry + '\tPrinters update and/or deletion requests successfully sended (' + docs.length + ')', 3);
