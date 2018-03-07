@@ -61,6 +61,7 @@ $(function() {
                 if (!coincident && (allFilters || basicFilters.location) && compareValues(printersPersistent[printer].metadata.location, inputSearch)) {coincident = true;}
                 if (!coincident && (allFilters || basicFilters.workteam) && compareValues(printersPersistent[printer].metadata.workteam, inputSearch)) {coincident = true;}
                 if (!coincident && (allFilters || basicFilters.reservedBy) && compareValues(printersPersistent[printer].metadata.reservedBy, inputSearch)) {coincident = true;}
+                if (!coincident && (allFilters || basicFilters.notes) && compareValues(printersPersistent[printer].metadata.notes, inputSearch)) {coincident = true;}
             }
 
             if (coincident) {

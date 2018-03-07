@@ -81,6 +81,10 @@ $(function() {
                 populateViews(sortPrinters(res, param1, param2, sortingConfig.direction));
                 activatePrintersTriggers();
 
+                $('#headerBarSearchInput').val('');
+                for (var filter in basicFilters) {basicFilters[filter] = false;}
+                $('#headerBarSearchBasicFilters button, #headerBarAdvancedFilters button, #columnsViewFiltersWrapper div').removeClass('current');
+
                 for (var key in listViewHeaders) {
                     if (listViewHeaders[key]) {
                         $('#listViewHeaders th[name="' + key + '"]').show();

@@ -16,7 +16,8 @@ var basicFilters = {
     alias: false,
     location: false,
     workteam: false,
-    reservedBy: false
+    reservedBy: false,
+    notes: false
 };
 var sortingConfig = {
     param: 'modelname',
