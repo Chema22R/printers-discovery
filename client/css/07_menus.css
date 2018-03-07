@@ -51,14 +51,26 @@
         min-width: 0;
         width: 100%;
     }
+
+    #menus > div.wrapper > div > div.wrapper > textarea {max-width: 90%!important;}
 }
 
 #menus > div.wrapper > div > div.wrapper {margin: 8px 20px;}
 #menus > div.wrapper > div > div.wrapper:first-child {margin-top: 20px;}
 
+#menus > div.wrapper > div > div.wrapper > textarea {
+    max-width: 500px;
+    padding: 8px;
+}
+
 #menus > div.wrapper > div > div.wrapper > div.wrapper {
     width: 50%;
     display: inline-block;
+}
+
+#menus > div.wrapper > div > div.wrapper > div.wrapper.center {
+    width: 100%;
+    max-width: 500px;
 }
 
 #menus > div.wrapper > div > div.wrapper > div.wrapper.left {
@@ -103,6 +115,8 @@
 
     line-height: 18px;
 }
+
+#infoMenuNotes > p {white-space: normal;}
 
 #filterFormName > input {
     width: 50%;

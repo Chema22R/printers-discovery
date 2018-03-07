@@ -319,12 +319,15 @@ $(function() {
 
             var details = fillDetailsFields('<div id="infoMenuDetails" class="wrapper right">', printersPersistent[$(e.currentTarget).attr('name')]);
             var information = fillInformationFields('<div id="infoMenuInformation" class="wrapper right">', printersPersistent[$(e.currentTarget).attr('name')].metadata);
+            var notes = fillNotesFields('<div id="infoMenuNotes" class="wrapper center">', printersPersistent[$(e.currentTarget).attr('name')].metadata);
 
             $('#infoMenuDetails').remove();
             $('#infoMenuInformation').remove();
+            $('#infoMenuNotes').remove();
 
             $(details).appendTo('#infoMenuDetailsWrapper');
             $(information).appendTo('#infoMenuInformationWrapper');
+            $(notes).appendTo('#infoMenuNotesWrapper');
             
             $('#infoMenu button.actionButton').attr('name', $(e.currentTarget).attr('name'));
 
@@ -345,12 +348,15 @@ $(function() {
             } else {
                 var details = fillDetailsFields('<div id="columnsViewPrinterDetails" class="wrapper right">', printersPersistent[$(e.currentTarget).attr('name')]);
                 var information = fillInformationFields('<div id="columnsViewPrinterInformation" class="wrapper right">', printersPersistent[$(e.currentTarget).attr('name')].metadata);
+                var notes = fillNotesFields('<div id="columnsViewPrinterNotes" class="wrapper center">', printersPersistent[$(e.currentTarget).attr('name')].metadata);
 
                 $('#columnsViewPrinterDetails').remove();
                 $('#columnsViewPrinterInformation').remove();
+                $('#columnsViewPrinterNotes').remove();
 
                 $(details).appendTo('#columnsViewPrinterDetailsWrapper');
                 $(information).appendTo('#columnsViewPrinterInformationWrapper');
+                $(notes).appendTo('#columnsViewPrinterNotesWrapper');
 
                 $('#columnsViewPrinterWrapper button.actionButton').attr('name', $(e.currentTarget).attr('name'));
 
@@ -490,6 +496,7 @@ $(function() {
             workteam: $('#editForm input[name="workteam"]').val().trim().replace(/\s\s+/g, ' '),
             reservedBy: $('#editForm input[name="reservedBy"]').val().trim().replace(/\s\s+/g, ' '),
             reservedUntil: new Date(dateTime[2], dateTime[1]-1, dateTime[0], dateTime[3], dateTime[4], dateTime[5]).getTime(),
+            notes: $('#editMenuNotesWrapper textarea').val().trim().replace(/\s\s+/g, ' '),
             calendar: []
         };
 
@@ -512,14 +519,6 @@ $(function() {
 
                 updatePrinters();
                 $('#columnsViewPrinterWrapper, #loadingBar').hide();
-
-                /*printersPersistent[$('#editMenu button.actionButton').attr('name')].metadata = metadata;
-
-                if ($('#editMenu button.actionButton').attr('name') == $('#columnsViewPrinterDataColumn button.actionButton').attr('name')) {
-                    $('#columnsViewPrinterInformation').remove();
-                    $(fillInformationFields('<div id="columnsViewPrinterInformation" class="wrapper right">', metadata)).appendTo('#columnsViewPrinterInformationWrapper');
-                    $('#columnsViewPrinterWrapper').fadeIn('slow');
-                }*/
 
                 $('#menus, #editMenu').fadeOut('slow');
             },
@@ -727,6 +726,18 @@ $(function() {
         return information;
     }
 
+    function fillNotesFields(notes, metadata) {
+        if (metadata.notes) {
+            notes += '<p title="' + metadata.notes.trim().replace(/\s\s+/g, ' ') + '">' + metadata.notes.trim().replace(/\s\s+/g, ' ') + '</p>';
+        } else {
+            notes += '<p>&mdash;</p>';
+        }
+
+        notes += '</div>';    // notes end
+
+        return notes;
+    }
+
     function fillEditForm(metadata) {
         if (metadata.alias) {
             $('#editForm input[name="alias"]').val(metadata.alias.trim().replace(/\s\s+/g, ' '));
@@ -757,6 +768,20 @@ $(function() {
             $('#editForm input[name="reservedUntil"]').val(('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + ':' + ('0' + (date.getSeconds())).slice(-2));
         } else {
             $('#editForm input[name="reservedUntil"]').val('');
+        }
+
+        if (metadata.notes) {
+            $('#editMenuNotesWrapper textarea').val(metadata.notes.trim().replace(/\s\s+/g, ' '));
+            $('#editMenuNotesWrapper textarea').css({
+                width: '400px',
+                height: '40px'
+            });
+        } else {
+            $('#editMenuNotesWrapper textarea').val('');
+            $('#editMenuNotesWrapper textarea').css({
+                width: '200px',
+                height: '16px'
+            });
         }
     }
 
