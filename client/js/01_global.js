@@ -51,6 +51,7 @@ var serverPort = 8080;
 var psOptions = {minScrollbarLength: 20};
 
 var psHeaderBarSearchBasicFilters = new PerfectScrollbar('#headerBarSearchBasicFilters', psOptions);
+var psHeaderBarAdvancedFilters = new PerfectScrollbar('#headerBarAdvancedFilters', psOptions);
 
 var psIconsView = new PerfectScrollbar('#iconsView', psOptions);
 var psListView = new PerfectScrollbar('#listView', psOptions);
@@ -63,7 +64,7 @@ var psInfoMenu = new PerfectScrollbar('#infoMenu', psOptions);
 var psEditMenu = new PerfectScrollbar('#editMenu', psOptions);
 var psAdvancedFiltersMenu = new PerfectScrollbar('#advancedFiltersMenu', psOptions);
 var psConfigMenu = new PerfectScrollbar('#configMenu', psOptions);
-var pslistViewConfigMenu = new PerfectScrollbar('#listViewConfigMenu', psOptions);
+var psListViewConfigMenu = new PerfectScrollbar('#listViewConfigMenu', psOptions);
 
 
 /* Datetimepicker

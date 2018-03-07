@@ -595,7 +595,7 @@ $(function() {
                 if ($('#listViewConfigMenu').is(':hidden')) {
                     $('#menus, #listViewConfigMenu').fadeIn('slow');
                     $('#listViewConfigMenu').scrollTop(0);
-                    pslistViewConfigMenu.update();
+                    psListViewConfigMenu.update();
                 }
             }
 

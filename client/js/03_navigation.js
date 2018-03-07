@@ -98,6 +98,7 @@ $(function() {
     ========================================================================== */
     $(window).on('resize', function(e) {
         psHeaderBarSearchBasicFilters.update();
+        psHeaderBarAdvancedFilters.update();
 
         psIconsView.update();
         psListView.update();
@@ -110,6 +111,6 @@ $(function() {
         psEditMenu.update();
         psAdvancedFiltersMenu.update();
         psConfigMenu.update();
-        pslistViewConfigMenu.update();
+        psListViewConfigMenu.update();
     });
 });

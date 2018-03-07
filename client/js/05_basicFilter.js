@@ -11,10 +11,10 @@ $(function() {
 
     /* Execute the filter function when the user changes the basic filters
     ========================================================================== */
-    $('#headerBarSearchBasicFilters button.basic').on('click touchstart', function(e) {
+    $('#headerBarSearchBasicFilters button').on('click touchstart', function(e) {
         e.preventDefault();
 
-        $('#headerBarSearchBasicFilters button.advanced').removeClass('current');
+        $('#headerBarAdvancedFilters button').removeClass('current');
         
         if ($(this).hasClass('current')) {
             $(this).removeClass('current');

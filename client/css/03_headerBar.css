@@ -81,7 +81,8 @@
     font-size: 20px;
 }
 
-#headerBar > div > div.dropdown > div {
+#headerBar > div > div.dropdown > div,
+#headerBarAdvancedFilters {
     width: 120px;
     max-width: 300px;
     max-height: calc(100vh - 52px);
@@ -99,12 +100,18 @@
     background-color: #FFF;
 }
 
-@media (max-width: 402px) {#headerBar > div > div.dropdown > div {max-width: 250px;}}
-@media (max-width: 352px) {#headerBar > div > div.dropdown > div {max-width: 200px;}}
-@media (max-width: 302px) {#headerBar > div > div.dropdown > div {max-width: 150px;}}
+#headerBarAdvancedFilters {
+    top: 50px;
+    right: 50px;
+}
+
+@media (max-width: 402px) {#headerBar > div > div.dropdown > div, #headerBarAdvancedFilters {max-width: 250px;}}
+@media (max-width: 352px) {#headerBar > div > div.dropdown > div, #headerBarAdvancedFilters {max-width: 200px;}}
+@media (max-width: 302px) {#headerBar > div > div.dropdown > div, #headerBarAdvancedFilters {max-width: 150px;}}
 #headerBar > div > div.dropdown:hover > div {display: block!important;}
 
-#headerBar > div > div.dropdown > div > button {
+#headerBar > div > div.dropdown > div > button,
+#headerBarAdvancedFilters > button {
     width: 100%;
 
     padding: 6px 10px;
@@ -114,19 +121,15 @@
     overflow: hidden;
 }
 
-#headerBar > div > div.dropdown > div > button.current {
+#headerBar > div > div.dropdown > div > button.current,
+#headerBarAdvancedFilters > button.current {
     border-left: 2px solid #0099D8;
     background-color: #EFEFEF;
 }
 
-#headerBar > div > div.dropdown > div > button:hover {
+#headerBar > div > div.dropdown > div > button:hover,
+#headerBarAdvancedFilters > button:hover {
     border-left: 2px solid #0099D8;
     font-weight: bold;
     background-color: #EFEFEF;
-}
-
-#headerBar > div > div.dropdown > div > span.separator {
-    margin: 6px 10px;
-    display: block;
-    border-top: 2px solid #95989A;
 }
