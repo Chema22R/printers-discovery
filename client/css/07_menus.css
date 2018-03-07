@@ -79,6 +79,7 @@
 
 #menus > div.wrapper > div > div.wrapper > p.importantMsj {
     margin-top: 4px;
+    cursor: default;
     color: #F00;
 }
 
@@ -112,7 +113,11 @@
 
 #configForm > input {width: 80px;}
 
-#listViewConfigMenu > div.wrapper > div.wrapper {padding-bottom: 16px;}
+#listViewConfigMenu > div.wrapper > div.wrapper {
+    padding-bottom: 16px;
+    cursor: default;
+}
+
 #listViewConfigMenu > div.wrapper > div.wrapper > input[type='checkbox'] {
     margin: 8px;
     cursor: pointer;
