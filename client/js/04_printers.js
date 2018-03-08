@@ -798,7 +798,16 @@ $(function() {
                     } else if (!b[param1][param2]) {
                         return true;
                     } else if (param1 == 'basicInfo' && param2 == 'ip') {
-                        return (parseInt(a[param1][param2].replace(/\./g, '')) > parseInt(b[param1][param2].replace(/\./g, ''))) ? 1 : ((parseInt(a[param1][param2].replace(/\./g, '')) < parseInt(b[param1][param2].replace(/\./g, ''))) ? -1 : 0);
+                        var ipa = a[param1][param2].split('.');
+                        var ipb = b[param1][param2].split('.');
+
+                        for (var i=0; i<ipa.length; i++) {
+                            if (parseInt(ipa[i]) > parseInt(ipb[i])) {
+                                return true;
+                            } else if (parseInt(ipa[i]) < parseInt(ipb[i])){
+                                return false
+                            }
+                        }
                     } else {
                         if (typeof a[param1][param2] == 'string' && typeof b[param1][param2] == 'string') {
                             return (a[param1][param2].toLowerCase() > b[param1][param2].toLowerCase()) ? 1 : ((a[param1][param2].toLowerCase() < b[param1][param2].toLowerCase()) ? -1 : 0);
@@ -826,7 +835,16 @@ $(function() {
                     } else if (!b[param1][param2]) {
                         return false;
                     } else if (param1 == 'basicInfo' && param2 == 'ip') {
-                        return (parseInt(b[param1][param2].replace(/\./g, '')) > parseInt(a[param1][param2].replace(/\./g, ''))) ? 1 : ((parseInt(b[param1][param2].replace(/\./g, '')) < parseInt(a[param1][param2].replace(/\./g, ''))) ? -1 : 0);
+                        var ipa = a[param1][param2].split('.');
+                        var ipb = b[param1][param2].split('.');
+
+                        for (var i=0; i<ipa.length; i++) {
+                            if (parseInt(ipa[i]) < parseInt(ipb[i])) {
+                                return true;
+                            } else if (parseInt(ipa[i]) > parseInt(ipb[i])){
+                                return false
+                            }
+                        }
                     } else {
                         if (typeof a[param1][param2] == 'string' && typeof b[param1][param2] == 'string') {
                             return (b[param1][param2].toLowerCase() > a[param1][param2].toLowerCase()) ? 1 : ((b[param1][param2].toLowerCase() < a[param1][param2].toLowerCase()) ? -1 : 0);
