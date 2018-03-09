@@ -123,6 +123,11 @@ $(function() {
         for (var i=0; i<printersList.length; i++) {
             id = uuid();
 
+            if (!printersList[i].basicInfo) {printersList[i].basicInfo = {};}
+            if (!printersList[i].detailedInfo) {printersList[i].detailedInfo = {};}
+            if (!printersList[i].metadata) {printersList[i].metadata = {};}
+            if (!printersList[i].lastUpdate) {printersList[i].lastUpdate = {};}
+
             iconsViewPrinters += '<div name="' + id +'" class="printer';
             listViewPrinters += '<tr name="' + id +'" class="printer';
             columnsViewPrinters += '<div name="' + id +'" class="printer';
