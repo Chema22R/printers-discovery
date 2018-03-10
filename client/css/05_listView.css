@@ -54,6 +54,10 @@
 #listView > table.wrapper > tbody > tr > td {
     padding: 8px;
     border-bottom: 1px solid #95989A;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 #listView > table.wrapper > thead > tr > th.current,
