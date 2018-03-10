@@ -1,6 +1,3 @@
-frontend:
-    al hacer el put de edit, el calendar va vacio ([]), si se implementa el calendario, tener mucho cuidado con esto, pues lo reseteara
-
 links:
     https://github.com/node-ffi/node-ffi/wiki/Node-FFI-Tutorial             (Node FFI Tutorial)
     http://tootallnate.github.io/ref/                                       (Ref API)
