@@ -37,6 +37,9 @@ $(function() {
                 click: function() {
                     $('#calendarMenu').fadeOut('slow');
                     $('#calendarView').fullCalendar('destroy');
+
+                    updatePrinters();
+                    $('#columnsViewPrinterWrapper').hide();
                 }
             }
         },
@@ -194,7 +197,7 @@ $(function() {
         var iconsViewPrinters = '<div id="iconsViewPopulation" class="wrapper"><p class="noPrinters">No printers to show with selected filters</p>';
         var listViewPrinters = '<tbody id="listViewPopulation">';
         var columnsViewPrinters = '<div id="columnsViewPopulation" class="wrapper"><p class="noPrinters">No printers to show with selected filters</p>';
-        var id, title;
+        var id, title, now, currentReservation;
 
         printersPersistent = new Object();
 
@@ -203,8 +206,22 @@ $(function() {
 
             if (!printersList[i].basicInfo) {printersList[i].basicInfo = {};}
             if (!printersList[i].detailedInfo) {printersList[i].detailedInfo = {};}
-            if (!printersList[i].metadata) {printersList[i].metadata = {};}
+            if (!printersList[i].metadata) {printersList[i].metadata = {calendar: []};}
             if (!printersList[i].lastUpdate) {printersList[i].lastUpdate = {};}
+
+            if (printersList[i].metadata.calendar) {
+                now = new Date().getTime();
+                currentReservation = null;
+
+                for (var j=0; j<printersList[i].metadata.calendar.length; j++) {
+                    if (printersList[i].metadata.calendar[j].start <= now && printersList[i].metadata.calendar[j].end > now) {
+                        currentReservation = printersList[i].metadata.calendar[j];
+                        break;
+                    }
+                }
+            } else {
+                currentReservation = null;
+            }
 
             iconsViewPrinters += '<div name="' + id +'" class="printer';
             listViewPrinters += '<tr name="' + id +'" class="printer';
@@ -321,7 +338,7 @@ $(function() {
             listViewPrinters += '<td class="status" name="status" title="' + title + '">' + title + '</td>';
             columnsViewPrinters += '<div class="status">';
             
-            if (printersList[i].metadata.reservedBy && printersList[i].metadata.reservedUntil) {
+            if (currentReservation) {
                 iconsViewPrinters += '<p>RESERVED</p>';
                 columnsViewPrinters += '<p>R</p>';
             }
@@ -356,15 +373,11 @@ $(function() {
                 listViewPrinters += '<td name="workteam">&mdash;</td>';
             }
 
-            if (printersList[i].metadata.reservedBy) {
-                listViewPrinters += '<td name="reservedBy" title="' + printersList[i].metadata.reservedBy.trim().replace(/\s\s+/g, ' ') + '">' + printersList[i].metadata.reservedBy.trim().replace(/\s\s+/g, ' ') + '</td>';
+            if (currentReservation) {
+                listViewPrinters += '<td name="reservedBy" title="' + currentReservation.title.trim().replace(/\s\s+/g, ' ') + '">' + currentReservation.title.trim().replace(/\s\s+/g, ' ') + '</td>';
+                listViewPrinters += '<td name="reservedUntil" title="' + new Date(currentReservation.end).toLocaleString() + '">' + new Date(currentReservation.end).toLocaleString() + '</td>';
             } else {
                 listViewPrinters += '<td name="reservedBy">&mdash;</td>';
-            }
-
-            if (printersList[i].metadata.reservedUntil) {
-                listViewPrinters += '<td name="reservedUntil" title="' + new Date(printersList[i].metadata.reservedUntil).toLocaleString() + '">' + new Date(printersList[i].metadata.reservedUntil).toLocaleString() + '</td>';
-            } else {
                 listViewPrinters += '<td name="reservedUntil">&mdash;</td>';
             }
 
@@ -480,11 +493,26 @@ $(function() {
                     $('#calendarView').fullCalendar('destroy');
                     $('#calendarView').fullCalendar(calendarConfig);
                 } else if ($(e.target).is('#contextMenuPrinters button[name="removeRes"]')) {
-                    if (confirm('Are you sure you want to remove the reservation?')) {
-                        var printer = printersPersistent[printerId];
-                        var metadata = printer.metadata;
-                        metadata.reservedBy = null;
-                        metadata.reservedUntil = null;
+                    var printer = printersPersistent[printerId];
+                    var now = new Date().getTime();
+                    var reservation;
+                    var reservationIndex;
+
+                    for (var i=0; i<printer.metadata.calendar.length; i++) {
+                        if (printer.metadata.calendar[i].start <= now && printer.metadata.calendar[i].end > now) {
+                            reservation = printer.metadata.calendar[i];
+                            reservationIndex = i;
+                            break;
+                        }
+                    }
+
+                    if (!(reservationIndex >= 0)) {
+                        showMessage('Printer has no reservation now', 'gray');
+
+                        updatePrinters();
+                        $('#columnsViewPrinterWrapper').hide();
+                    } else if (confirm('Are you sure you want to remove the reservation in course?\n\tReserved by: ' + reservation.title + '\n\tStart: ' + new Date(reservation.start).toLocaleString() + '\n\tEnd: ' + new Date(reservation.end).toLocaleString())) {
+                        printer.metadata.calendar.splice(reservationIndex, 1);
 
                         $('#loadingBar').show();
 
@@ -495,7 +523,7 @@ $(function() {
                             method: 'PUT',
                             headers: {'Content-Type': 'application/json'},
                             processData: false,
-                            data: JSON.stringify(metadata),
+                            data: JSON.stringify(printer.metadata),
                             success: function(res, status) {
                                 showMessage('Reserve successfully removed', 'green');
 

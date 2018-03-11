@@ -46,7 +46,7 @@ var dateTimePickerOptions = {
     oneLine: true,
     timeInput: true,
     dateFormat: 'dd/mm/yy',
-    timeFormat: 'HH:mm:ss'
+    timeFormat: 'HH:mm'
 };
 
 
