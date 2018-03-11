@@ -91,6 +91,11 @@ $(function() {
             e.preventDefault();
             $('#menus, #listViewConfigMenu').fadeOut('slow');
         }
+
+        if ($('#createReservationMenu').is(':visible') && (!$(e.target).is('#createReservationMenu, #createReservationMenu *') || $(e.target).is('.closeButton'))) {
+            e.preventDefault();
+            $('#menus, #createReservationMenu').hide();
+        }
     });
 
 
@@ -112,5 +117,6 @@ $(function() {
         psAdvancedFiltersMenu.update();
         psConfigMenu.update();
         psListViewConfigMenu.update();
+        psCreateReservationMenu.update();
     });
 });

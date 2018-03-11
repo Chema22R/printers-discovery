@@ -30,6 +30,7 @@
         </div>
         
         <div id='contextMenuPrinters'>
+            <button name='calendar' type='button'>Calendar</button>
             <button name='removeRes' type='button'>Remove Reservation</button>
             <button name='forceUpdate' type='button'>Force Update</button>
         </div>
@@ -355,7 +356,37 @@
                         </div>
                     </div>
                 </div>
+
+                <div id='createReservationMenu'>
+                    <div class='wrapper'>
+                        <p class='title'>Create a New Reservation</p>
+                        <div class='wrapper left'>
+                            <p>Reserved&nbsp;By</p>
+                            <p>Reservation Start</p>
+                            <p>Reservation End</p>
+                        </div>
+                        <form id='createReservationForm' class='wrapper right'>
+                            <input type='text' value='' name='reservedBy' maxlength='100' placeholder='reserved&nbsp;by'>
+                            <input class='datetimepicker' type='text' value='' name='reservationStart' maxlength='100' placeholder='reservation&nbsp;start'>
+                            <input class='datetimepicker' type='text' value='' name='reservationEnd' maxlength='100' placeholder='reservation&nbsp;end'>
+                        </form>
+                    </div>
+
+                    <button class='actionButton' type='submit' form='createReservationForm' title='Create Reservation'>Create</button>
+                    <button class='closeButton icon-close icon' type='button' title='Close Window'></button>
+
+                    <div class='dropdown'>
+                        <button class='icon-help icon' type='button' accesskey='f'></button>
+                        <div>
+                            <p>This menu allows the user to create new reservations for a given printer (all fields are mandatory)</p>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+
+        <div id='calendarMenu'>
+            <div id='calendarView'></div>
         </div>
 
 

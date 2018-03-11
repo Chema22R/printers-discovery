@@ -7,6 +7,7 @@ var defaultView = 'iconsView';
 
 var printersPersistent = new Object();
 var advancedFilters = new Object();
+
 var basicFilters = {
     hostname: false,
     ip: false,
@@ -19,10 +20,12 @@ var basicFilters = {
     reservedBy: false,
     notes: false
 };
+
 var sortingConfig = {
     param: 'modelname',
     direction: true
 };
+
 var listViewHeaders = {
     hostname: false,
     ip: true,
@@ -36,6 +39,14 @@ var listViewHeaders = {
     workteam: false,
     reservedBy: true,
     reservedUntil: false
+};
+
+var dateTimePickerOptions = {
+    controlType: 'select',
+    oneLine: true,
+    timeInput: true,
+    dateFormat: 'dd/mm/yy',
+    timeFormat: 'HH:mm:ss'
 };
 
 
@@ -66,18 +77,7 @@ var psEditMenu = new PerfectScrollbar('#editMenu', psOptions);
 var psAdvancedFiltersMenu = new PerfectScrollbar('#advancedFiltersMenu', psOptions);
 var psConfigMenu = new PerfectScrollbar('#configMenu', psOptions);
 var psListViewConfigMenu = new PerfectScrollbar('#listViewConfigMenu', psOptions);
-
-
-/* Datetimepicker
-========================================================================== */
-
-var dateTimePickerOptions = {
-    controlType: 'select',
-    oneLine: true,
-    timeInput: true,
-    dateFormat: 'dd/mm/yy',
-    timeFormat: 'HH:mm:ss'
-};
+var psCreateReservationMenu = new PerfectScrollbar('#createReservationMenu', psOptions);
 
 
 /* Functions

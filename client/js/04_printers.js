@@ -1,6 +1,84 @@
 'use strict';
 
 $(function() {
+    var calendarConfig = {
+        allDayDefault : false,
+        aspectRatio: 'auto',
+        deleteMode: false,
+        customButtons: {
+            add: {
+                text: '+',
+                click: function() {
+                    $('#createReservationForm input').val('');
+                    $('#createReservationForm input.datetimepicker').datetimepicker(dateTimePickerOptions);
+
+                    if ($('#createReservationMenu').is(':hidden')) {
+                        $('#menus, #createReservationMenu').show();
+                        $('#createReservationMenu').scrollTop(0);
+                        psCreateReservationMenu.update();
+                    }
+                }
+            },
+            remove: {
+                text: '–',
+                click: function() {
+                    if (!calendarConfig.deleteMode) {
+                        $('#calendarView').fullCalendar('option', 'eventColor', '#E40000');
+                        showMessage('Delete Mode: click on a reservation to delete it', 'gray');
+                    } else {
+                        $('#calendarView').fullCalendar('option', 'eventColor', '#3A87AD');
+                    }
+
+                    calendarConfig.deleteMode = !calendarConfig.deleteMode;
+                }
+            },
+            exit: {
+                icon: 'x',
+                click: function() {
+                    $('#calendarMenu').fadeOut('slow');
+                    $('#calendarView').fullCalendar('destroy');
+                }
+            }
+        },
+        dayPopoverFormat: 'dddd, D MMMM',
+        defaultView: 'month',
+        displayEventEnd: true,
+        eventClick: calendarDeleteMode,
+        eventLimit: true,
+        firstDay: 1,
+        header: {
+            left: 'prev,next today add,remove',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay,listWeek exit'
+        },
+        height: window.innerHeight - 60,
+        navLinks: true,
+        nowIndicator: true,
+        slotLabelFormat: 'H:mm',
+        timeFormat: 'H:mm',
+        timezone: 'local',
+        views: {
+            month: {
+                titleFormat: 'MMMM YYYY'
+            },
+            agendaWeek: {
+                columnHeaderFormat: 'ddd D',
+                titleFormat: 'D MMMM YYYY'
+            },
+            agendaDay: {
+                titleFormat: 'D MMMM YYYY'
+            },
+            listWeek: {
+                titleFormat: 'D MMMM YYYY'
+            }
+        },
+        windowResize: function() {
+            $('#calendarView').fullCalendar('option', 'height', window.innerHeight - 60);
+        },
+        handleWindowResize : true
+    };
+
+
     $('#listViewHeaders th[name=' + sortingConfig.param + ']').addClass('current');
     if (sortingConfig.direction) {
         $('#listViewHeaders th[name=' + sortingConfig.param + '] span').addClass('icon-arrowUp').show();
@@ -392,7 +470,16 @@ $(function() {
             $(document).off().on('mousedown', function(e) {
                 e.preventDefault();
 
-                if ($(e.target).is('#contextMenuPrinters button[name="removeRes"]')) {
+                if ($(e.target).is('#contextMenuPrinters button[name="calendar"]')) {
+                    calendarConfig.events = printersPersistent[printerId].metadata.calendar;
+                    calendarConfig.deleteMode = false;
+                    $('#calendarView').attr('name', printerId);
+
+                    $('#calendarMenu').fadeIn('slow');
+
+                    $('#calendarView').fullCalendar('destroy');
+                    $('#calendarView').fullCalendar(calendarConfig);
+                } else if ($(e.target).is('#contextMenuPrinters button[name="removeRes"]')) {
                     if (confirm('Are you sure you want to remove the reservation?')) {
                         var printer = printersPersistent[printerId];
                         var metadata = printer.metadata;
@@ -492,6 +579,127 @@ $(function() {
     });
 
 
+    /* This function defines the behaviour of the 'Create' button, placed into the createReservationMenu, which creates a new event in the calendar
+    =============================================================================================================================================== */
+    $('#createReservationForm').on('submit', function(e) {
+        e.preventDefault();
+
+        var printer = printersPersistent[$('#calendarView').attr('name')];
+
+        var reservationStart = $('#createReservationForm input[name="reservationStart"]').val().trim().replace(/\s\s+/g, ' ').split(/\/|\s|\:/);
+        var reservationEnd = $('#createReservationForm input[name="reservationEnd"]').val().trim().replace(/\s\s+/g, ' ').split(/\/|\s|\:/);
+        var reservation = {
+            title: $('#createReservationForm input[name="reservedBy"]').val().trim().replace(/\s\s+/g, ' '),
+            start: new Date(reservationStart[2], reservationStart[1]-1, reservationStart[0], reservationStart[3], reservationStart[4], reservationStart[5]).getTime(),
+            end: new Date(reservationEnd[2], reservationEnd[1]-1, reservationEnd[0], reservationEnd[3], reservationEnd[4], reservationEnd[5]).getTime(),
+        };
+        
+        if (reservation.title == '' || reservationStart == '' || reservationEnd == '') {
+            showMessage('All fields are mandatory', 'red');
+        } else if (reservation.start >= reservation.end) {
+            showMessage('Reservation end must be after its start', 'red');
+        } else {
+            var overlap = false;
+
+            for (var i=0; i<printer.metadata.calendar.length; i++) {
+                if (reservation.start >= printer.metadata.calendar[i].start && reservation.start < printer.metadata.calendar[i].end) {overlap = true;break;}
+                if (reservation.end > printer.metadata.calendar[i].start && reservation.end <= printer.metadata.calendar[i].end) {overlap = true;break;}
+                if (reservation.start >= printer.metadata.calendar[i].start && reservation.end <= printer.metadata.calendar[i].end) {overlap = true;break;}
+                if (reservation.start <= printer.metadata.calendar[i].start && reservation.end >= printer.metadata.calendar[i].end) {overlap = true;break;}
+            }
+
+            if (overlap) {
+                showMessage('Already exists a reservation in the selected interval', 'red');
+            } else {
+                printer.metadata.calendar.push(reservation);
+                
+                $('#loadingBar').show();
+
+                $.ajax({
+                    async: true,
+                    crossDomain: true,
+                    url: 'http://'+serverAddress+':'+serverPort+'/printers/update?ip=' + printer.basicInfo.ip + '&hostname=' + printer.basicInfo.hostname,
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    processData: false,
+                    data: JSON.stringify(printer.metadata),
+                    success: function(res, status) {
+                        showMessage('Calendar successfully updated', 'green');
+
+                        calendarConfig.events = printer.metadata.calendar;
+                        calendarConfig.deleteMode = false;
+                        $('#calendarView').fullCalendar('destroy');
+                        $('#calendarView').fullCalendar(calendarConfig);
+
+                        $('#loadingBar, #menus, #createReservationMenu').hide();
+                    },
+                    error: function(jqXHR, status, err) {
+                        $('#loadingBar').hide();
+        
+                        if (!err) {
+                            showMessage('Unable to connect to server', 'red');
+                        } else {
+                            showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
+                        }
+                    }
+                });
+            }
+        }
+    });
+
+
+    /* This function defines the behaviour of the click button (over calendar events) when the delete mode is active
+    ================================================================================================================ */
+    function calendarDeleteMode(event, jsEvent, view) {
+        if (calendarConfig.deleteMode) {
+            var printer = printersPersistent[$('#calendarView').attr('name')];
+            var reservationIndex;
+
+            for (var i=0; i<printer.metadata.calendar.length; i++) {
+                if (printer.metadata.calendar[i].title == event.title && printer.metadata.calendar[i].start == event.start._i && printer.metadata.calendar[i].end == event.end._i) {
+                    reservationIndex = i;
+                    break;
+                }
+            }
+
+            if (reservationIndex >= 0 && confirm('Are you sure you want to remove the reservation?\n\tReserved by: ' + event.title + '\n\tStart: ' + new Date(event.start._i).toLocaleString() + '\n\tEnd: ' + new Date(event.end._i).toLocaleString())) {
+                printer.metadata.calendar.splice(reservationIndex, 1);
+
+                $('#loadingBar').show();
+
+                $.ajax({
+                    async: true,
+                    crossDomain: true,
+                    url: 'http://'+serverAddress+':'+serverPort+'/printers/update?ip=' + printer.basicInfo.ip + '&hostname=' + printer.basicInfo.hostname,
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    processData: false,
+                    data: JSON.stringify(printer.metadata),
+                    success: function(res, status) {
+                        showMessage('Calendar successfully updated', 'green');
+
+                        calendarConfig.events = printer.metadata.calendar;
+                        calendarConfig.deleteMode = false;
+                        $('#calendarView').fullCalendar('destroy');
+                        $('#calendarView').fullCalendar(calendarConfig);
+
+                        $('#loadingBar').hide();
+                    },
+                    error: function(jqXHR, status, err) {
+                        $('#loadingBar').hide();
+        
+                        if (!err) {
+                            showMessage('Unable to connect to server', 'red');
+                        } else {
+                            showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+
     /* This function defines the behaviour of the 'Send' button, placed into the editMenu, which puts the input values to the server
     ================================================================================================================================ */
     $('#editForm').on('submit', function(e) {
@@ -506,7 +714,7 @@ $(function() {
             reservedBy: $('#editForm input[name="reservedBy"]').val().trim().replace(/\s\s+/g, ' '),
             reservedUntil: new Date(dateTime[2], dateTime[1]-1, dateTime[0], dateTime[3], dateTime[4], dateTime[5]).getTime(),
             notes: $('#editMenuNotesWrapper textarea').val().trim().replace(/\s\s+/g, ' '),
-            calendar: []
+            calendar: printer.metadata.calendar
         };
 
         for (var key in metadata) {
