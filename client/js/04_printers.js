@@ -202,7 +202,7 @@ $(function() {
         var iconsViewPrinters = '<div id="iconsViewPopulation" class="wrapper"><p class="noPrinters">No printers to show with selected filters</p>';
         var listViewPrinters = '<tbody id="listViewPopulation">';
         var columnsViewPrinters = '<div id="columnsViewPopulation" class="wrapper"><p class="noPrinters">No printers to show with selected filters</p>';
-        var id, now, currentReservation, title;
+        var id, now, title;
 
         printersPersistent = new Object();
 
@@ -213,18 +213,19 @@ $(function() {
             if (!printersList[i].metadata.calendar) {printersList[i].metadata.calendar = [];}
             if (!printersList[i].lastUpdate) {printersList[i].lastUpdate = {};}
 
+            printersList[i].metadata.reservedBy = null;
+            printersList[i].metadata.reservedUntil = null;
+
             if (printersList[i].metadata.calendar) {
                 now = new Date().getTime();
-                currentReservation = null;
 
                 for (var j=0; j<printersList[i].metadata.calendar.length; j++) {
                     if (printersList[i].metadata.calendar[j].start <= now && printersList[i].metadata.calendar[j].end > now) {
-                        currentReservation = printersList[i].metadata.calendar[j];
+                        printersList[i].metadata.reservedBy = printersList[i].metadata.calendar[j].title;
+                        printersList[i].metadata.reservedUntil = printersList[i].metadata.calendar[j].end;
                         break;
                     }
                 }
-            } else {
-                currentReservation = null;
             }
 
             id = uuid();
@@ -343,11 +344,6 @@ $(function() {
             iconsViewPrinters += '<div class="status">';
             listViewPrinters += '<td class="status" name="status" title="' + title + '">' + title + '</td>';
             columnsViewPrinters += '<div class="status">';
-            
-            if (currentReservation) {
-                iconsViewPrinters += '<p>RESERVED</p>';
-                columnsViewPrinters += '<p>R</p>';
-            }
 
             if (printersList[i].creationDate) {
                 listViewPrinters += '<td name="creationDate" title="' + customDate(printersList[i].creationDate) + '">' + customDate(printersList[i].creationDate) + '</td>';
@@ -379,9 +375,11 @@ $(function() {
                 listViewPrinters += '<td name="workteam">&mdash;</td>';
             }
 
-            if (currentReservation) {
-                listViewPrinters += '<td name="reservedBy" title="' + currentReservation.title.trim().replace(/\s\s+/g, ' ') + '">' + currentReservation.title.trim().replace(/\s\s+/g, ' ') + '</td>';
-                listViewPrinters += '<td name="reservedUntil" title="' + customDate(currentReservation.end) + '">' + customDate(currentReservation.end) + '</td>';
+            if (printersList[i].metadata.reservedBy && printersList[i].metadata.reservedUntil) {
+                iconsViewPrinters += '<p>RESERVED</p>';
+                listViewPrinters += '<td name="reservedBy" title="' + printersList[i].metadata.reservedBy.trim().replace(/\s\s+/g, ' ') + '">' + printersList[i].metadata.reservedBy.trim().replace(/\s\s+/g, ' ') + '</td>';
+                listViewPrinters += '<td name="reservedUntil" title="' + customDate(printersList[i].metadata.reservedUntil) + '">' + customDate(printersList[i].metadata.reservedUntil) + '</td>';
+                columnsViewPrinters += '<p>R</p>';
             } else {
                 listViewPrinters += '<td name="reservedBy">&mdash;</td>';
                 listViewPrinters += '<td name="reservedUntil">&mdash;</td>';
@@ -739,14 +737,13 @@ $(function() {
     $('#editForm').on('submit', function(e) {
         e.preventDefault();
 
-        var dateTime = $('#editForm input[name="reservedUntil"]').val().trim().replace(/\s\s+/g, ' ').split(/\/|\s|\:/);
         var printer = printersPersistent[$('#editMenu button.actionButton').attr('name')];
         var metadata = {
             alias: $('#editForm input[name="alias"]').val().trim().replace(/\s\s+/g, ' '),
             location: $('#editForm input[name="location"]').val().trim().replace(/\s\s+/g, ' '),
             workteam: $('#editForm input[name="workteam"]').val().trim().replace(/\s\s+/g, ' '),
-            reservedBy: $('#editForm input[name="reservedBy"]').val().trim().replace(/\s\s+/g, ' '),
-            reservedUntil: new Date(dateTime[2], dateTime[1]-1, dateTime[0], dateTime[3], dateTime[4]).getTime(),
+            reservedBy: null,
+            reservedUntil: null,
             notes: $('#editMenuNotesWrapper textarea').val().trim().replace(/\s\s+/g, ' '),
             calendar: printer.metadata.calendar
         };
@@ -1006,15 +1003,15 @@ $(function() {
         }
 
         if (metadata.reservedBy) {
-            $('#editForm input[name="reservedBy"]').val(metadata.reservedBy.trim().replace(/\s\s+/g, ' '));
+            $('#editForm p[name="reservedBy"]').text(metadata.reservedBy.trim().replace(/\s\s+/g, ' ')).attr('title', metadata.reservedBy.trim().replace(/\s\s+/g, ' '));
         } else {
-            $('#editForm input[name="reservedBy"]').val('');
+            $('#editForm p[name="reservedBy"]').text('—').attr('title', '');
         }
 
         if (metadata.reservedUntil) {
-            $('#editForm input[name="reservedUntil"]').val(customDate(metadata.reservedUntil));
+            $('#editForm p[name="reservedUntil"]').text(customDate(metadata.reservedUntil)).attr('title', customDate(metadata.reservedUntil));
         } else {
-            $('#editForm input[name="reservedUntil"]').val('');
+            $('#editForm p[name="reservedUntil"]').text('—').attr('title', '');
         }
 
         if (metadata.notes) {

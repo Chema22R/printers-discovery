@@ -95,7 +95,8 @@
     color: #F00;
 }
 
-#menus > div.wrapper > div > div.wrapper > div.wrapper > p {
+#menus > div.wrapper > div > div.wrapper > div.wrapper > p,
+#menus > div.wrapper > div > div.wrapper > form.wrapper > p {
     cursor: default;
     line-height: 30px;
 }
@@ -141,7 +142,8 @@
 #menus > div.wrapper > div > div.wrapper > form.wrapper > input:focus {border-bottom: 1px solid #0099D8;}
 
 #menus > div.wrapper > div > div.wrapper > div.wrapper.left > p {padding-right: 8px}
-#menus > div.wrapper > div > div.wrapper > div.wrapper.right > p {padding-left: 8px}
+#menus > div.wrapper > div > div.wrapper > div.wrapper.right > p,
+#menus > div.wrapper > div > div.wrapper > form.wrapper.right > p {padding-left: 8px}
 
 #menus > div.wrapper > div > div.wrapper > div.wrapper > p.status.connected {color: #1DBE00;}
 #menus > div.wrapper > div > div.wrapper > div.wrapper > p.status.warning {color: #EBD000;}
