@@ -89,10 +89,7 @@ p {
     display: none;
     position: absolute;
 
-    border: 1px solid #95989A;
-    border-radius: 5px 5px 5px 5px;
-    -moz-border-radius: 5px 5px 5px 5px;
-    -webkit-border-radius: 5px 5px 5px 5px;
+    border: 1px solid #BBB;
 
     z-index: 1;
     overflow: hidden;
