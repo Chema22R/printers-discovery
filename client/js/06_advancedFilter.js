@@ -150,13 +150,13 @@ $(function() {
                 modelname: $('#filterFormDetails input[name="modelname"]').val().trim().replace(/\s\s+/g, ' '),
                 firmware: $('#filterFormDetails input[name="firmware"]').val().trim().replace(/\s\s+/g, ' '),
                 status: $('#filterFormDetails input[name="status"]').val().trim().replace(/\s\s+/g, ' '),
-                creationDate: new Date(dateTime1[2], dateTime1[1]-1, dateTime1[0], dateTime1[3], dateTime1[4], dateTime1[5]).getTime(),
-                lastUpdateStatus: new Date(dateTime2[2], dateTime2[1]-1, dateTime2[0], dateTime2[3], dateTime2[4], dateTime2[5]).getTime(),
+                creationDate: new Date(dateTime1[2], dateTime1[1]-1, dateTime1[0], dateTime1[3], dateTime1[4]).getTime(),
+                lastUpdateStatus: new Date(dateTime2[2], dateTime2[1]-1, dateTime2[0], dateTime2[3], dateTime2[4]).getTime(),
                 alias: $('#filterFormInfo input[name="alias"]').val().trim().replace(/\s\s+/g, ' '),
                 location: $('#filterFormInfo input[name="location"]').val().trim().replace(/\s\s+/g, ' '),
                 workteam: $('#filterFormInfo input[name="workteam"]').val().trim().replace(/\s\s+/g, ' '),
                 reservedBy: $('#filterFormInfo input[name="reservedBy"]').val().trim().replace(/\s\s+/g, ' '),
-                reservedUntil: new Date(dateTime3[2], dateTime3[1]-1, dateTime3[0], dateTime3[3], dateTime3[4], dateTime3[5]).getTime()
+                reservedUntil: new Date(dateTime3[2], dateTime3[1]-1, dateTime3[0], dateTime3[3], dateTime3[4]).getTime()
             };
 
             for (var key in data) {
@@ -262,11 +262,13 @@ $(function() {
     
     function generateTitle(obj) {
         var title = '';
+        var date;
 
         for (var key in obj) {
             if (obj[key]) {
                 if (typeof(obj[key]) == 'number' && obj[key] > 31536000000) {
-                    title += key + ': ' + new Date(obj[key]).toLocaleString() + '\n';
+                    date = new Date(obj[key]);
+                    title += key + ': ' + ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + '\n';
                 } else {
                     title += key + ': ' + obj[key] + '\n';
                 }
