@@ -4,6 +4,11 @@ $(function() {
     var calendarConfig = {
         allDayDefault : false,
         aspectRatio: 'auto',
+        businessHours: {
+            dow: [1,2,3,4,5],
+            start: '8:00',
+            end: '18:00'
+        },
         deleteMode: false,
         customButtons: {
             add: {
