@@ -197,7 +197,7 @@ $(function() {
         var iconsViewPrinters = '<div id="iconsViewPopulation" class="wrapper"><p class="noPrinters">No printers to show with selected filters</p>';
         var listViewPrinters = '<tbody id="listViewPopulation">';
         var columnsViewPrinters = '<div id="columnsViewPopulation" class="wrapper"><p class="noPrinters">No printers to show with selected filters</p>';
-        var id, title, now, currentReservation;
+        var id, title, now, currentReservation, date, dateStr;
 
         printersPersistent = new Object();
 
@@ -344,13 +344,17 @@ $(function() {
             }
 
             if (printersList[i].creationDate) {
-                listViewPrinters += '<td name="creationDate" title="' + new Date(printersList[i].creationDate).toLocaleString() + '">' + new Date(printersList[i].creationDate).toLocaleString() + '</td>';
+                date = new Date(printersList[i].creationDate);
+                dateStr = ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2);
+                listViewPrinters += '<td name="creationDate" title="' + dateStr + '">' + dateStr + '</td>';
             } else {
                 listViewPrinters += '<td name="creationDate">&mdash;</td>';
             }
 
             if (printersList[i].lastUpdate.status) {
-                listViewPrinters += '<td name="lastUpdateStatus" title="' + new Date(printersList[i].lastUpdate.status).toLocaleString() + '">' + new Date(printersList[i].lastUpdate.status).toLocaleString() + '</td>';
+                date = new Date(printersList[i].lastUpdate.status);
+                dateStr = ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2);
+                listViewPrinters += '<td name="lastUpdateStatus" title="' + dateStr + '">' + dateStr + '</td>';
             } else {
                 listViewPrinters += '<td name="lastUpdateStatus">&mdash;</td>';
             }
@@ -374,8 +378,10 @@ $(function() {
             }
 
             if (currentReservation) {
+                date = new Date(currentReservation.end);
+                dateStr = ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2);
                 listViewPrinters += '<td name="reservedBy" title="' + currentReservation.title.trim().replace(/\s\s+/g, ' ') + '">' + currentReservation.title.trim().replace(/\s\s+/g, ' ') + '</td>';
-                listViewPrinters += '<td name="reservedUntil" title="' + new Date(currentReservation.end).toLocaleString() + '">' + new Date(currentReservation.end).toLocaleString() + '</td>';
+                listViewPrinters += '<td name="reservedUntil" title="' + dateStr + '">' + dateStr + '</td>';
             } else {
                 listViewPrinters += '<td name="reservedBy">&mdash;</td>';
                 listViewPrinters += '<td name="reservedUntil">&mdash;</td>';
@@ -618,8 +624,8 @@ $(function() {
         var reservationEnd = $('#createReservationForm input[name="reservationEnd"]').val().trim().replace(/\s\s+/g, ' ').split(/\/|\s|\:/);
         var reservation = {
             title: $('#createReservationForm input[name="reservedBy"]').val().trim().replace(/\s\s+/g, ' '),
-            start: new Date(reservationStart[2], reservationStart[1]-1, reservationStart[0], reservationStart[3], reservationStart[4], reservationStart[5]).getTime(),
-            end: new Date(reservationEnd[2], reservationEnd[1]-1, reservationEnd[0], reservationEnd[3], reservationEnd[4], reservationEnd[5]).getTime(),
+            start: new Date(reservationStart[2], reservationStart[1]-1, reservationStart[0], reservationStart[3], reservationStart[4]).getTime(),
+            end: new Date(reservationEnd[2], reservationEnd[1]-1, reservationEnd[0], reservationEnd[3], reservationEnd[4]).getTime(),
         };
         
         if (reservation.title == '' || reservationStart == '' || reservationEnd == '') {
@@ -740,7 +746,7 @@ $(function() {
             location: $('#editForm input[name="location"]').val().trim().replace(/\s\s+/g, ' '),
             workteam: $('#editForm input[name="workteam"]').val().trim().replace(/\s\s+/g, ' '),
             reservedBy: $('#editForm input[name="reservedBy"]').val().trim().replace(/\s\s+/g, ' '),
-            reservedUntil: new Date(dateTime[2], dateTime[1]-1, dateTime[0], dateTime[3], dateTime[4], dateTime[5]).getTime(),
+            reservedUntil: new Date(dateTime[2], dateTime[1]-1, dateTime[0], dateTime[3], dateTime[4]).getTime(),
             notes: $('#editMenuNotesWrapper textarea').val().trim().replace(/\s\s+/g, ' '),
             calendar: printer.metadata.calendar
         };
@@ -917,14 +923,14 @@ $(function() {
 
         if (printer.creationDate) {
             var date = new Date(printer.creationDate);
-            details += '<p title="' + date + '">' + ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + ':' + ('0' + (date.getSeconds())).slice(-2) + '</p>';
+            details += '<p title="' + date + '">' + ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + '</p>';
         } else {
             details += '<p>&mdash;</p>';
         }
 
         if (printer.lastUpdate.status) {
             var date = new Date(printer.lastUpdate.status);
-            details += '<p title="' + date + '">' + ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + ':' + ('0' + (date.getSeconds())).slice(-2) + '</p>';
+            details += '<p title="' + date + '">' + ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + '</p>';
         } else {
             details += '<p>&mdash;</p>';
         }
@@ -961,7 +967,7 @@ $(function() {
 
         if (metadata.reservedUntil) {
             var date = new Date(metadata.reservedUntil);
-            information += '<p title="' + date + '">' + ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + ':' + ('0' + (date.getSeconds())).slice(-2) + '</p>';
+            information += '<p title="' + date + '">' + ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + '</p>';
         } else {
             information += '<p>&mdash;</p>';
         }
@@ -1010,7 +1016,7 @@ $(function() {
 
         if (metadata.reservedUntil) {
             var date = new Date(metadata.reservedUntil);
-            $('#editForm input[name="reservedUntil"]').val(('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2) + ':' + ('0' + (date.getSeconds())).slice(-2));
+            $('#editForm input[name="reservedUntil"]').val(('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth()+1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + (date.getHours())).slice(-2) + ':' + ('0' + (date.getMinutes())).slice(-2));
         } else {
             $('#editForm input[name="reservedUntil"]').val('');
         }
