@@ -197,16 +197,15 @@ $(function() {
         var iconsViewPrinters = '<div id="iconsViewPopulation" class="wrapper"><p class="noPrinters">No printers to show with selected filters</p>';
         var listViewPrinters = '<tbody id="listViewPopulation">';
         var columnsViewPrinters = '<div id="columnsViewPopulation" class="wrapper"><p class="noPrinters">No printers to show with selected filters</p>';
-        var id, title, now, currentReservation;
+        var id, now, currentReservation, title;
 
         printersPersistent = new Object();
 
         for (var i=0; i<printersList.length; i++) {
-            id = uuid();
-
             if (!printersList[i].basicInfo) {printersList[i].basicInfo = {};}
             if (!printersList[i].detailedInfo) {printersList[i].detailedInfo = {};}
             if (!printersList[i].metadata) {printersList[i].metadata = {calendar: []};}
+            if (!printersList[i].metadata.calendar) {printersList[i].metadata.calendar = [];}
             if (!printersList[i].lastUpdate) {printersList[i].lastUpdate = {};}
 
             if (printersList[i].metadata.calendar) {
@@ -222,6 +221,8 @@ $(function() {
             } else {
                 currentReservation = null;
             }
+
+            id = uuid();
 
             iconsViewPrinters += '<div name="' + id +'" class="printer';
             listViewPrinters += '<tr name="' + id +'" class="printer';
