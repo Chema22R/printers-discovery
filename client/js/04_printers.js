@@ -44,7 +44,6 @@ $(function() {
                     $('#calendarView').fullCalendar('destroy');
 
                     updatePrinters();
-                    $('#columnsViewPrinterWrapper').hide();
                 }
             }
         },
@@ -201,7 +200,7 @@ $(function() {
                     }
                 }
 
-                $('#loadingBar').hide();
+                $('#columnsViewPrinterWrapper, #loadingBar').hide();
             },
             error: function(jqXHR, status, err) {
                 $('#loadingBar').hide();
@@ -513,7 +512,6 @@ $(function() {
                         showMessage('Printer has no reservation now', 'gray');
 
                         updatePrinters();
-                        $('#columnsViewPrinterWrapper').hide();
                     } else if (confirm('Are you sure you want to remove the reservation in course?\n\tReserved by: ' + reservation.title + '\n\tStart: ' + customDate(reservation.start) + '\n\tEnd: ' + customDate(reservation.end))) {
                         printer.metadata.calendar.splice(reservationIndex, 1);
 
@@ -529,9 +527,7 @@ $(function() {
                             data: JSON.stringify(printer.metadata),
                             success: function(res, status) {
                                 showMessage('Reserve successfully removed', 'green');
-
                                 updatePrinters();
-                                $('#columnsViewPrinterWrapper, #loadingBar').hide();
                             },
                             error: function(jqXHR, status, err) {
                                 $('#loadingBar').hide();
@@ -556,9 +552,7 @@ $(function() {
                         method: 'GET',
                         success: function(res, status) {
                             showMessage('Printer successfully updated (force mode)', 'green');
-
                             updatePrinters();
-                            $('#columnsViewPrinterWrapper, #loadingBar').hide();
                         },
                         error: function(jqXHR, status, err) {
                             $('#loadingBar').hide();
@@ -763,9 +757,7 @@ $(function() {
             data: JSON.stringify(metadata),
             success: function(res, status) {
                 showMessage('Information successfully updated', 'green');
-
                 updatePrinters();
-                $('#columnsViewPrinterWrapper, #loadingBar').hide();
 
                 $('#menus, #editMenu').fadeOut('slow');
             },
@@ -812,7 +804,6 @@ $(function() {
         document.cookie = 'sortingConfig=' + JSON.stringify(sortingConfig) + ';max-age=315360000';   // 315360000s are 10 years
 
         updatePrinters();
-        $('#columnsViewPrinterWrapper').hide();
     });
 
 
