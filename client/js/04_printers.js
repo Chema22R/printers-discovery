@@ -108,7 +108,27 @@ $(function() {
             url: 'http://'+serverAddress+':'+serverPort+'/printers/list',
             method: 'GET',
             success: function(res, status) {
-                var param1, param2;
+                var now, param1, param2;
+
+                for (var i=0; i<res.length; i++) {
+                    if (!res[i].basicInfo) {res[i].basicInfo = {};}
+                    if (!res[i].detailedInfo) {res[i].detailedInfo = {};}
+                    if (!res[i].metadata) {res[i].metadata = {calendar: []};}
+                    if (!res[i].metadata.calendar) {res[i].metadata.calendar = [];}
+                    if (!res[i].lastUpdate) {res[i].lastUpdate = {};}
+
+                    res[i].metadata.reservedBy = null;
+                    res[i].metadata.reservedUntil = null;
+                    now = new Date().getTime();
+    
+                    for (var j=0; j<res[i].metadata.calendar.length; j++) {
+                        if (res[i].metadata.calendar[j].start <= now && res[i].metadata.calendar[j].end > now) {
+                            res[i].metadata.reservedBy = res[i].metadata.calendar[j].title;
+                            res[i].metadata.reservedUntil = res[i].metadata.calendar[j].end;
+                            break;
+                        }
+                    }
+                }
 
                 switch (sortingConfig.param) {
                     case 'hostname':
@@ -202,32 +222,11 @@ $(function() {
         var iconsViewPrinters = '<div id="iconsViewPopulation" class="wrapper"><p class="noPrinters">No printers to show with selected filters</p>';
         var listViewPrinters = '<tbody id="listViewPopulation">';
         var columnsViewPrinters = '<div id="columnsViewPopulation" class="wrapper"><p class="noPrinters">No printers to show with selected filters</p>';
-        var id, now, title;
+        var id, title;
 
         printersPersistent = new Object();
 
         for (var i=0; i<printersList.length; i++) {
-            if (!printersList[i].basicInfo) {printersList[i].basicInfo = {};}
-            if (!printersList[i].detailedInfo) {printersList[i].detailedInfo = {};}
-            if (!printersList[i].metadata) {printersList[i].metadata = {calendar: []};}
-            if (!printersList[i].metadata.calendar) {printersList[i].metadata.calendar = [];}
-            if (!printersList[i].lastUpdate) {printersList[i].lastUpdate = {};}
-
-            printersList[i].metadata.reservedBy = null;
-            printersList[i].metadata.reservedUntil = null;
-
-            if (printersList[i].metadata.calendar) {
-                now = new Date().getTime();
-
-                for (var j=0; j<printersList[i].metadata.calendar.length; j++) {
-                    if (printersList[i].metadata.calendar[j].start <= now && printersList[i].metadata.calendar[j].end > now) {
-                        printersList[i].metadata.reservedBy = printersList[i].metadata.calendar[j].title;
-                        printersList[i].metadata.reservedUntil = printersList[i].metadata.calendar[j].end;
-                        break;
-                    }
-                }
-            }
-
             id = uuid();
 
             iconsViewPrinters += '<div name="' + id +'" class="printer';
@@ -1034,9 +1033,9 @@ $(function() {
             if (order) {
                 if (param1 && param2) {
                     if (!a[param1][param2]) {
-                        return false;
-                    } else if (!b[param1][param2]) {
                         return true;
+                    } else if (!b[param1][param2]) {
+                        return false;
                     } else if (param1 == 'basicInfo' && param2 == 'ip') {
                         var ipa = a[param1][param2].split('.');
                         var ipb = b[param1][param2].split('.');
@@ -1057,9 +1056,9 @@ $(function() {
                     }
                 } else {
                     if (!a[param1]) {
-                        return false;
-                    } else if (!b[param1]) {
                         return true;
+                    } else if (!b[param1]) {
+                        return false;
                     } else {
                         if (typeof a[param1] == 'string' && typeof b[param1] == 'string') {
                             return (a[param1].toLowerCase() > b[param1].toLowerCase()) ? 1 : ((a[param1].toLowerCase() < b[param1].toLowerCase()) ? -1 : 0);
@@ -1071,9 +1070,9 @@ $(function() {
             } else {
                 if (param1 && param2) {
                     if (!a[param1][param2]) {
-                        return true;
-                    } else if (!b[param1][param2]) {
                         return false;
+                    } else if (!b[param1][param2]) {
+                        return true;
                     } else if (param1 == 'basicInfo' && param2 == 'ip') {
                         var ipa = a[param1][param2].split('.');
                         var ipb = b[param1][param2].split('.');
@@ -1094,9 +1093,9 @@ $(function() {
                     }
                 } else {
                     if (!a[param1]) {
-                        return true;
-                    } else if (!b[param1]) {
                         return false;
+                    } else if (!b[param1]) {
+                        return true;
                     } else {
                         if (typeof a[param1] == 'string' && typeof b[param1] == 'string') {
                             return (b[param1].toLowerCase() > a[param1].toLowerCase()) ? 1 : ((b[param1].toLowerCase() < a[param1].toLowerCase()) ? -1 : 0);
