@@ -1,4 +1,7 @@
-revisar accesskeys
+Añadir boton de ayuda en el menu de informacion de la vista de columnas
+
+Modificar docu del servidor:
+    Eliminacion automatica de reservas?
 
 links:
     https://github.com/node-ffi/node-ffi/wiki/Node-FFI-Tutorial             (Node FFI Tutorial)
