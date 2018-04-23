@@ -1,7 +1,13 @@
 Añadir boton de ayuda en el menu de informacion de la vista de columnas
 
 Modificar docu del servidor:
-    Eliminacion automatica de reservas?
+    Eliminacion automatica de reservas (3.11)?
+    Reflejar que HPDiscoveryGetPrinterInformation se ejecuta de forma asincrona?
+
+Asincronia HPDiscovery (enlaces que llevan medio año en firefox a la espera de la libreria):
+    https://github.com/node-ffi/node-ffi/wiki/Node-FFI-Tutorial
+    https://medium.freecodecamp.org/node-js-child-processes-everything-you-need-to-know-e69498fe970a
+
 
 links:
     https://github.com/node-ffi/node-ffi/wiki/Node-FFI-Tutorial             (Node FFI Tutorial)
