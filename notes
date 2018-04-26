@@ -9,11 +9,4 @@ Asincronia HPDiscovery (enlaces que llevan medio año en firefox a la espera de 
     https://medium.freecodecamp.org/node-js-child-processes-everything-you-need-to-know-e69498fe970a
 
 
-links:
-    https://github.com/node-ffi/node-ffi/wiki/Node-FFI-Tutorial             (Node FFI Tutorial)
-    http://tootallnate.github.io/ref/                                       (Ref API)
-    https://nodeaddons.com/calling-native-c-dlls-from-a-node-js-web-app/    (guia de FFI)
-    https://www.w3schools.com/tags/att_global_accesskey.asp                 (accesskey shortcuts)
-    http://trentrichardson.com/examples/timepicker/                         (datetimepicker)
-    https://fullcalendar.io/                                                (fullcalendar)
-    https://utatti.github.io/perfect-scrollbar/                             (perfect-scrollbar)
+Al guardar el código, tenger mucho cuidado con descomentar las líneas de HPDiscovery en server.js y de hacer un npm install completo
