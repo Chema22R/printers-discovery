@@ -222,3 +222,48 @@
 }
 
 #columnsViewPrinterNotes > p {white-space: normal;}
+
+/* help button */
+
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.dropdown {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.dropdown > button {
+    padding: 15px 5px 5px 20px;
+    font-size: 15px;
+}
+
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.dropdown > div {
+    width: 100vw;
+    max-width: 300px;
+    padding: 10px 10px;
+
+    display: none;
+    position: absolute;
+    top: 30px;
+    left: 35px;
+
+    border: 1px solid #95989A;
+    cursor: default;
+
+    text-align: justify;
+    font-size: .9em;
+    line-height: 1.3em;
+    background-color: #FFF;
+}
+
+@media (max-width: 784px) {#columnsView > div.wrapper > div.column.big > div.wrapper > div.dropdown > div {max-width: 200px;}}
+@media (max-width: 584px) {#columnsView > div.wrapper > div.column.big > div.wrapper > div.dropdown > div {max-width: 150px;}}
+@media (max-width: 484px) {#columnsView > div.wrapper > div.column.big > div.wrapper > div.dropdown > div {max-width: 100px;}}
+@media (max-width: 384px) {#columnsView > div.wrapper > div.column.big > div.wrapper > div.dropdown > div {max-width: 50px;}}
+
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.dropdown:hover > div {display: block;}
+
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.dropdown > div > p {white-space: initial;}
+#columnsView > div.wrapper > div.column.big > div.wrapper > div.dropdown > div > p.withIndentation {
+    padding-left: 25px;
+    text-indent: -10px;
+}
