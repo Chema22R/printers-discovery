@@ -1,7 +1,6 @@
-Añadir boton de ayuda en el menu de informacion de la vista de columnas
-
 Modificar docu del servidor:
     Eliminacion automatica de reservas (3.11)?
+    Finalización del servidor (3.15)?
     Reflejar que HPDiscoveryGetPrinterInformation se ejecuta de forma asincrona?
 
 Asincronia HPDiscovery (enlaces que llevan medio año en firefox a la espera de la libreria):
@@ -9,4 +8,6 @@ Asincronia HPDiscovery (enlaces que llevan medio año en firefox a la espera de 
     https://medium.freecodecamp.org/node-js-child-processes-everything-you-need-to-know-e69498fe970a
 
 
-Al guardar el código, tenger mucho cuidado con descomentar las líneas de HPDiscovery en server.js y de hacer un npm install completo
+###################################################################################################################################
+Al guardar el código, tener mucho cuidado con descomentar las líneas de HPDiscovery en server.js y de hacer un npm install completo
+###################################################################################################################################
