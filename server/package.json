@@ -1,15 +1,15 @@
 {
-  "name": "tfm",
+  "name": "printersmanagement",
   "version": "1.0.0",
   "description": "Gestion de Prototipos de Impresora Conectadas a Red",
   "main": "server.js",
   "dependencies": {
-    "express": "4.x.x",
-    "cors": "2.x.x",
-    "mongodb": "3.x.x",
-    "ref": "1.x.x",
-    "ffi": "2.x.x",
-    "xml-js": "1.x.x"
+    "express": "4.16.3",
+    "cors": "2.8.4",
+    "mongodb": "3.1.1",
+    "ref": "1.3.5",
+    "ffi": "2.2.0",
+    "xml-js": "1.6.7"
   },
   "devDependencies": {},
   "scripts": {
