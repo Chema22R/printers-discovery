@@ -14,6 +14,7 @@ var xmljs = require('xml-js');
 var logger, db, updatePrintersByTimeID;
 var configData = {logLevel: 3, logSeparator: 3, updateFrequency: 60000, deleteTimeout: 7200000};
 var xmlOptions = {compact: true, ignoreDeclaration: true, ignoreInstruction: true, ignoreComment: true, ignoreCdata: true, ignoreDoctype: true};
+var detailedInfoDefault = {status: null, firmwareVersion: null};
 var metadataDefault = {alias: null, location: null, workteam: null, reservedBy: null, reservedUntil: null, notes: null, calendar: []};
 
 
@@ -68,6 +69,7 @@ var subscriptionCallback = ffi.Callback('void', [voidPtr, cstringPtr, 'int'], fu
     function createPrinter() {
         db.collection('printers').insertOne({
             'basicInfo': printerBasicInfo,
+            'detailedInfo': detailedInfoDefault,
             'metadata': metadataDefault,
             'lastUpdate': {'basicInfo': new Date().getTime()},
             'creationDate': new Date().getTime()
@@ -120,9 +122,9 @@ function updatePrintersByTime() {
                 if (docs[i].detailedInfo && docs[i].detailedInfo.status && docs[i].detailedInfo.status.toLowerCase() == 'unreachable' && (new Date().getTime() - docs[i].lastUpdate.status) > configData.deleteTimeout) {
                     deletePrinter(docs[i].basicInfo.ip, docs[i].basicInfo.hostname, docs[i]._id);
                 } else {
-                    if (docs[i].metadata && docs[i].metadata.reservedUntil && docs[i].metadata.reservedUntil < new Date().getTime()) {
+                    /*if (docs[i].metadata && docs[i].metadata.reservedUntil && docs[i].metadata.reservedUntil < new Date().getTime()) {
                         removeReservation(docs[i].basicInfo.ip, docs[i].basicInfo.hostname, docs[i]._id);
-                    }
+                    }*/
 
                     updatePrinterInfo(docs[i].basicInfo.ip, docs[i].basicInfo.hostname, docs[i]._id, docs[i].detailedInfo, docs[i].lastUpdate.status);
                 }
@@ -141,7 +143,7 @@ exports.init = function(controllers) {
 
     logger = controllers.logger;
     db = controllers.db;
-    
+
     returnState = libHPDiscovery.HPDiscoveryInit();
     if (returnState != 0) {closeLog('Error at HPDiscoveryInit: returned the state ' + returnState, 1);}
 
@@ -159,7 +161,7 @@ exports.terminate = function() {
 
 exports.updateConfigData = function(data) {
     configData = data;
-    
+
     clearInterval(updatePrintersByTimeID);
     updatePrintersByTimeID = setInterval(updatePrintersByTime, configData.updateFrequency);
 };
@@ -311,7 +313,7 @@ function deletePrinter(printerIP, printerHostname, id) {
     });
 }
 
-function removeReservation(printerIP, printerHostname, id) {
+/*function removeReservation(printerIP, printerHostname, id) {
     var logEntry = 'Remove Printer Reservation (' + new Date() + ', ' + printerIP + ', ' + printerHostname + '):';
 
     db.collection('printers').updateOne({
@@ -327,7 +329,7 @@ function removeReservation(printerIP, printerHostname, id) {
             closeLog(logEntry + '\tPrinter reservation successfully removed', 3);
         }
     });
-}
+}*/
 
 function closeLog(entry, level) {
     if (level <= configData.logLevel) {
