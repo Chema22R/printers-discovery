@@ -606,7 +606,7 @@ $(function() {
 
     /* This function defines the behaviour of the 'Create' button, placed into the createReservationMenu, which creates a new event in the calendar
     =============================================================================================================================================== */
-    $('#createReservationForm').on('submit', function(e) {
+    $('#createReservationMenu > button.actionButton').on('click touchstart', function(e) {
         e.preventDefault();
 
         var printer = printersPersistent[$('#calendarView').attr('name')];
@@ -727,7 +727,7 @@ $(function() {
 
     /* This function defines the behaviour of the 'Send' button, placed into the editMenu, which puts the input values to the server
     ================================================================================================================================ */
-    $('#editForm').on('submit', function(e) {
+    $('#editMenu > button.actionButton').on('click touchstart', function(e) {
         e.preventDefault();
 
         var printer = printersPersistent[$('#editMenu button.actionButton').attr('name')];

@@ -135,7 +135,7 @@ $(function() {
 
     /* This function defines the behaviour of the 'Filter' button, placed into the advancedFiltersMenu
     ================================================================================================== */
-    $('#filterFormName').on('submit', function(e) {
+    $('#advancedFiltersMenu > button.actionButton').on('click touchstart', function(e) {
         e.preventDefault();
 
         var filterName = $('#filterFormName input[name="filterName"]').val().trim().replace(/\s\s+/g, ' ');
