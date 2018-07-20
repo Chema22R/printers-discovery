@@ -143,7 +143,7 @@
     width: -webkit-calc(100% - 51px);
 }
 
-#columnsView > div.wrapper > div.column.small > div.wrapper > div.filter > button {
+#columnsView > div.wrapper > div.column.small > div.wrapper > div.filter > button {
     float: right;
     padding: 8px;
 
