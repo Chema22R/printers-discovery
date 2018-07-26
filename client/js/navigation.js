@@ -98,6 +98,12 @@ $(function() {
         }
     });
 
+    $('#menus > div').on('click touchstart', function(e) {
+        if (!$(e.target).is('input.datetimepicker')) {
+            $('input.datetimepicker').datepicker('hide');
+        }
+    });
+
 
     /* Window Resize
     ========================================================================== */
