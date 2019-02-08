@@ -122,9 +122,9 @@ function updatePrintersByTime() {
                 if (docs[i].detailedInfo && docs[i].detailedInfo.status && docs[i].detailedInfo.status.toLowerCase() == 'unreachable' && (new Date().getTime() - docs[i].lastUpdate.status) > configData.deleteTimeout) {
                     deletePrinter(docs[i].basicInfo.ip, docs[i].basicInfo.hostname, docs[i]._id);
                 } else {
-                    /*if (docs[i].metadata && docs[i].metadata.reservedUntil && docs[i].metadata.reservedUntil < new Date().getTime()) {
+                    if (docs[i].metadata && docs[i].metadata.reservedUntil && docs[i].metadata.reservedUntil < new Date().getTime()) {
                         removeReservation(docs[i].basicInfo.ip, docs[i].basicInfo.hostname, docs[i]._id);
-                    }*/
+                    }
 
                     updatePrinterInfo(docs[i].basicInfo.ip, docs[i].basicInfo.hostname, docs[i]._id, docs[i].detailedInfo, docs[i].lastUpdate.status);
                 }
@@ -313,7 +313,7 @@ function deletePrinter(printerIP, printerHostname, id) {
     });
 }
 
-/*function removeReservation(printerIP, printerHostname, id) {
+function removeReservation(printerIP, printerHostname, id) {
     var logEntry = 'Remove Printer Reservation (' + new Date() + ', ' + printerIP + ', ' + printerHostname + '):';
 
     db.collection('printers').updateOne({
@@ -329,7 +329,7 @@ function deletePrinter(printerIP, printerHostname, id) {
             closeLog(logEntry + '\tPrinter reservation successfully removed', 3);
         }
     });
-}*/
+}
 
 function closeLog(entry, level) {
     if (level <= configData.logLevel) {
