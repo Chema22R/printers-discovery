@@ -54,7 +54,7 @@ var dateTimePickerOptions = {
 ========================================================================== */
 
 var serverAddress = 'localhost';
-var serverPort = 8080;
+var serverPort = 8084;
 
 
 /* Scrollbars

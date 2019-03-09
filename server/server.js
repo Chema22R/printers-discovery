@@ -67,7 +67,7 @@ function getConfigData() {
 
 var databaseURI = 'mongodb://localhost:27017';
 var databaseName = 'hpdiscovery';
-var serverPort = 8080;
+var serverPort = 8084;
 
 mongodb.connect(databaseURI, function (err, client) {
     if (err) {
