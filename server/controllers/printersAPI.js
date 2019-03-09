@@ -3,9 +3,7 @@
 exports.getPrintersList = function(req, res) {
     var logEntry = 'Get Printers List (' + new Date() + ', ' + req.ip + '):';
 
-    req.app.locals.db.collection('printers').find({}, {
-        projection: {'_id': 0}
-    }).toArray(function(err, docs) {
+    req.app.locals.db.collection('printers').find({}, {}).toArray(function(err, docs) {
         if (err) {
             closeLog('\tError retrieving the list of printers: ' + err, 1);
             res.sendStatus(500);
