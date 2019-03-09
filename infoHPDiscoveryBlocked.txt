@@ -1,0 +1,9 @@
+The following lines were commented:
+    server
+        server.js (lines 19, 54, 58, 79, 94, 106)
+
+The following lines were removed:
+    server
+        package.json (lines 10-11)
+            "ref": "1.3.5",
+            "ffi": "2.2.0",
