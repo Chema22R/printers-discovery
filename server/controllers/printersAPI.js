@@ -41,7 +41,8 @@ exports.updatePrinterMetadata = function(req, res) {
             'basicInfo.ip': req.query.ip,
             'basicInfo.hostname': req.query.hostname
         }, {
-            projection: {'_id': 1, 'metadata': 1}
+            '_id': 1,
+            'metadata': 1
         }).toArray(function(err, docs) {
             if (err) {
                 closeLog('\tError searching the given combination ip+hostname: ' + err, 1);
