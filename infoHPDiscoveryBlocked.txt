@@ -1,4 +1,7 @@
 The following lines were commented:
+    client
+        index.html (line 43)
+
     server
         server.js (lines 19, 54, 58, 79, 94, 106)
 
