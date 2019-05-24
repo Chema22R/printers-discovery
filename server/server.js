@@ -16,7 +16,7 @@ var Console = require('console').Console;
 /* controllers
 ========================================================================== */
 
-// var HPDiscovery = require('./controllers/HPDiscovery.js');
+// var discovery = require('./controllers/discovery.js');
 var configAPI = require('./controllers/configAPI.js');
 var printersAPI = require('./controllers/printersAPI.js');
 
@@ -51,11 +51,11 @@ function getConfigData() {
 
         if (JSON.stringify(data) !== JSON.stringify(app.locals.configData)) {
             app.locals.configData = JSON.parse(data);
-            // HPDiscovery.updateConfigData(app.locals.configData);
+            // discovery.updateConfigData(app.locals.configData);
         }
     } else {
         app.locals.configData = {logLevel: 3, logSeparator: 3, updateFrequency: 60000, deleteTimeout: 7200000}; // four levels (null/0, error/1, warn/2, info/3)
-        // HPDiscovery.updateConfigData(app.locals.configData);
+        // discovery.updateConfigData(app.locals.configData);
 
         fs.writeFileSync('./config.json', JSON.stringify(app.locals.configData), {encoding: 'utf8', flag: 'w'});
     }
@@ -66,7 +66,7 @@ function getConfigData() {
 ========================================================================== */
 
 var databaseURI = 'mongodb://localhost:27017';
-var databaseName = 'hpdiscovery';
+var databaseName = 'printersdiscovery';
 var serverPort = 8084;
 
 mongodb.connect(databaseURI, function (err, client) {
@@ -76,13 +76,13 @@ mongodb.connect(databaseURI, function (err, client) {
         app.locals.db = client.db(databaseName);
         console.log('Connected to database "' + databaseName + '"');
 
-        // HPDiscovery.init(app.locals);
-        console.log('HPDiscovery library initiated and subscribed');
+        // discovery.init(app.locals);
+        console.log('Discovery library initiated and subscribed');
     }
 });
 
 app.listen(serverPort, function () {
-    console.log('HPDiscovery server running on http://localhost:' + serverPort);
+    console.log('Printers Discovery server running on http://localhost:' + serverPort);
 });
 
 
@@ -91,8 +91,8 @@ app.listen(serverPort, function () {
 
 process.on('exit', function(code) { // exit with "process.exit()"
     clearInterval(getConfigDataID);
-    // HPDiscovery.terminate();
-    console.log("HPDiscovery terminated with status code " + code);
+    // discovery.terminate();
+    console.log("Printers Discovery terminated with status code " + code);
 });
 
 
@@ -103,4 +103,4 @@ app.get('/config/data', configAPI.getConfigData);
 app.put('/config/update', configAPI.updateConfigData);
 app.get('/printers/list', printersAPI.getPrintersList);
 app.put('/printers/update', printersAPI.updatePrinterMetadata);
-// app.get('/printers/update', HPDiscovery.forcePrinterInfoUpdate);
+// app.get('/printers/update', discovery.forcePrinterInfoUpdate);

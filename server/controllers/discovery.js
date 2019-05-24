@@ -26,7 +26,7 @@ var cstringPtrPtr = ref.refType(cstringPtr);
 var intPtr = ref.refType('size_t');
 var voidPtr = ref.refType('void');
 
-var libHPDiscovery = ffi.Library('./HPDiscovery/libhpDiscovery.so', {
+var libDiscovery = ffi.Library('./HPDiscovery/libhpDiscovery.so', {
     'HPDiscoveryInit': ['int', []],
     'HPDiscoveryTerminate': ['int', []],
     'HPDiscoverySubscribe': ['int', ['pointer', 'void']],
@@ -144,10 +144,10 @@ exports.init = function(controllers) {
     logger = controllers.logger;
     db = controllers.db;
 
-    returnState = libHPDiscovery.HPDiscoveryInit();
+    returnState = libDiscovery.HPDiscoveryInit();
     if (returnState != 0) {closeLog('Error at HPDiscoveryInit: returned the state ' + returnState, 1);}
 
-    returnState = libHPDiscovery.HPDiscoverySubscribe(subscriptionCallback, null);
+    returnState = libDiscovery.HPDiscoverySubscribe(subscriptionCallback, null);
     if (returnState != 0) {closeLog('Error at HPDiscoverySubscribe: returned the state ' + returnState, 1);}
 };
 
@@ -155,7 +155,7 @@ exports.terminate = function() {
     var returnState;
 
     clearInterval(updatePrintersByTimeID);
-    returnState = libHPDiscovery.HPDiscoveryTerminate();
+    returnState = libDiscovery.HPDiscoveryTerminate();
     if (returnState != 0) {closeLog('Error at HPDiscoveryTerminate: returned the state ' + returnState, 1);}
 };
 
@@ -201,14 +201,14 @@ exports.forcePrinterInfoUpdate = function(req, res) {
     function getInfo(id, currentInfo, lastStatusUpdate) {
         var printerDetailedInfo, returnState1, returnState2, integrityCheck;
 
-        returnState1 = libHPDiscovery.HPDiscoveryGetPrinterInformation(req.query.ip, printerInformation, printerInformationLength);
+        returnState1 = libDiscovery.HPDiscoveryGetPrinterInformation(req.query.ip, printerInformation, printerInformationLength);
         if (returnState1 != 0) {logEntry += '\tError at HPDiscoveryGetPrinterInformation: returned the state ' + returnState1 + '\t';}
 
         printerDetailedInfo = xmljs.xml2js(printerInformation.deref().readCString(), xmlOptions).Information._attributes;
         integrityCheck = printerDetailedInfo.hostname;
         delete printerDetailedInfo.hostname;
 
-        returnState2 = libHPDiscovery.HPDiscoveryDeleteBuffer(printerInformation);
+        returnState2 = libDiscovery.HPDiscoveryDeleteBuffer(printerInformation);
         if (returnState2 != 0) {logEntry += '\tError at HPDiscoveryDeleteBuffer: returned the state ' + returnState2 + '\t';}
 
         if (returnState1 != 0) {    // if returnstate2 != 0, we can continue but registering the error
@@ -258,14 +258,14 @@ function updatePrinterInfo(printerIP, printerHostname, id, currentInfo, lastStat
     var printerDetailedInfo, returnState1, returnState2, integrityCheck;
     var logEntry = 'Update Printer Detailed Information (' + new Date() + ', ' + printerIP + ', ' + printerHostname + '):';
 
-    returnState1 = libHPDiscovery.HPDiscoveryGetPrinterInformation(printerIP, printerInformation, printerInformationLength);
+    returnState1 = libDiscovery.HPDiscoveryGetPrinterInformation(printerIP, printerInformation, printerInformationLength);
     if (returnState1 != 0) {logEntry += '\tError at HPDiscoveryGetPrinterInformation: returned the state ' + returnState1 + '\t';}
 
     printerDetailedInfo = xmljs.xml2js(printerInformation.deref().readCString(), xmlOptions).Information._attributes;
     integrityCheck = printerDetailedInfo.hostname;
     delete printerDetailedInfo.hostname;
 
-    returnState2 = libHPDiscovery.HPDiscoveryDeleteBuffer(printerInformation);
+    returnState2 = libDiscovery.HPDiscoveryDeleteBuffer(printerInformation);
     if (returnState2 != 0) {logEntry += '\tError at HPDiscoveryDeleteBuffer: returned the state ' + returnState2 + '\t';}
 
     if (returnState1 != 0) {    // if returnstate2 != 0, we can continue but registering the error

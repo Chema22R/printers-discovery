@@ -1,6 +1,6 @@
 {
-    "name": "HPDiscovery",
-    "short_name": "HPDiscovery",
+    "name": "PrintersDiscovery",
+    "short_name": "PrintersDiscovery",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
