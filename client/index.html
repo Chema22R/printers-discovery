@@ -35,9 +35,12 @@
         <div id='fixedLog'><p></p></div>
 
         <div id="projectIntroContainer">
-			<img id="projectIntroImg" src="img/projectIntro.png" alt="Project image">
-			<div id="projectIntroText"></div>
-			<!--<button id="projectIntroExit" class="icon-quit icon"></button>-->
+			<div id="projectIntroBack" onclick="fadeOut()"></div>
+			<div id="projectIntroContent">
+				<img id="projectIntroImg" src="img/projectIntro.png" alt="Introduction Image">
+				<p id="projectIntroText"></p>
+				<span id="projectIntroExit" onclick="fadeOut()">&times;</span>
+			</div>
 		</div>
 
         <div id='loadingBar'>
