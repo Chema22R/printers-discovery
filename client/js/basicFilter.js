@@ -83,12 +83,7 @@ $(function() {
         }
 
         $('#iconsView').scrollTop(0);
-        psIconsView.update();
-
         $('#listView').scrollTop(0);
-        psListView.update();
-
         $('#columnsViewPopulation').scrollTop(0);
-        psColumnsViewPopulation.update();
     }
 });

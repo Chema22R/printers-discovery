@@ -22,7 +22,6 @@ $(function() {
             $('#iconsView').show();
 
             $('#iconsView').scrollTop(0);
-            psIconsView.update();
 
             $('#listViewTrigger, #columnsViewTrigger').removeClass('current');
             $('#iconsViewTrigger').addClass('current');
@@ -37,7 +36,6 @@ $(function() {
             $('#listView').show();
             
             $('#listView').scrollTop(0);
-            psListView.update();
 
             $('#iconsViewTrigger, #columnsViewTrigger').removeClass('current');
             $('#listViewTrigger').addClass('current');
@@ -54,9 +52,6 @@ $(function() {
             $('#columnsViewFiltersWrapper').scrollTop(0);
             $('#columnsViewPopulation').scrollTop(0);
             $('#columnsViewPrinterWrapper').scrollTop(0);
-            psColumnsViewFiltersWrapper.update();
-            psColumnsViewPopulation.update();
-            psColumnsViewPrinterWrapper.update();
 
             $('#iconsViewTrigger, #listViewTrigger').removeClass('current');
             $('#columnsViewTrigger').addClass('current');
@@ -102,27 +97,5 @@ $(function() {
         if (!$(e.target).is('input.datetimepicker')) {
             $('input.datetimepicker').datepicker('hide');
         }
-    });
-
-
-    /* Window Resize
-    ========================================================================== */
-    $(window).on('resize', function(e) {
-        psHeaderBarSearchBasicFilters.update();
-        psHeaderBarAdvancedFilters.update();
-
-        psIconsView.update();
-        psListView.update();
-
-        psColumnsViewFiltersWrapper.update();
-        psColumnsViewPopulation.update();
-        psColumnsViewPrinterWrapper.update();
-
-        psInfoMenu.update();
-        psEditMenu.update();
-        psAdvancedFiltersMenu.update();
-        psConfigMenu.update();
-        psListViewConfigMenu.update();
-        psCreateReservationMenu.update();
     });
 });

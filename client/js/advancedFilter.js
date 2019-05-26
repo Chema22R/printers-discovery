@@ -12,12 +12,9 @@ $(function() {
         }
 
         $('#headerBarSearchBasicFilters, #headerBarAdvancedFilters').show().scrollTop(0);
-        psHeaderBarSearchBasicFilters.update();
-        psHeaderBarAdvancedFilters.update();
         $('#headerBarSearchBasicFilters, #headerBarAdvancedFilters').hide();
 
         $('#columnsViewFiltersWrapper').scrollTop(0);
-        psColumnsViewFiltersWrapper.update();
 
         activateFiltersTriggers();
     }
@@ -59,11 +56,9 @@ $(function() {
                     document.cookie = $(this).attr('name') + '=;max-age=0';
 
                     $('#headerBarAdvancedFilters').show().scrollTop(0);
-                    psHeaderBarAdvancedFilters.update();
                     $('#headerBarAdvancedFilters').hide();
                     
                     $('#columnsViewFiltersWrapper').scrollTop(0);
-                    psColumnsViewFiltersWrapper.update();
                 }
             } else {
                 if ($(this).hasClass('current')) {
@@ -94,11 +89,9 @@ $(function() {
                 document.cookie = $(this).attr('name') + '=;max-age=0';
 
                 $('#headerBarAdvancedFilters').show().scrollTop(0);
-                psHeaderBarAdvancedFilters.update();
                 $('#headerBarAdvancedFilters').hide();
                 
                 $('#columnsViewFiltersWrapper').scrollTop(0);
-                psColumnsViewFiltersWrapper.update();
             }
         });
     }
@@ -128,7 +121,6 @@ $(function() {
         if ($('#advancedFiltersMenu').is(':hidden')) {
             $('#menus, #advancedFiltersMenu').fadeIn('slow');
             $('#advancedFiltersMenu').scrollTop(0);
-            psAdvancedFiltersMenu.update();
         }
     });
 
@@ -173,11 +165,9 @@ $(function() {
             $('<div class="filter current" name="' + filterName + '" title="' + generateTitle(data) + '"><p>' + filterName + '</p><button class="delete icon-delete icon" title="remove filter"></button></div>').insertAfter('#columnsViewFiltersWrapper span.separator');
 
             $('#headerBarAdvancedFilters').show().scrollTop(0);
-            psHeaderBarAdvancedFilters.update();
             $('#headerBarAdvancedFilters').hide();
             
             $('#columnsViewFiltersWrapper').scrollTop(0);
-            psColumnsViewFiltersWrapper.update();
 
             advancedFilters[filterName] = data;
             document.cookie = filterName + '=' + JSON.stringify(data) + ';max-age=315360000';   // 315360000s are 10 years
@@ -247,13 +237,8 @@ $(function() {
         }
 
         $('#iconsView').scrollTop(0);
-        psIconsView.update();
-
         $('#listView').scrollTop(0);
-        psListView.update();
-
         $('#columnsViewPopulation').scrollTop(0);
-        psColumnsViewPopulation.update();
     }
 
 

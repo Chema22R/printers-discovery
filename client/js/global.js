@@ -57,29 +57,6 @@ var serverAddress = 'localhost';
 var serverPort = 8084;
 
 
-/* Scrollbars
-========================================================================== */
-
-var psOptions = {minScrollbarLength: 20};
-
-var psHeaderBarSearchBasicFilters = new PerfectScrollbar('#headerBarSearchBasicFilters', psOptions);
-var psHeaderBarAdvancedFilters = new PerfectScrollbar('#headerBarAdvancedFilters', psOptions);
-
-var psIconsView = new PerfectScrollbar('#iconsView', psOptions);
-var psListView = new PerfectScrollbar('#listView', psOptions);
-
-var psColumnsViewFiltersWrapper = new PerfectScrollbar('#columnsViewFiltersWrapper', psOptions);
-var psColumnsViewPopulation = new PerfectScrollbar('#columnsViewPopulation', psOptions);
-var psColumnsViewPrinterWrapper = new PerfectScrollbar('#columnsViewPrinterWrapper', psOptions);
-
-var psInfoMenu = new PerfectScrollbar('#infoMenu', psOptions);
-var psEditMenu = new PerfectScrollbar('#editMenu', psOptions);
-var psAdvancedFiltersMenu = new PerfectScrollbar('#advancedFiltersMenu', psOptions);
-var psConfigMenu = new PerfectScrollbar('#configMenu', psOptions);
-var psListViewConfigMenu = new PerfectScrollbar('#listViewConfigMenu', psOptions);
-var psCreateReservationMenu = new PerfectScrollbar('#createReservationMenu', psOptions);
-
-
 /* Functions
 ========================================================================== */
 

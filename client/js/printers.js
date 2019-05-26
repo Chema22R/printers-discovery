@@ -20,7 +20,6 @@ $(function() {
                     if ($('#createReservationMenu').is(':hidden')) {
                         $('#menus, #createReservationMenu').show();
                         $('#createReservationMenu').scrollTop(0);
-                        psCreateReservationMenu.update();
                     }
                 }
             },
@@ -401,12 +400,6 @@ $(function() {
         $(iconsViewPrinters).appendTo('#iconsView');
         $(listViewPrinters).appendTo('#listView table.wrapper');
         $(columnsViewPrinters).appendTo('#columnsViewPrintersColumn');
-
-        psIconsView.update();
-        psListView.update();
-
-        psColumnsViewPopulation.destroy();
-        psColumnsViewPopulation = new PerfectScrollbar('#columnsViewPopulation', psOptions);
     }
 
 
@@ -437,7 +430,6 @@ $(function() {
             if ($('#infoMenu').is(':hidden')) {
                 $('#menus, #infoMenu').fadeIn('slow');
                 $('#infoMenu').scrollTop(0);
-                psInfoMenu.update();
             }
         });
 
@@ -468,7 +460,6 @@ $(function() {
 
                 $('#columnsViewPrinterWrapper').fadeIn('slow');
                 $('#columnsViewPrinterWrapper').scrollTop(0);
-                psColumnsViewPrinterWrapper.update();
             }
         });
 
@@ -599,7 +590,6 @@ $(function() {
 
             $('#editMenu').fadeIn('slow');
             $('#editMenu').scrollTop(0);
-            psEditMenu.update();
         }
     });
 
@@ -832,7 +822,6 @@ $(function() {
                 if ($('#listViewConfigMenu').is(':hidden')) {
                     $('#menus, #listViewConfigMenu').fadeIn('slow');
                     $('#listViewConfigMenu').scrollTop(0);
-                    psListViewConfigMenu.update();
                 }
             }
 
