@@ -3,7 +3,7 @@
     padding-top: 36px;
     display: none;
     position: relative;
-    overflow: hidden;
+    overflow: auto;
 }
 
 #listView > p.noPrinters {

@@ -101,6 +101,7 @@
 #headerBar > div > div.dropdown > div {
     width: 120px;
     right: 102px;
+    overflow: auto;
 }
 
 #headerBarAdvancedFilters {

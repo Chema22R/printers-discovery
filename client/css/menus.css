@@ -32,7 +32,7 @@
     min-width: 600px;
 
     position: relative;
-    overflow: hidden;
+    overflow: auto;
 
     border-radius: 15px 15px 15px 15px;
     -moz-border-radius: 15px 15px 15px 15px;

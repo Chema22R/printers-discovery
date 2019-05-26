@@ -2,7 +2,7 @@
     height: calc(100vh - 50px);
     display: none;
     position: relative;
-    overflow: hidden;
+    overflow: auto;
 }
 
 #iconsView > div.wrapper {
