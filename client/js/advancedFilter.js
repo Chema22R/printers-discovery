@@ -25,7 +25,7 @@ $(function() {
     function activateFiltersTriggers() {
         $('#headerBarAdvancedFilters button, #columnsViewFiltersWrapper div.filter').off();
 
-        $('#headerBarAdvancedFilters button').on('click touchstart', function(e) {
+        $('#headerBarAdvancedFilters button').on('click', function(e) {
             e.preventDefault();
 
             if ($(this).hasClass('current')) {
@@ -43,7 +43,7 @@ $(function() {
             }
         });
 
-        $('#columnsViewFiltersWrapper div.filter').on('click touchstart', function(e) {
+        $('#columnsViewFiltersWrapper div.filter').on('click', function(e) {
             e.preventDefault();
             
             if ($(e.target).hasClass('delete')) {
@@ -108,7 +108,7 @@ $(function() {
 
     /* Fade in the advanced filter menu
     ========================================================================== */
-    $('#advancedFiltersMenuTrigger').on('click touchstart', function(e) {
+    $('#advancedFiltersMenuTrigger').on('click', function(e) {
         e.preventDefault();
 
         $('#filterFormDetails input').val('');
@@ -127,7 +127,7 @@ $(function() {
 
     /* This function defines the behaviour of the 'Filter' button, placed into the advancedFiltersMenu
     ================================================================================================== */
-    $('#advancedFiltersMenu > button.actionButton').on('click touchstart', function(e) {
+    $('#advancedFiltersMenu > button.actionButton').on('click', function(e) {
         e.preventDefault();
 
         var filterName = $('#filterFormName input[name="filterName"]').val().trim().replace(/\s\s+/g, ' ');

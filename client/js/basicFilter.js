@@ -11,7 +11,7 @@ $(function() {
 
     /* Execute the filter function when the user changes the basic filters
     ========================================================================== */
-    $('#headerBarSearchBasicFilters button').on('click touchstart', function(e) {
+    $('#headerBarSearchBasicFilters button').on('click', function(e) {
         e.preventDefault();
 
         $('#headerBarAdvancedFilters button').removeClass('current');

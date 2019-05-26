@@ -10,9 +10,9 @@ $(function() {
         default: fadeInIconsView();
     }
 
-    $('#iconsViewTrigger').on('click touchstart', fadeInIconsView);
-    $('#listViewTrigger').on('click touchstart', fadeInListView);
-    $('#columnsViewTrigger').on('click touchstart', fadeInColumnsView);
+    $('#iconsViewTrigger').on('click', fadeInIconsView);
+    $('#listViewTrigger').on('click', fadeInListView);
+    $('#columnsViewTrigger').on('click', fadeInColumnsView);
 
     function fadeInIconsView() {
         if ($('#iconsView').is(':hidden')) {

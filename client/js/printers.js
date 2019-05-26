@@ -409,7 +409,7 @@ $(function() {
     function activatePrintersTriggers() {
         $('#iconsViewPopulation div.printer, #listViewPopulation tr.printer, #columnsViewPopulation div.printer').off();
 
-        $('#iconsViewPopulation div.printer, #listViewPopulation tr.printer').on('click touchstart', function(e) {
+        $('#iconsViewPopulation div.printer, #listViewPopulation tr.printer').on('click', function(e) {
             e.preventDefault();
 
             var details = fillDetailsFields('<div id="infoMenuDetails" class="wrapper right">', printersPersistent[$(e.currentTarget).attr('name')]);
@@ -433,7 +433,7 @@ $(function() {
             }
         });
 
-        $('#columnsViewPopulation div.printer').on('click touchstart', function(e) {
+        $('#columnsViewPopulation div.printer').on('click', function(e) {
             e.preventDefault();
 
             if ($(e.currentTarget).hasClass('current')) {
@@ -566,7 +566,7 @@ $(function() {
 
     /* This function defines the behaviour of the 'Edit' button, placed into the infoMenu, which fills the fields of the editMenu
     ============================================================================================================================= */
-    $('#infoMenu button.actionButton, #columnsViewPrinterWrapper button.actionButton').on('click touchstart', function(e) {
+    $('#infoMenu button.actionButton, #columnsViewPrinterWrapper button.actionButton').on('click', function(e) {
         e.preventDefault();
 
         var details = fillDetailsFields('<div id="editMenuDetails" class="wrapper right">', printersPersistent[e.currentTarget.name]);
@@ -596,7 +596,7 @@ $(function() {
 
     /* This function defines the behaviour of the 'Create' button, placed into the createReservationMenu, which creates a new event in the calendar
     =============================================================================================================================================== */
-    $('#createReservationMenu > button.actionButton').on('click touchstart', function(e) {
+    $('#createReservationMenu > button.actionButton').on('click', function(e) {
         e.preventDefault();
 
         var printer = printersPersistent[$('#calendarView').attr('name')];
@@ -717,7 +717,7 @@ $(function() {
 
     /* This function defines the behaviour of the 'Send' button, placed into the editMenu, which puts the input values to the server
     ================================================================================================================================ */
-    $('#editMenu > button.actionButton').on('click touchstart', function(e) {
+    $('#editMenu > button.actionButton').on('click', function(e) {
         e.preventDefault();
 
         var printer = printersPersistent[$('#editMenu button.actionButton').attr('name')];
@@ -766,7 +766,7 @@ $(function() {
 
     /* This function controls the listView headers (click), updating the printers with the new sorting parameter
     ============================================================================================================ */
-    $('#listViewHeaders th').on('click touchstart', function(e) {
+    $('#listViewHeaders th').on('click', function(e) {
         e.preventDefault();
         
         if (sortingConfig.param == $(e.currentTarget).attr('name')) {
@@ -833,7 +833,7 @@ $(function() {
 
     /* This function controls the checkboxes of the listViewConfigMenu, showing and hiding the respective columns in the listView
     ============================================================================================================================= */
-    $('#listViewConfigMenu input[type="checkbox"]').on('click touchstart', function(e) {
+    $('#listViewConfigMenu input[type="checkbox"]').on('click', function(e) {
         var idCol = $(e.target).attr('name');
 
         if (!$(e.target).is(':checked')) {

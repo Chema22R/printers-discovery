@@ -3,7 +3,7 @@
 $(function() {
     /* Update the configuration inputs and fade in the config menu
     ========================================================================== */
-    $('#configMenuTrigger').on('click touchstart', function(e) {
+    $('#configMenuTrigger').on('click', function(e) {
         e.preventDefault();
         
         if ($('#configMenu').is(':hidden')) {
