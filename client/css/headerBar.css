@@ -102,6 +102,7 @@
     width: 120px;
     right: 102px;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 #headerBarAdvancedFilters {

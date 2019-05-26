@@ -3,6 +3,7 @@
     display: none;
     position: relative;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 #iconsView > div.wrapper {

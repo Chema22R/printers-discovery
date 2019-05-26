@@ -38,6 +38,7 @@
     
     position: relative;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 @media (min-width: 1000px) {
@@ -159,6 +160,7 @@
     display: none;
     position: relative;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 #columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper {margin: 8px 0;}
