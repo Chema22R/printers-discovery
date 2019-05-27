@@ -1,6 +1,6 @@
 #listView {
     height: calc(100vh - 86px);
-    padding-top: 36px;
+    margin-top: 36px;
     display: none;
     position: relative;
     overflow: auto;
