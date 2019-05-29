@@ -1,22 +1,25 @@
 {
   "name": "printers-discovery",
   "version": "1.0.0",
+  "license": "ISC",
+  "author": "Jose Maria Rivera Alonso (https://github.com/Chema22R)",
   "description": "",
   "main": "server.js",
-  "dependencies": {
-    "express": "4.16.3",
-    "cors": "2.8.4",
-    "mongodb": "2.2",
-    "xml-js": "1.6.7"
-  },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Chema22R/Printers-Discovery.git"
+    "url": "git+https://github.com/Chema22R/printers-discovery.git"
   },
-  "author": "Jose Maria Rivera Alonso",
-  "license": "ISC"
+  "bugs": {
+    "url": "https://github.com/Chema22R/printers-discovery/issues"
+  },
+  "homepage": "https://github.com/Chema22R/printers-discovery#readme",
+  "dependencies": {
+    "express": "4.16.3",
+    "cors": "2.8.4",
+    "mongodb": "2.2",
+    "xml-js": "1.6.7"
+  }
 }
