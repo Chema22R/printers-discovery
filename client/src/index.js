@@ -1,14 +1,33 @@
-'use strict';
+import * as projectIntro from "project-intro";
 
-/* Various
+import "./assets/style/normalize.css";
+import "./assets/style/main.css";
+import "./assets/style/headerBar.css";
+import "./assets/style/iconsView.css";
+import "./assets/style/listView.css";
+import "./assets/style/columnsView.css";
+import "./assets/style/menus.css";
+
+import "./app/cookies.js";
+import "./app/navigation.js";
+import "./app/printers.js";
+import "./app/basicFilter.js";
+import "./app/advancedFilter.js";
+import "./app/config.js";
+
+window.projectIntro = projectIntro;
+projectIntro.init();
+
+
+/* Variables
 ========================================================================== */
 
-var defaultView = 'iconsView';
+window.defaultView = 'iconsView';
 
-var printersPersistent = new Object();
-var advancedFilters = new Object();
+window.printersPersistent = new Object();
+window.advancedFilters = new Object();
 
-var basicFilters = {
+window.basicFilters = {
     hostname: false,
     ip: false,
     modelname: false,
@@ -21,12 +40,12 @@ var basicFilters = {
     notes: false
 };
 
-var sortingConfig = {
+window.sortingConfig = {
     param: 'modelname',
     direction: true
 };
 
-var listViewHeaders = {
+window.listViewHeaders = {
     hostname: false,
     ip: true,
     modelname: true,
@@ -41,7 +60,7 @@ var listViewHeaders = {
     reservedUntil: false
 };
 
-var dateTimePickerOptions = {
+window.dateTimePickerOptions = {
     controlType: 'select',
     oneLine: true,
     timeInput: true,
@@ -50,17 +69,10 @@ var dateTimePickerOptions = {
 };
 
 
-/* Server Connections
-========================================================================== */
-
-var serverAddress = 'localhost';
-var serverPort = 8084;
-
-
 /* Functions
 ========================================================================== */
 
-function compareValues(var1, var2) {
+window.compareValues = (var1, var2) => {
     var mapReplace = {'á':'a', 'é':'e', 'í':'i', 'ó':'o', 'ú':'u', 'à':'a', 'è':'e', 'ì':'i', 'ò':'o', 'ú':'u', 'ä':'a', 'ë':'e', 'ï':'i', 'ö':'o', 'ü':'u'};
 
     var1 = String(var1).toLowerCase().trim().replace(/\s\s+/g, ' ').replace(/[áéíóúàèìòùäëïöü]/g, function(match) {return mapReplace[match];});
@@ -71,9 +83,9 @@ function compareValues(var1, var2) {
     } else {
         return false;
     }
-}
+};
 
-function showMessage(msj, color) {
+window.showMessage = (msj, color) => {
     $('#fixedLog p')
     .text(msj)
     .css({
@@ -86,4 +98,4 @@ function showMessage(msj, color) {
             $('#fixedLog').fadeOut('slow');
         }, 2000);
     });
-}
+};

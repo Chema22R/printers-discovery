@@ -12,7 +12,7 @@ $(function() {
             $.ajax({
                 async: true,
                 crossDomain: true,
-                url: 'http://'+serverAddress+':'+serverPort+'/config/data',
+                url: SERVER_URL + '/config/data',
                 method: 'GET',
                 success: function(res, status) {
                     if (res.logLevel) {
@@ -47,9 +47,9 @@ $(function() {
                     $('#loadingBar').hide();
 
                     if (!err) {
-                        showMessage('Unable to connect to server', 'red');
+                        window.showMessage('Unable to connect to server', 'red');
                     } else {
-                        showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
+                        window.showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
                     }
                 }
             });
@@ -68,7 +68,7 @@ $(function() {
             $.ajax({
                 async: true,
                 crossDomain: true,
-                url: 'http://'+serverAddress+':'+serverPort+'/config/update',
+                url: SERVER_URL + '/config/update',
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
                 processData: false,
@@ -79,7 +79,7 @@ $(function() {
                     deleteTimeout: parseInt($('#configForm input[name="deleteTimeout"]').val()) * 60000
                 }),
                 success: function(res, status) {
-                    showMessage('Configuration successfully updated', 'green');
+                    window.showMessage('Configuration successfully updated', 'green');
                     $('#loadingBar').hide();
                     $('#menus, #configMenu').fadeOut('slow');
                 },
@@ -87,9 +87,9 @@ $(function() {
                     $('#loadingBar').hide();
 
                     if (!err) {
-                        showMessage('Unable to connect to server', 'red');
+                        window.showMessage('Unable to connect to server', 'red');
                     } else {
-                        showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
+                        window.showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
                     }
                 }
             });

@@ -6,38 +6,29 @@
         <meta name='author' content='Jose Maria Rivera Alonso'/>
         <meta name='viewport' content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'/>
 
-        <link rel='stylesheet' type='text/css' href='libs/jquery-ui/jquery-ui.min.css'>
+        <!--<link rel='stylesheet' type='text/css' href='libs/jquery-ui/jquery-ui.min.css'>
         <link rel='stylesheet' type='text/css' href='libs/timepicker/timepicker.min.css'>
-        <link rel='stylesheet' type='text/css' href='libs/fullcalendar/fullcalendar.min.css'/>
+        <link rel='stylesheet' type='text/css' href='libs/fullcalendar/fullcalendar.min.css'/>-->
 
-        <link rel='stylesheet' type='text/css' href='css/normalize.css'>
-        <link rel='stylesheet' type='text/css' href='css/main.css'>
-        <link rel='stylesheet' type='text/css' href='css/headerBar.css'>
-        <link rel='stylesheet' type='text/css' href='css/iconsView.css'>
-        <link rel='stylesheet' type='text/css' href='css/listView.css'>
-        <link rel='stylesheet' type='text/css' href='css/columnsView.css'>
-        <link rel='stylesheet' type='text/css' href='css/menus.css'>
-        <link rel='stylesheet' type='text/css' href='css/projectIntro.css'>
+        <link rel='stylesheet' href='./icons/style.css'>
 
-        <link rel='stylesheet' href='fonts/style.css'>
-
-        <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
-        <link rel="manifest" href="favicons/site.webmanifest">
-        <link rel="mask-icon" href="favicons/safari-pinned-tab.svg" color="#5bbad5">
-        <link rel="shortcut icon" href="favicons/favicon.ico">
+        <link rel="apple-touch-icon" sizes="180x180" href="./favicons/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="./favicons/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="./favicons/favicon-16x16.png">
+        <link rel="manifest" href="./favicons/site.webmanifest">
+        <link rel="mask-icon" href="./favicons/safari-pinned-tab.svg" color="#5bbad5">
+        <link rel="shortcut icon" href="./favicons/favicon.ico">
         <meta name="msapplication-TileColor" content="#2d89ef">
-        <meta name="msapplication-config" content="favicons/browserconfig.xml">
+        <meta name="msapplication-config" content="./favicons/browserconfig.xml">
         <meta name="theme-color" content="#ffffff">
     </head>
     <body>
         <div id='fixedLog'><p></p></div>
 
         <div id="projectIntroContainer">
-            <div id="projectIntroBack" onclick="projectIntrofadeOut()"></div>
+            <div id="projectIntroBack" onclick="projectIntro.fadeOut()"></div>
             <div id="projectIntroContent">
-                <img id="projectIntroImg" src="img/projectIntro.png" alt="Introduction Image">
+                <img id="projectIntroImg" src="./images/projectIntro.png" alt="Project Introduction Image">
                 <p id="projectIntroText">
                     This application aims to analyze the local network in search of prototypes of printers,
                     capturing and storing their information.<br>The interface allows users to view the
@@ -50,7 +41,7 @@
                     the context menu (right-click mouse), users can access extra features, such as the reservation
                     calendar.<br> Due to the nature of the project, the information shown is simulated.
                 </p>
-                <span id="projectIntroExit" onclick="projectIntrofadeOut()">&times;</span>
+                <span id="projectIntroExit" onclick="projectIntro.fadeOut()">&times;</span>
             </div>
         </div>
 
@@ -427,21 +418,11 @@
         </div>
 
 
-        <!-- JS -->
+        <!-- JS 
 		<script src='libs/jquery.min.js'></script>
 		<script src='libs/jquery-ui/jquery-ui.min.js'></script>
 		<script src='libs/timepicker/timepicker.min.js'></script>
         <script src='libs/fullcalendar/lib/moment.min.js'></script>
-        <script src='libs/fullcalendar/fullcalendar.min.js'></script>
-        <script src="libs/projectIntro.js" type="text/javascript"></script>
-
-		<script src='js.min.js'></script>
-		<!--<script src='js/global.js'></script>
-		<script src='js/cookies.js'></script>
-		<script src='js/navigation.js'></script>
-		<script src='js/printers.js'></script>
-		<script src='js/basicFilter.js'></script>
-		<script src='js/advancedFilter.js'></script>
-		<script src='js/config.js'></script>-->
+        <script src='libs/fullcalendar/fullcalendar.min.js'></script>-->
     </body>
 </html>

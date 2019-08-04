@@ -3,7 +3,7 @@
 $(function() {
     /* Views Triggers
     ========================================================================== */
-    switch(defaultView) {
+    switch(window.defaultView) {
         case 'iconsView': fadeInIconsView();break;
         case 'listView': fadeInListView();break;
         case 'columnsView': fadeInColumnsView();break;

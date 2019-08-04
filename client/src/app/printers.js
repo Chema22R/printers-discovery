@@ -15,7 +15,7 @@ $(function() {
                 text: '+',
                 click: function() {
                     $('#createReservationForm input').val('');
-                    $('#createReservationForm input.datetimepicker').datetimepicker(dateTimePickerOptions);
+                    $('#createReservationForm input.datetimepicker').datetimepicker(window.dateTimePickerOptions);
 
                     if ($('#createReservationMenu').is(':hidden')) {
                         $('#menus, #createReservationMenu').show();
@@ -28,7 +28,7 @@ $(function() {
                 click: function() {
                     if (!calendarConfig.deleteMode) {
                         $('#calendarView').fullCalendar('option', 'eventColor', '#E40000');
-                        showMessage('Delete Mode: click on a reservation to delete it', 'gray');
+                        window.showMessage('Delete Mode: click on a reservation to delete it', 'gray');
                     } else {
                         $('#calendarView').fullCalendar('option', 'eventColor', '#3A87AD');
                     }
@@ -85,11 +85,11 @@ $(function() {
     };
 
 
-    $('#listViewHeaders th[name=' + sortingConfig.param + ']').addClass('current');
-    if (sortingConfig.direction) {
-        $('#listViewHeaders th[name=' + sortingConfig.param + '] span').addClass('icon-arrowUp').show();
+    $('#listViewHeaders th[name=' + window.sortingConfig.param + ']').addClass('current');
+    if (window.sortingConfig.direction) {
+        $('#listViewHeaders th[name=' + window.sortingConfig.param + '] span').addClass('icon-arrowUp').show();
     } else {
-        $('#listViewHeaders th[name=' + sortingConfig.param + '] span').addClass('icon-arrowDown').show();
+        $('#listViewHeaders th[name=' + window.sortingConfig.param + '] span').addClass('icon-arrowDown').show();
     }
 
     updatePrinters();
@@ -103,7 +103,7 @@ $(function() {
         $.ajax({
             async: true,
             crossDomain: true,
-            url: 'http://'+serverAddress+':'+serverPort+'/printers/list',
+            url: SERVER_URL + '/printers/list',
             method: 'GET',
             success: function(res, status) {
                 var now, param1, param2;
@@ -128,7 +128,7 @@ $(function() {
                     }
                 }
 
-                switch (sortingConfig.param) {
+                switch (window.sortingConfig.param) {
                     case 'hostname':
                         param1 = 'basicInfo';
                         param2 = 'hostname';
@@ -182,15 +182,15 @@ $(function() {
                         param2 = 'modelname';
                 }
 
-                populateViews(sortPrinters(res, param1, param2, sortingConfig.direction));
+                populateViews(sortPrinters(res, param1, param2, window.sortingConfig.direction));
                 activatePrintersTriggers();
 
                 $('#headerBarSearchInput').val('');
-                for (var filter in basicFilters) {basicFilters[filter] = false;}
+                for (var filter in window.basicFilters) {window.basicFilters[filter] = false;}
                 $('#headerBarSearchBasicFilters button, #headerBarAdvancedFilters button, #columnsViewFiltersWrapper div').removeClass('current');
 
-                for (var key in listViewHeaders) {
-                    if (listViewHeaders[key]) {
+                for (var key in window.listViewHeaders) {
+                    if (window.listViewHeaders[key]) {
                         $('#listViewHeaders th[name="' + key + '"]').show();
                         $('#listViewPopulation td[name="' + key + '"]').show();
                     } else {
@@ -205,9 +205,9 @@ $(function() {
                 $('#loadingBar').hide();
 
                 if (!err) {
-                    showMessage('Unable to connect to server', 'red');
+                    window.showMessage('Unable to connect to server', 'red');
                 } else {
-                    showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
+                    window.showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
                 }
             }
         });
@@ -222,7 +222,7 @@ $(function() {
         var columnsViewPrinters = '<div id="columnsViewPopulation" class="wrapper"><p class="noPrinters">No printers to show with selected filters</p>';
         var id, title;
 
-        printersPersistent = new Object();
+        window.printersPersistent = new Object();
 
         for (var i=0; i<printersList.length; i++) {
             id = uuid();
@@ -386,7 +386,7 @@ $(function() {
             listViewPrinters += '</tr>';             // printer end
             columnsViewPrinters += '</div></div>';  // status div and printer end
 
-            printersPersistent[id] = printersList[i];
+            window.printersPersistent[id] = printersList[i];
         }
 
         iconsViewPrinters += '</div>';      // iconsViewPopulation end
@@ -412,9 +412,9 @@ $(function() {
         $('#iconsViewPopulation div.printer, #listViewPopulation tr.printer').on('click', function(e) {
             e.preventDefault();
 
-            var details = fillDetailsFields('<div id="infoMenuDetails" class="wrapper right">', printersPersistent[$(e.currentTarget).attr('name')]);
-            var information = fillInformationFields('<div id="infoMenuInformation" class="wrapper right">', printersPersistent[$(e.currentTarget).attr('name')].metadata);
-            var notes = fillNotesFields('<div id="infoMenuNotes" class="wrapper center">', printersPersistent[$(e.currentTarget).attr('name')].metadata);
+            var details = fillDetailsFields('<div id="infoMenuDetails" class="wrapper right">', window.printersPersistent[$(e.currentTarget).attr('name')]);
+            var information = fillInformationFields('<div id="infoMenuInformation" class="wrapper right">', window.printersPersistent[$(e.currentTarget).attr('name')].metadata);
+            var notes = fillNotesFields('<div id="infoMenuNotes" class="wrapper center">', window.printersPersistent[$(e.currentTarget).attr('name')].metadata);
 
             $('#infoMenuDetails').remove();
             $('#infoMenuInformation').remove();
@@ -440,9 +440,9 @@ $(function() {
                 $(e.currentTarget).removeClass('current');
                 $('#columnsViewPrinterWrapper').hide();
             } else {
-                var details = fillDetailsFields('<div id="columnsViewPrinterDetails" class="wrapper right">', printersPersistent[$(e.currentTarget).attr('name')]);
-                var information = fillInformationFields('<div id="columnsViewPrinterInformation" class="wrapper right">', printersPersistent[$(e.currentTarget).attr('name')].metadata);
-                var notes = fillNotesFields('<div id="columnsViewPrinterNotes" class="wrapper center">', printersPersistent[$(e.currentTarget).attr('name')].metadata);
+                var details = fillDetailsFields('<div id="columnsViewPrinterDetails" class="wrapper right">', window.printersPersistent[$(e.currentTarget).attr('name')]);
+                var information = fillInformationFields('<div id="columnsViewPrinterInformation" class="wrapper right">', window.printersPersistent[$(e.currentTarget).attr('name')].metadata);
+                var notes = fillNotesFields('<div id="columnsViewPrinterNotes" class="wrapper center">', window.printersPersistent[$(e.currentTarget).attr('name')].metadata);
 
                 $('#columnsViewPrinterDetails').remove();
                 $('#columnsViewPrinterInformation').remove();
@@ -477,7 +477,7 @@ $(function() {
                 e.preventDefault();
 
                 if ($(e.target).is('#contextMenuPrinters button[name="calendar"]')) {
-                    calendarConfig.events = printersPersistent[printerId].metadata.calendar;
+                    calendarConfig.events = window.printersPersistent[printerId].metadata.calendar;
                     calendarConfig.deleteMode = false;
                     $('#calendarView').attr('name', printerId);
 
@@ -486,7 +486,7 @@ $(function() {
                     $('#calendarView').fullCalendar('destroy');
                     $('#calendarView').fullCalendar(calendarConfig);
                 } else if ($(e.target).is('#contextMenuPrinters button[name="removeRes"]')) {
-                    var printer = printersPersistent[printerId];
+                    var printer = window.printersPersistent[printerId];
                     var now = new Date().getTime();
                     var reservation;
                     var reservationIndex;
@@ -500,7 +500,7 @@ $(function() {
                     }
 
                     if (!(reservationIndex >= 0)) {
-                        showMessage('Printer has no reservation now', 'gray');
+                        window.showMessage('Printer has no reservation now', 'gray');
 
                         updatePrinters();
                     } else if (confirm('Are you sure you want to remove the reservation in course?\n\tReserved by: ' + reservation.title + '\n\tStart: ' + customDate(reservation.start) + '\n\tEnd: ' + customDate(reservation.end))) {
@@ -511,47 +511,47 @@ $(function() {
                         $.ajax({
                             async: true,
                             crossDomain: true,
-                            url: 'http://'+serverAddress+':'+serverPort+'/printers/update?ip=' + printer.basicInfo.ip + '&hostname=' + printer.basicInfo.hostname,
+                            url: SERVER_URL + '/printers/update?ip=' + printer.basicInfo.ip + '&hostname=' + printer.basicInfo.hostname,
                             method: 'PUT',
                             headers: {'Content-Type': 'application/json'},
                             processData: false,
                             data: JSON.stringify(printer.metadata),
                             success: function(res, status) {
-                                showMessage('Reserve successfully removed', 'green');
+                                window.showMessage('Reserve successfully removed', 'green');
                                 updatePrinters();
                             },
                             error: function(jqXHR, status, err) {
                                 $('#loadingBar').hide();
                 
                                 if (!err) {
-                                    showMessage('Unable to connect to server', 'red');
+                                    window.showMessage('Unable to connect to server', 'red');
                                 } else {
-                                    showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
+                                    window.showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
                                 }
                             }
                         });
                     }
                 } else if ($(e.target).is('#contextMenuPrinters button[name="forceUpdate"]')) {
-                    var printer = printersPersistent[printerId];
+                    var printer = window.printersPersistent[printerId];
 
                     $('#loadingBar').show();
                     
                     $.ajax({
                         async: true,
                         crossDomain: true,
-                        url: 'http://'+serverAddress+':'+serverPort+'/printers/update?ip=' + printer.basicInfo.ip + '&hostname=' + printer.basicInfo.hostname,
+                        url: SERVER_URL + '/printers/update?ip=' + printer.basicInfo.ip + '&hostname=' + printer.basicInfo.hostname,
                         method: 'GET',
                         success: function(res, status) {
-                            showMessage('Printer successfully updated (force mode)', 'green');
+                            window.showMessage('Printer successfully updated (force mode)', 'green');
                             updatePrinters();
                         },
                         error: function(jqXHR, status, err) {
                             $('#loadingBar').hide();
             
                             if (!err) {
-                                showMessage('Unable to connect to server', 'red');
+                                window.showMessage('Unable to connect to server', 'red');
                             } else {
-                                showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
+                                window.showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
                             }
                         }
                     });
@@ -569,12 +569,12 @@ $(function() {
     $('#infoMenu button.actionButton, #columnsViewPrinterWrapper button.actionButton').on('click', function(e) {
         e.preventDefault();
 
-        var details = fillDetailsFields('<div id="editMenuDetails" class="wrapper right">', printersPersistent[e.currentTarget.name]);
+        var details = fillDetailsFields('<div id="editMenuDetails" class="wrapper right">', window.printersPersistent[e.currentTarget.name]);
         $('#editMenuDetails').remove();
         $(details).appendTo('#editMenuDetailsWrapper');
 
-        fillEditForm(printersPersistent[e.currentTarget.name].metadata);
-        $('#editForm input.datetimepicker').datetimepicker(dateTimePickerOptions);
+        fillEditForm(window.printersPersistent[e.currentTarget.name].metadata);
+        $('#editForm input.datetimepicker').datetimepicker(window.dateTimePickerOptions);
 
         $('#editMenu button.actionButton').attr('name', e.currentTarget.name);
 
@@ -599,7 +599,7 @@ $(function() {
     $('#createReservationMenu > button.actionButton').on('click', function(e) {
         e.preventDefault();
 
-        var printer = printersPersistent[$('#calendarView').attr('name')];
+        var printer = window.printersPersistent[$('#calendarView').attr('name')];
 
         var reservationStart = $('#createReservationForm input[name="reservationStart"]').val().trim().replace(/\s\s+/g, ' ').split(/\/|\s|\:/);
         var reservationEnd = $('#createReservationForm input[name="reservationEnd"]').val().trim().replace(/\s\s+/g, ' ').split(/\/|\s|\:/);
@@ -610,9 +610,9 @@ $(function() {
         };
         
         if (reservation.title == '' || reservationStart == '' || reservationEnd == '') {
-            showMessage('All fields are mandatory', 'red');
+            window.showMessage('All fields are mandatory', 'red');
         } else if (reservation.start >= reservation.end) {
-            showMessage('Reservation end must be after its start', 'red');
+            window.showMessage('Reservation end must be after its start', 'red');
         } else {
             var overlap = false;
 
@@ -624,7 +624,7 @@ $(function() {
             }
 
             if (overlap) {
-                showMessage('Already exists a reservation in the selected interval', 'red');
+                window.showMessage('Already exists a reservation in the selected interval', 'red');
             } else {
                 printer.metadata.calendar.push(reservation);
                 
@@ -633,13 +633,13 @@ $(function() {
                 $.ajax({
                     async: true,
                     crossDomain: true,
-                    url: 'http://'+serverAddress+':'+serverPort+'/printers/update?ip=' + printer.basicInfo.ip + '&hostname=' + printer.basicInfo.hostname,
+                    url: SERVER_URL + '/printers/update?ip=' + printer.basicInfo.ip + '&hostname=' + printer.basicInfo.hostname,
                     method: 'PUT',
                     headers: {'Content-Type': 'application/json'},
                     processData: false,
                     data: JSON.stringify(printer.metadata),
                     success: function(res, status) {
-                        showMessage('Calendar successfully updated', 'green');
+                        window.showMessage('Calendar successfully updated', 'green');
 
                         calendarConfig.events = printer.metadata.calendar;
                         calendarConfig.deleteMode = false;
@@ -652,9 +652,9 @@ $(function() {
                         $('#loadingBar').hide();
         
                         if (!err) {
-                            showMessage('Unable to connect to server', 'red');
+                            window.showMessage('Unable to connect to server', 'red');
                         } else {
-                            showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
+                            window.showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
                         }
                     }
                 });
@@ -667,7 +667,7 @@ $(function() {
     ================================================================================================================ */
     function calendarDeleteMode(event, jsEvent, view) {
         if (calendarConfig.deleteMode) {
-            var printer = printersPersistent[$('#calendarView').attr('name')];
+            var printer = window.printersPersistent[$('#calendarView').attr('name')];
             var reservationIndex;
 
             for (var i=0; i<printer.metadata.calendar.length; i++) {
@@ -685,13 +685,13 @@ $(function() {
                 $.ajax({
                     async: true,
                     crossDomain: true,
-                    url: 'http://'+serverAddress+':'+serverPort+'/printers/update?ip=' + printer.basicInfo.ip + '&hostname=' + printer.basicInfo.hostname,
+                    url: SERVER_URL + '/printers/update?ip=' + printer.basicInfo.ip + '&hostname=' + printer.basicInfo.hostname,
                     method: 'PUT',
                     headers: {'Content-Type': 'application/json'},
                     processData: false,
                     data: JSON.stringify(printer.metadata),
                     success: function(res, status) {
-                        showMessage('Calendar successfully updated', 'green');
+                        window.showMessage('Calendar successfully updated', 'green');
 
                         calendarConfig.events = printer.metadata.calendar;
                         calendarConfig.deleteMode = false;
@@ -704,9 +704,9 @@ $(function() {
                         $('#loadingBar').hide();
         
                         if (!err) {
-                            showMessage('Unable to connect to server', 'red');
+                            window.showMessage('Unable to connect to server', 'red');
                         } else {
-                            showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
+                            window.showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
                         }
                     }
                 });
@@ -720,7 +720,7 @@ $(function() {
     $('#editMenu > button.actionButton').on('click', function(e) {
         e.preventDefault();
 
-        var printer = printersPersistent[$('#editMenu button.actionButton').attr('name')];
+        var printer = window.printersPersistent[$('#editMenu button.actionButton').attr('name')];
         var metadata = {
             alias: $('#editForm input[name="alias"]').val().trim().replace(/\s\s+/g, ' '),
             location: $('#editForm input[name="location"]').val().trim().replace(/\s\s+/g, ' '),
@@ -740,13 +740,13 @@ $(function() {
         $.ajax({
             async: true,
             crossDomain: true,
-            url: 'http://'+serverAddress+':'+serverPort+'/printers/update?ip=' + printer.basicInfo.ip + '&hostname=' + printer.basicInfo.hostname,
+            url: SERVER_URL + '/printers/update?ip=' + printer.basicInfo.ip + '&hostname=' + printer.basicInfo.hostname,
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             processData: false,
             data: JSON.stringify(metadata),
             success: function(res, status) {
-                showMessage('Information successfully updated', 'green');
+                window.showMessage('Information successfully updated', 'green');
                 updatePrinters();
 
                 $('#menus, #editMenu').fadeOut('slow');
@@ -755,9 +755,9 @@ $(function() {
                 $('#loadingBar').hide();
 
                 if (!err) {
-                    showMessage('Unable to connect to server', 'red');
+                    window.showMessage('Unable to connect to server', 'red');
                 } else {
-                    showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
+                    window.showMessage(jqXHR.status + ' ' + jqXHR.statusText, 'red');
                 }
             }
         });
@@ -769,29 +769,29 @@ $(function() {
     $('#listViewHeaders th').on('click', function(e) {
         e.preventDefault();
         
-        if (sortingConfig.param == $(e.currentTarget).attr('name')) {
-            if (sortingConfig.direction) {
-                sortingConfig.direction = false;
+        if (window.sortingConfig.param == $(e.currentTarget).attr('name')) {
+            if (window.sortingConfig.direction) {
+                window.sortingConfig.direction = false;
 
-                $('#listViewHeaders th[name=' + sortingConfig.param + '] span').removeClass('icon-arrowUp');
-                $('#listViewHeaders th[name=' + sortingConfig.param + '] span').addClass('icon-arrowDown');
+                $('#listViewHeaders th[name=' + window.sortingConfig.param + '] span').removeClass('icon-arrowUp');
+                $('#listViewHeaders th[name=' + window.sortingConfig.param + '] span').addClass('icon-arrowDown');
             } else {
-                sortingConfig.direction = true;
+                window.sortingConfig.direction = true;
 
-                $('#listViewHeaders th[name=' + sortingConfig.param + '] span').removeClass('icon-arrowDown');
-                $('#listViewHeaders th[name=' + sortingConfig.param + '] span').addClass('icon-arrowUp');
+                $('#listViewHeaders th[name=' + window.sortingConfig.param + '] span').removeClass('icon-arrowDown');
+                $('#listViewHeaders th[name=' + window.sortingConfig.param + '] span').addClass('icon-arrowUp');
             }
         } else {
-            sortingConfig.param = $(e.currentTarget).attr('name');
-            sortingConfig.direction = true;
+            window.sortingConfig.param = $(e.currentTarget).attr('name');
+            window.sortingConfig.direction = true;
 
             $('#listViewHeaders th').removeClass('current');
-            $('#listViewHeaders th[name=' + sortingConfig.param + ']').addClass('current');
+            $('#listViewHeaders th[name=' + window.sortingConfig.param + ']').addClass('current');
             $('#listViewHeaders th span').removeClass('icon-arrowUp icon-arrowDown').hide();
-            $('#listViewHeaders th[name=' + sortingConfig.param + '] span').addClass('icon-arrowUp').show();
+            $('#listViewHeaders th[name=' + window.sortingConfig.param + '] span').addClass('icon-arrowUp').show();
         }
 
-        document.cookie = 'sortingConfig=' + JSON.stringify(sortingConfig) + ';max-age=315360000';   // 315360000s are 10 years
+        document.cookie = 'sortingConfig=' + JSON.stringify(window.sortingConfig) + ';max-age=315360000';   // 315360000s are 10 years
 
         updatePrinters();
     });
@@ -810,8 +810,8 @@ $(function() {
         $(document).off().on('mousedown', function(e) {
             e.preventDefault();
 
-            for (var key in listViewHeaders) {
-                if (listViewHeaders[key]) {
+            for (var key in window.listViewHeaders) {
+                if (window.listViewHeaders[key]) {
                     $('#listViewConfigMenu input[type="checkbox"][name="' + key + '"]').prop('checked', true);
                 } else {
                     $('#listViewConfigMenu input[type="checkbox"][name="' + key + '"]').prop('checked', false);
@@ -844,8 +844,8 @@ $(function() {
             $('#listViewPopulation td[name="' + idCol + '"]').show();
         }
 
-        listViewHeaders[idCol] = !listViewHeaders[idCol];
-        document.cookie = 'listViewHeaders=' + JSON.stringify(listViewHeaders) + ';max-age=315360000';   // 315360000s are 10 years
+        window.listViewHeaders[idCol] = !window.listViewHeaders[idCol];
+        document.cookie = 'listViewHeaders=' + JSON.stringify(window.listViewHeaders) + ';max-age=315360000';   // 315360000s are 10 years
     });
 
     

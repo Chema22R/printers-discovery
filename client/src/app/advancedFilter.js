@@ -6,9 +6,9 @@ $(function() {
     /* This funtion retrieves the filters stored into cookies and populate the filters list with them
     ================================================================================================= */
     function populateFiltersList() {
-        for (var filter in advancedFilters) {
-            $('<button name="' + filter + '" title="' + generateTitle(advancedFilters[filter]) + '">' + filter + '</button>').insertAfter('#headerBarAdvancedFilters span.separator');
-            $('<div class="filter" name="' + filter + '" title="' + generateTitle(advancedFilters[filter]) + '"><p>' + filter + '</p><button class="delete icon-delete icon" title="remove filter"></button></div>').insertAfter('#columnsViewFiltersWrapper span.separator');
+        for (var filter in window.advancedFilters) {
+            $('<button name="' + filter + '" title="' + generateTitle(window.advancedFilters[filter]) + '">' + filter + '</button>').insertAfter('#headerBarAdvancedFilters span.separator');
+            $('<div class="filter" name="' + filter + '" title="' + generateTitle(window.advancedFilters[filter]) + '"><p>' + filter + '</p><button class="delete icon-delete icon" title="remove filter"></button></div>').insertAfter('#columnsViewFiltersWrapper span.separator');
         }
 
         $('#headerBarSearchBasicFilters, #headerBarAdvancedFilters').show().scrollTop(0);
@@ -34,12 +34,12 @@ $(function() {
                 filterPrinters({});
             } else {
                 $('#headerBarSearchInput').val('');
-                for (var filter in basicFilters) {basicFilters[filter] = false;}
+                for (var filter in window.basicFilters) {window.basicFilters[filter] = false;}
                 $('#headerBarSearchBasicFilters button, #headerBarAdvancedFilters button, #columnsViewFiltersWrapper div').removeClass('current');
 
                 $(this).addClass('current');
                 $('#columnsViewFiltersWrapper div[name="' + $(this).attr('name') + '"]').addClass('current');
-                filterPrinters(advancedFilters[$(this).attr('name')]);
+                filterPrinters(window.advancedFilters[$(this).attr('name')]);
             }
         });
 
@@ -67,12 +67,12 @@ $(function() {
                     filterPrinters({});
                 } else {
                     $('#headerBarSearchInput').val('');
-                    for (var filter in basicFilters) {basicFilters[filter] = false;}
+                    for (var filter in window.basicFilters) {window.basicFilters[filter] = false;}
                     $('#headerBarSearchBasicFilters button, #headerBarAdvancedFilters button, #columnsViewFiltersWrapper div').removeClass('current');
 
                     $(this).addClass('current');
                     $('#headerBarAdvancedFilters button[name="' + $(this).attr('name') + '"]').addClass('current');
-                    filterPrinters(advancedFilters[$(this).attr('name')]);
+                    filterPrinters(window.advancedFilters[$(this).attr('name')]);
                 }
             }
         });
@@ -115,7 +115,7 @@ $(function() {
         $('#filterFormInfo input').val('');
         $('#filterFormName input').val('');
 
-        $('#filterFormDetails input.datetimepicker, #filterFormInfo input.datetimepicker').datetimepicker(dateTimePickerOptions);
+        $('#filterFormDetails input.datetimepicker, #filterFormInfo input.datetimepicker').datetimepicker(window.dateTimePickerOptions);
 
 
         if ($('#advancedFiltersMenu').is(':hidden')) {
@@ -156,7 +156,7 @@ $(function() {
             }
 
             $('#headerBarSearchInput').val('');
-            for (var filter in basicFilters) {basicFilters[filter] = false;}
+            for (var filter in window.basicFilters) {window.basicFilters[filter] = false;}
             $('#headerBarSearchBasicFilters button, #headerBarAdvancedFilters button, #columnsViewFiltersWrapper div').removeClass('current');
 
             $('#headerBarAdvancedFilters button[name="' + filterName + '"]').remove();
@@ -169,7 +169,7 @@ $(function() {
             
             $('#columnsViewFiltersWrapper').scrollTop(0);
 
-            advancedFilters[filterName] = data;
+            window.advancedFilters[filterName] = data;
             document.cookie = filterName + '=' + JSON.stringify(data) + ';max-age=315360000';   // 315360000s are 10 years
 
             activateFiltersTriggers();
@@ -179,7 +179,7 @@ $(function() {
             $('#menus, #advancedFiltersMenu').fadeOut('slow');
         } else {
             $('#filterFormName input[name="filterName"]').focus();
-            showMessage('Filter name is mandatory', 'red');
+            window.showMessage('Filter name is mandatory', 'red');
         }
     });
 
@@ -190,32 +190,32 @@ $(function() {
         var noPrinters = true;
         var coincident;
 
-        for (var printer in printersPersistent) {
+        for (var printer in window.printersPersistent) {
             coincident = true;
 
-            if (coincident && printersPersistent[printer].basicInfo) {
-                if (coincident && data.hostname && !compareValues(printersPersistent[printer].basicInfo.hostname, data.hostname)) {coincident = false;}
-                if (coincident && data.ip && !compareValues(printersPersistent[printer].basicInfo.ip, data.ip)) {coincident = false;}
-                if (coincident && data.modelname && !compareValues(printersPersistent[printer].basicInfo.modelname, data.modelname)) {coincident = false;}
+            if (coincident && window.printersPersistent[printer].basicInfo) {
+                if (coincident && data.hostname && !window.compareValues(window.printersPersistent[printer].basicInfo.hostname, data.hostname)) {coincident = false;}
+                if (coincident && data.ip && !window.compareValues(window.printersPersistent[printer].basicInfo.ip, data.ip)) {coincident = false;}
+                if (coincident && data.modelname && !window.compareValues(window.printersPersistent[printer].basicInfo.modelname, data.modelname)) {coincident = false;}
             }
 
-            if (coincident && printersPersistent[printer].detailedInfo) {
-                if (coincident && data.firmware && !compareValues(printersPersistent[printer].detailedInfo.firmwareVersion, data.firmware)) {coincident = false;}
-                if (coincident && data.status && !compareValues(printersPersistent[printer].detailedInfo.status, data.status)) {coincident = false;}
+            if (coincident && window.printersPersistent[printer].detailedInfo) {
+                if (coincident && data.firmware && !window.compareValues(window.printersPersistent[printer].detailedInfo.firmwareVersion, data.firmware)) {coincident = false;}
+                if (coincident && data.status && !window.compareValues(window.printersPersistent[printer].detailedInfo.status, data.status)) {coincident = false;}
             }
 
-            if (coincident && data.creationDate && !compareValues(printersPersistent[printer].creationDate, data.creationDate)) {coincident = false;}
+            if (coincident && data.creationDate && !window.compareValues(window.printersPersistent[printer].creationDate, data.creationDate)) {coincident = false;}
 
-            if (coincident && printersPersistent[printer].lastUpdate) {
-                if (coincident && data.lastUpdateStatus && !compareValues(printersPersistent[printer].lastUpdate.status, data.lastUpdateStatus)) {coincident = false;}
+            if (coincident && window.printersPersistent[printer].lastUpdate) {
+                if (coincident && data.lastUpdateStatus && !window.compareValues(window.printersPersistent[printer].lastUpdate.status, data.lastUpdateStatus)) {coincident = false;}
             }
 
-            if (coincident && printersPersistent[printer].metadata) {
-                if (coincident && data.alias && !compareValues(printersPersistent[printer].metadata.alias, data.alias)) {coincident = false;}
-                if (coincident && data.location && !compareValues(printersPersistent[printer].metadata.location, data.location)) {coincident = false;}
-                if (coincident && data.workteam && !compareValues(printersPersistent[printer].metadata.workteam, data.workteam)) {coincident = false;}
-                if (coincident && data.reservedBy && !compareValues(printersPersistent[printer].metadata.reservedBy, data.reservedBy)) {coincident = false;}
-                if (coincident && data.reservedUntil && !compareValues(printersPersistent[printer].metadata.reservedUntil, data.reservedUntil)) {coincident = false;}
+            if (coincident && window.printersPersistent[printer].metadata) {
+                if (coincident && data.alias && !window.compareValues(window.printersPersistent[printer].metadata.alias, data.alias)) {coincident = false;}
+                if (coincident && data.location && !window.compareValues(window.printersPersistent[printer].metadata.location, data.location)) {coincident = false;}
+                if (coincident && data.workteam && !window.compareValues(window.printersPersistent[printer].metadata.workteam, data.workteam)) {coincident = false;}
+                if (coincident && data.reservedBy && !window.compareValues(window.printersPersistent[printer].metadata.reservedBy, data.reservedBy)) {coincident = false;}
+                if (coincident && data.reservedUntil && !window.compareValues(window.printersPersistent[printer].metadata.reservedUntil, data.reservedUntil)) {coincident = false;}
             }
 
             if (coincident) {
