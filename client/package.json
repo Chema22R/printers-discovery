@@ -19,9 +19,9 @@
   },
   "homepage": "https://github.com/Chema22R/printers-discovery#readme",
   "dependencies": {
-    "fullcalendar": "^3.9.0",
     "jquery": "^3.3.1",
     "jquery-ui": "^1.12.1",
+    "moment": "2.24.0",
     "project-intro": "^2.0.0"
   },
   "devDependencies": {
