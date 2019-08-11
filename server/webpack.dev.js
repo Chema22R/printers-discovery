@@ -10,7 +10,8 @@ module.exports = merge(common, {
         new CleanWebpackPlugin(),
         new webpack.DefinePlugin({
             SERVER_PORT: 8084,
-            DATABASE_URI: JSON.stringify("mongodb://localhost/3dpreviewer")
+            DATABASE_NAME: JSON.stringify("printersdiscovery"),
+            DATABASE_URI: JSON.stringify("mongodb://localhost:27017")
         })
     ]
 });

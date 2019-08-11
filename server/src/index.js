@@ -16,9 +16,9 @@ var Console = require('console').Console;
 /* controllers
 ========================================================================== */
 
-// var discovery = require('./controllers/discovery.js');
-var configAPI = require('./controllers/configAPI.js');
-var printersAPI = require('./controllers/printersAPI.js');
+// var discovery = require('./app/discovery.js');
+var configAPI = require('./app/configAPI.js');
+var printersAPI = require('./app/printersAPI.js');
 
 
 /* app configuration
@@ -65,24 +65,20 @@ function getConfigData() {
 /* connections
 ========================================================================== */
 
-var databaseURI = 'mongodb://localhost:27017';
-var databaseName = 'printersdiscovery';
-var serverPort = 8084;
-
-mongodb.connect(databaseURI, function (err, client) {
+mongodb.connect(DATABASE_URI, function (err, client) {
     if (err) {
-        console.error('ERROR connecting to database server\n\t' + err.message);
+        console.error('- ERROR connecting to database server\n\t' + err.message);
     } else {
-        app.locals.db = client.db(databaseName);
-        console.log('Connected to database "' + databaseName + '"');
+        app.locals.db = client.db(DATABASE_NAME);
+        console.log('> Connected to database "' + DATABASE_NAME + '"');
 
         // discovery.init(app.locals);
-        console.log('Discovery library initiated and subscribed');
+        // console.log('> Discovery library initiated and subscribed');
     }
 });
 
-app.listen(serverPort, function () {
-    console.log('Printers Discovery server running on http://localhost:' + serverPort);
+app.listen(SERVER_PORT, function () {
+    console.log('> Printers Discovery server running on http://localhost:' + SERVER_PORT);
 });
 
 
