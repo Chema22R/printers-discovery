@@ -8,7 +8,7 @@ module.exports = {
         index: "./src/index.js"
     },
     output: {
-        filename: "[name].bundle.js",
+        filename: "[name].[contenthash].js",
         path: path.resolve(__dirname, "dist")
     },
     module: {
@@ -24,8 +24,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "./src/index.html",
-            hash: true
+            template: "./src/index.html"
         }),
         new CopyWebpackPlugin([
             {from: "./src/assets/favicons", to: "favicons"},
