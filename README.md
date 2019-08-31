@@ -20,16 +20,10 @@ Check out a real example of the application from [here](http://chema22r.duckdns.
 
 ## Setup and Run
 1. Download the source code
-2. Do the following from inside the *server* folder:
-    - Install the node modules executing `npm i`
-    - Execute one of the following commands:
-        - `npm start` to run the application in live-reload mode (development)
-        - `npm run build` to build the application (production)
-3. Do the following from inside the *client* folder:
-    - Install the node modules executing `npm i`
-    - Execute one of the following commands:
-        - `npm start` to build the application (development)
-        - `npm run build` to build the application (production)
+2. Install the node modules executing `npm run i`
+3. Execute one of the following commands
+    - `npm start` to run the application in live-reload mode (development)
+    - `npm run build` to build the application (production)
 
 ## Directories Structure
 ```
@@ -63,5 +57,7 @@ Check out a real example of the application from [here](http://chema22r.duckdns.
     |- webpack.dev.js
     |- webpack.prod.js
 |- .gitignore
+|- LICENSE
+|- package.json
 |- README.md
 ```
