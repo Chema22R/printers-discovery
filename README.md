@@ -16,7 +16,7 @@ advanced filtering is needed, users can create custom advanced filters (second r
 Regarding the interaction with the information shown, users can click on one of the printers to view detailed information or to
 edit it. In addition, through the context menu (right-click mouse), users can access extra features, such as the reservation calendar.
 
-Check out a real example of the application from [here](http://chema22r.duckdns.org/printersDiscovery).
+Check out a real example of the application from [here](https://printersdiscovery.chema22r.com).
 
 ## Setup and Run
 1. Download the source code
