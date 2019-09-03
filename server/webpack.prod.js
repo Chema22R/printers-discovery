@@ -10,7 +10,7 @@ module.exports = merge(common, {
         new CleanWebpackPlugin(),
         new webpack.DefinePlugin({
             DEFAULT_PORT: 8000,
-            DEFAULT_DATABASE_URI: JSON.stringify("mongodb+srv://PrintersDiscovery:C%7B%5B%3D%2B(kb77x44on%256%404s4P@generaldefaultdb-g1vbu.mongodb.net/printersdiscovery?retryWrites=true&w=majority")
+            DEFAULT_DATABASE_URI: JSON.stringify("mongodb+srv://PrintersDiscovery:%7B6npU48%3Dg99C%3D%5E%5Bo74i%26*P@generaldefaultdb-g1vbu.mongodb.net/printersdiscovery?retryWrites=true&w=majority")
         })
     ]
 });
