@@ -6,7 +6,7 @@
     "scripts": {
         "build": "webpack --config webpack.prod.js",
         "build:dev": "webpack --config webpack.dev.js",
-        "heroku-postbuild": "npm run build && rm -r node_modules src webpack.*.js",
+        "heroku-postbuild": "npm run build && rm -r src webpack.*.js",
         "start": "cd dist && node index.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
