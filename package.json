@@ -4,9 +4,10 @@
     "description": "Application to analyze the local network in search of prototypes of printers, capturing and storing their information",
     "scripts": {
         "build": "concurrently 'npm run build --prefix client' 'npm run build --prefix server'",
+        "build:dev": "concurrently 'npm run build:dev --prefix client' 'npm run build:dev --prefix server'",
         "heroku-prebuild": "rm -r client package.json && mv server/* . && rm -r server",
         "i": "[ -d node_modules ] && (concurrently 'npm i' 'npm i --prefix client' 'npm i --prefix server') || (npm i && npm i --prefix client && npm i --prefix server)",
-        "start": "concurrently 'npm start --prefix client' 'npm start --prefix server'",
+        "start": "concurrently 'npm start --prefix client' 'npm run build:dev --prefix server && npm start --prefix server'",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
