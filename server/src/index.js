@@ -65,12 +65,12 @@ function getConfigData() {
 /* connections
 ========================================================================== */
 
-mongodb.connect(process.env.DATABASE_URI || DEFAULT_DATABASE_URI, function (err, db) {
+mongodb.connect(process.env.DATABASE_URI || DEFAULT_DATABASE_URI, function (err, client) {
     if (err) {
-        console.error('- ERROR connecting to database "printersdiscovery"\n\t' + err.message);
+        console.error('- ERROR connecting to database server\n\t' + err.message);
     } else {
-        app.locals.db = db;
-        console.log('> Connected to database "printersdiscovery"');
+        app.locals.db = client.db(DATABASE_NAME);
+        console.log('> Connected to database "' + DATABASE_NAME + '"');
 
         // discovery.init(app.locals);
         // console.log('> Discovery library initiated and subscribed');
