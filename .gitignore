@@ -1,8 +1,8 @@
 .DS_Store
-.vscode
-
 config.json
 package-lock.json
 
-server/log
-server/node_modules
+.vscode
+dist
+log
+node_modules

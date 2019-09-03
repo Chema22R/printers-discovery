@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <title>Printers Discovery</title>
+        <meta charset='UTF-8'/>
+        <meta name='author' content='Jose Maria Rivera Alonso'/>
+        <meta name='viewport' content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'/>
+
+        <link rel='stylesheet' href='./icons/style.css'>
+
+        <link rel="apple-touch-icon" sizes="180x180" href="./favicons/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="./favicons/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="./favicons/favicon-16x16.png">
+        <link rel="manifest" href="./favicons/site.webmanifest">
+        <link rel="mask-icon" href="./favicons/safari-pinned-tab.svg" color="#5bbad5">
+        <link rel="shortcut icon" href="./favicons/favicon.ico">
+        <meta name="msapplication-TileColor" content="#2d89ef">
+        <meta name="msapplication-config" content="./favicons/browserconfig.xml">
+        <meta name="theme-color" content="#ffffff">
+    </head>
+    <body>
+        <div id='fixedLog'><p></p></div>
+
+        <div id="projectIntroContainer">
+            <div id="projectIntroBack" onclick="projectIntro.fadeOut()"></div>
+            <div id="projectIntroContent">
+                <img id="projectIntroImg" src="./images/projectIntro.png" alt="Project Introduction Image">
+                <p id="projectIntroText">
+                    This application aims to analyze the local network in search of prototypes of printers,
+                    capturing and storing their information.<br>The interface allows users to view the
+                    information collected in three different ways, these being the icon view, the list view
+                    and the column view (accessible from the left buttons).<br>In the central part of the
+                    interface is the search field, which allows a basic filtering of the displayed information.
+                    If a more advanced filtering is needed, users can create custom advanced filters (second
+                    right button).<br>Regarding the interaction with the information shown, users can click
+                    on one of the printers to view detailed information or to edit it. In addition, through
+                    the context menu (right-click mouse), users can access extra features, such as the reservation
+                    calendar.<br> Due to the nature of the project, the information shown is simulated.
+                </p>
+                <span id="projectIntroExit" onclick="projectIntro.fadeOut()">&times;</span>
+            </div>
+        </div>
+
+        <div id='loadingBar'>
+			<div class='leftover'></div>
+			<div class='loader'></div>
+        </div>
+        
+        <div id='contextMenuPrinters'>
+            <button name='calendar' type='button'>Calendar</button>
+            <button name='removeRes' type='button'>Remove Reservation</button>
+            <!--<button name='forceUpdate' type='button'>Force Update</button>-->
+        </div>
+
+        <div id='contextMenuHeaders'>
+            <button name='configCols' type='button'>Configure Columns</button>
+        </div>
+
+
+        <header id='headerBar'>
+            <div>
+                <button id='iconsViewTrigger' class='marked borderRight icon-iconsView icon' type='button' title='Icons View' tabindex='1' accesskey='i'></button>
+                <button id='listViewTrigger' class='marked borderRight icon-listView icon' type='button' title='List View' tabindex='2' accesskey='l'></button>
+                <button id='columnsViewTrigger' class='marked borderRight icon-columnsView icon' type='button' title='Columns View' tabindex='3' accesskey='c'></button>
+            </div>
+            <div id='headerBarSearch'>
+                <input id='headerBarSearchInput' type='text' maxlength='100' placeholder='Search for printers...' tabindex='4' accesskey='s'>
+                <div class='dropdown'>
+                    <button class='icon-dropdown icon' type='button'></button>
+                    <div id='headerBarSearchBasicFilters'>
+                        <button name='hostname'>Hostname</button>
+                        <button name='ip'>IP&nbsp;Address</button>
+                        <button name='modelname'>Modelname</button>
+                        <button name='firmware'>Firmware</button>
+                        <button name='status'>Status</button>
+                        <button name='alias'>Alias</button>
+                        <button name='location'>Location</button>
+                        <button name='workteam'>Workteam</button>
+                        <button name='reservedBy'>Reserved&nbsp;By</button>
+                        <button name='notes'>Notes</button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button id='advancedFiltersMenuTrigger' class='marked borderLeft icon-advancedFilter icon' type='button' title='Advanced Filter' tabindex='5' accesskey='a'></button>
+                <div id='headerBarAdvancedFilters'><span class='separator'></span></div>
+                <button id='configMenuTrigger' class='marked borderLeft icon-config icon' type='button' title='Configuration' tabindex='6' accesskey='o'></button>
+            </div>
+        </header>
+
+        <div id='mainContent'>
+            <div id='iconsView'></div>
+
+            <div id='listView'>
+                <table class='wrapper'>
+                    <thead>
+                        <tr id='listViewHeaders'>
+                            <th name='hostname'>Hostname<span class='icon'></span></th>
+                            <th name='ip'>IP<span class='icon'></span></th>
+                            <th name='modelname'>Modelname<span class='icon'></span></th>
+                            <th name='firmware'>Firmware<span class='icon'></span></th>
+                            <th name='status'>Status<span class='icon'></span></th>
+                            <th name='creationDate'>Creation&nbsp;Date<span class='icon'></span></th>
+                            <th name='lastUpdateStatus'>Last&nbsp;Status&nbsp;Change<span class='icon'></span></th>
+                            <th name='alias'>Alias<span class='icon'></span></th>
+                            <th name='location'>Location<span class='icon'></span></th>
+                            <th name='workteam'>Workteam<span class='icon'></span></th>
+                            <th name='reservedBy'>Reserved&nbsp;By<span class='icon'></span></th>
+                            <th name='reservedUntil'>Reserved&nbsp;Until<span class='icon'></span></th>
+                        </tr>
+                    </thead>
+                </table>
+                <p class="noPrinters">No printers to show with selected filters</p>
+            </div>
+
+            <div id='columnsView'>
+                <div class='wrapper'>
+                    <div class='column small'>
+                        <p class='title'>Filters</p>
+                        <div id='columnsViewFiltersWrapper' class='wrapper'>
+                            <span class='separator'></span>
+                        </div>
+                    </div>
+
+                    <div id='columnsViewPrintersColumn' class='column small'>
+                        <p class='title'>Printers</p>
+                        <div id='columnsViewPopulation' class='wrapper'></div>
+                    </div>
+
+                    <div id='columnsViewPrinterDataColumn' class='column big'>
+                        <div id='columnsViewPrinterWrapper' class='wrapper'>
+                            <div id='columnsViewPrinterDetailsWrapper' class='wrapper'>
+                                <p class='title'>Details</p>
+                                <div class='wrapper left'>
+                                    <p>Hostname</p>
+                                    <p>IP&nbsp;Address</p>
+                                    <p>Modelname</p>
+                                    <p>Firmware&nbsp;Version</p>
+                                    <p>Status</p>
+                                    <p>Creation&nbsp;Date</p>
+                                    <p>Last&nbsp;Status&nbsp;Change</p>
+                                </div>
+                            </div>
+
+                            <div id='columnsViewPrinterInformationWrapper' class='wrapper'>
+                                <p class='title'>Information</p>
+                                <div class='wrapper left'>
+                                    <p>Alias</p>
+                                    <p>Location</p>
+                                    <p>Workteam</p>
+                                    <p>Reserved&nbsp;By</p>
+                                    <p>Reserved&nbsp;Until</p>
+                                </div>
+                            </div>
+
+                            <div id='columnsViewPrinterNotesWrapper' class='wrapper'>
+                                <p class='title'>Notes</p>
+                            </div>
+                            
+                            <button type='button' class='actionButton' title='Edit Information'>Edit</button>
+
+                            <div class='dropdown'>
+                                <button class='icon-help icon' type='button'></button>
+                                <div>
+                                    <p>This menu shows the details and information of the selected printer, as well as allows the user to edit it through the 'Edit' button at the bottom</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id='menus'>
+            <div id='menusLeftover'></div>
+            <div id='menusWrapper' class='wrapper'>
+                <div id='infoMenu'>
+                    <div id='infoMenuDetailsWrapper' class='wrapper'>
+                        <p class='title'>Details</p>
+                        <div class='wrapper left'>
+                            <p>Hostname</p>
+                            <p>IP&nbsp;Address</p>
+                            <p>Modelname</p>
+                            <p>Firmware&nbsp;Version</p>
+                            <p>Status</p>
+                            <p>Creation&nbsp;Date</p>
+                            <p>Last&nbsp;Status&nbsp;Change</p>
+                        </div>
+                    </div>
+
+                    <div id='infoMenuInformationWrapper' class='wrapper'>
+                        <p class='title'>Information</p>
+                        <div class='wrapper left'>
+                            <p>Alias</p>
+                            <p>Location</p>
+                            <p>Workteam</p>
+                            <p>Reserved&nbsp;By</p>
+                            <p>Reserved&nbsp;Until</p>
+                        </div>
+                    </div>
+
+                    <div id='infoMenuNotesWrapper' class='wrapper'>
+                        <p class='title'>Notes</p>
+                    </div>
+
+                    <button class='actionButton' type='button' title='Edit Information'>Edit</button>
+                    <button class='closeButton icon-close icon' type='button' title='Close Window'></button>
+
+                    <div class='dropdown'>
+                        <button class='icon-help icon' type='button'></button>
+                        <div>
+                            <p>This menu shows the details and information of the selected printer, as well as allows the user to edit it through the 'Edit' button at the bottom</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id='editMenu'>
+                    <div id='editMenuDetailsWrapper' class='wrapper'>
+                        <p class='title'>Details</p>
+                        <div class='wrapper left'>
+                            <p>Hostname</p>
+                            <p>IP&nbsp;Address</p>
+                            <p>Modelname</p>
+                            <p>Firmware&nbsp;Version</p>
+                            <p>Status</p>
+                            <p>Creation&nbsp;Date</p>
+                            <p>Last&nbsp;Status&nbsp;Change</p>
+                        </div>
+                    </div>
+
+                    <div id='editMenuInformationWrapper' class='wrapper'>
+                        <p class='title'>Information</p>
+                        <div class='wrapper left'>
+                            <p>Alias</p>
+                            <p>Location</p>
+                            <p>Workteam</p>
+                            <p>Reserved&nbsp;By</p>
+                            <p>Reserved&nbsp;Until</p>
+                        </div>
+                        <form id='editForm' class='wrapper right'>
+                            <input type='text' value='' name='alias' maxlength='100' placeholder='alias'>
+                            <input type='text' value='' name='location' maxlength='100' placeholder='location'>
+                            <input type='text' value='' name='workteam' maxlength='100' placeholder='workteam'>
+                            <p name='reservedBy'>&mdash;</p>
+                            <p name='reservedUntil'>&mdash;</p>
+                        </form>
+                    </div>
+
+                    <div id='editMenuNotesWrapper' class='wrapper'>
+                        <p class='title'>Notes</p>
+                        <textarea maxlength="1000" placeholder="Notes"></textarea>
+                    </div>
+
+                    <button class='actionButton' type='submit' form='editForm' title='Upload Information'>Send</button>
+                    <button class='closeButton icon-close icon' type='button' title='Close Window'></button>
+
+                    <div class='dropdown'>
+                        <button class='icon-help icon' type='button'></button>
+                        <div>
+                            <p>This menu shows the details of the selected printer and allows the user to edit its information (metadata)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id='advancedFiltersMenu'>
+                    <div class='wrapper'>
+                        <p class='title'>Details</p>
+                        <div class='wrapper left'>
+                            <p>Hostname</p>
+                            <p>IP&nbsp;Address</p>
+                            <p>Modelname</p>
+                            <p>Firmware&nbsp;Version</p>
+                            <p>Status</p>
+                            <p>Creation&nbsp;Date</p>
+                            <p>Last&nbsp;Status&nbsp;Change</p>
+                        </div>
+                        <form id='filterFormDetails' class='wrapper right'>
+                            <input type='text' value='' name='hostname' maxlength='100' placeholder='hostname'>
+                            <input type='text' value='' name='ip' maxlength='100' placeholder='ip address'>
+                            <input type='text' value='' name='modelname' maxlength='100' placeholder='modelname'>
+                            <input type='text' value='' name='firmware' maxlength='100' placeholder='firmware version'>
+                            <input type='text' value='' name='status' maxlength='100' placeholder='status'>
+                            <input class='datetimepicker' type='text' value='' name='creationDate' maxlength='100' placeholder='creation date'>
+                            <input class='datetimepicker' type='text' value='' name='lastUpdateStatus' maxlength='100' placeholder='last status change'>
+                        </form>
+                    </div>
+
+                    <div class='wrapper'>
+                        <p class='title'>Information</p>
+                        <div class='wrapper left'>
+                            <p>Alias</p>
+                            <p>Location</p>
+                            <p>Workteam</p>
+                            <p>Reserved&nbsp;By</p>
+                            <p>Reserved&nbsp;Until</p>
+                        </div>
+                        <form id='filterFormInfo' class='wrapper right'>
+                            <input type='text' value='' name='alias' maxlength='100' placeholder='alias'>
+                            <input type='text' value='' name='location' maxlength='100' placeholder='location'>
+                            <input type='text' value='' name='workteam' maxlength='100' placeholder='workteam'>
+                            <input type='text' value='' name='reservedBy' maxlength='100' placeholder='reserved by'>
+                            <input class='datetimepicker' type='text' value='' name='reservedUntil' maxlength='100' placeholder='reserved until'>
+                        </form>
+                    </div>
+
+
+                    <div class='wrapper'>
+                        <form id='filterFormName' class='wrapper center'>
+                            <input type='text' value='' name='filterName' maxlength='100' placeholder='Filter Name'>
+                        </form>
+                    </div>
+
+                    <button class='actionButton' type='submit' form='filterFormName' title='Filter'>Filter</button>
+                    <button class='closeButton icon-close icon' type='button' title='Close Window'></button>
+
+                    <div class='dropdown'>
+                        <button class='icon-help icon' type='button'></button>
+                        <div>
+                            <p>This menu allows the user to search printers using an advanced filter, which will be stored in cookies</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id='configMenu'>
+                    <div class='wrapper'>
+                        <p class='title'>Server Configuration</p>
+                        <div class='wrapper left'>
+                            <p title='Log Level indicates the messages to be stored (0=null, 1=error, 2=warning, 3=info)'>Log&nbsp;Level</p>
+                            <p title='Log Separator indicates the level to be used as a separator in log files (messages from lower levels will be stored in error.log and the rest in info.log)'>Log&nbsp;Separator</p>
+                            <p title='Update Frequency indicates how often the server updates the printers'>Update&nbsp;Frequency&nbsp;(sec)</p>
+                            <p title='Delete Timeout indicates how often the server deletes the printers with Unreachable status'>Delete&nbsp;Timeout&nbsp;(min)</p>
+                        </div>
+                        <form id='configForm' class='wrapper right'>
+                            <input type='number' value='' name='logLevel' min='0' max='3' placeholder='log level' required>
+                            <input type='number' value='' name='logSeparator' min='0' max='3' placeholder='log separator' required>
+                            <input type='number' value='' name='updateFrequency' min='0' placeholder='update freq.' required>
+                            <input type='number' value='' name='deleteTimeout' min='0' placeholder='delete timeout' required>
+                        </form>
+                        <p class='importantMsj'>(Please do not touch these options)</p>
+                    </div>
+
+                    <button class='actionButton' type='submit' form='configForm' title='Update Configuration'>Send</button>
+                    <button class='closeButton icon-close icon' type='button' title='Close Window'></button>
+
+                    <div class='dropdown'>
+                        <button class='icon-help icon' type='button'></button>
+                        <div>
+                            <p>This menu allows the user to edit the client and server configuration (place over the variables for further information)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id='listViewConfigMenu'>
+                    <div class='wrapper'>
+                        <p class='title'>List View Columns Configuration</p>
+                        <div class='wrapper left'>
+                            Hostname<input type='checkbox' name='hostname'><br>
+                            IP Address<input type='checkbox' name='ip'><br>
+                            Modelname<input type='checkbox' name='modelname'><br>
+                            Firmware Version<input type='checkbox' name='firmware'><br>
+                            Status<input type='checkbox' name='status'><br>
+                            Creation Date<input type='checkbox' name='creationDate'><br>
+                            Last Status Change<input type='checkbox' name='lastUpdateStatus'><br>
+                        </div>
+                        <div class='wrapper right'>
+                            <input type='checkbox' name='alias'>Alias<br>
+                            <input type='checkbox' name='location'>Location<br>
+                            <input type='checkbox' name='workteam'>Workteam<br>
+                            <input type='checkbox' name='reservedBy'>Reserved By<br>
+                            <input type='checkbox' name='reservedUntil'>Reserved Until<br>
+                        </div>
+                    </div>
+
+                    <button class='closeButton icon-close icon' type='button' title='Close Window'></button>
+
+                    <div class='dropdown'>
+                        <button class='icon-help icon' type='button'></button>
+                        <div>
+                            <p>This menu allows the user to select the columns to display into the list view</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id='createReservationMenu'>
+                    <div class='wrapper'>
+                        <p class='title'>Create a New Reservation</p>
+                        <div class='wrapper left'>
+                            <p>Reserved&nbsp;By</p>
+                            <p>Reservation Start</p>
+                            <p>Reservation End</p>
+                        </div>
+                        <form id='createReservationForm' class='wrapper right'>
+                            <input type='text' value='' name='reservedBy' maxlength='100' placeholder='reserved&nbsp;by'>
+                            <input class='datetimepicker' type='text' value='' name='reservationStart' maxlength='100' placeholder='reservation&nbsp;start'>
+                            <input class='datetimepicker' type='text' value='' name='reservationEnd' maxlength='100' placeholder='reservation&nbsp;end'>
+                        </form>
+                    </div>
+
+                    <button class='actionButton' type='submit' form='createReservationForm' title='Create Reservation'>Create</button>
+                    <button class='closeButton icon-close icon' type='button' title='Close Window'></button>
+
+                    <div class='dropdown'>
+                        <button class='icon-help icon' type='button'></button>
+                        <div>
+                            <p>This menu allows the user to create new reservations for a given printer (all fields are mandatory)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id='calendarMenu'>
+            <div id='calendarView'></div>
+        </div>
+    </body>
+</html>

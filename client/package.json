@@ -1,13 +1,12 @@
 {
-    "name": "printers-discovery_server",
+    "name": "printers-discovery_client",
     "version": "1.0.0",
     "description": "Application to analyze the local network in search of prototypes of printers, capturing and storing their information",
     "main": "./src/index.js",
     "scripts": {
         "build": "webpack --config webpack.prod.js",
         "build:dev": "webpack --config webpack.dev.js",
-        "heroku-postbuild": "npm run build && rm -r src webpack.*.js",
-        "start": "cd dist && node index.js",
+        "start": "webpack-dev-server --open --config webpack.dev.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
@@ -21,16 +20,20 @@
     },
     "homepage": "https://github.com/Chema22R/printers-discovery#readme",
     "dependencies": {
-        "cors": "2.8.4",
-        "express": "4.16.3",
-        "mongodb": "2.2",
-        "xml-js": "1.6.7"
+        "jquery": "^3.3.1",
+        "jquery-ui": "^1.12.1",
+        "moment": "2.24.0",
+        "project-intro": "^2.0.0"
     },
     "devDependencies": {
         "clean-webpack-plugin": "^3.0.0",
         "copy-webpack-plugin": "^5.0.3",
+        "css-loader": "^2.1.1",
+        "html-webpack-plugin": "^3.2.0",
+        "style-loader": "^0.23.1",
         "webpack": "^4.33.0",
         "webpack-cli": "^3.3.3",
+        "webpack-dev-server": "^3.7.1",
         "webpack-merge": "^4.2.1"
     }
 }
