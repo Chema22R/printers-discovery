@@ -65,20 +65,20 @@ function getConfigData() {
 /* connections
 ========================================================================== */
 
-mongodb.connect(DATABASE_URI, function (err, client) {
+mongodb.connect(process.env.DATABASE_URI || DEFAULT_DATABASE_URI, function (err, db) {
     if (err) {
-        console.error('- ERROR connecting to database server\n\t' + err.message);
+        console.error('- ERROR connecting to database "printersdiscovery"\n\t' + err.message);
     } else {
-        app.locals.db = client.db(DATABASE_NAME);
-        console.log('> Connected to database "' + DATABASE_NAME + '"');
+        app.locals.db = db;
+        console.log('> Connected to database "printersdiscovery"');
 
         // discovery.init(app.locals);
         // console.log('> Discovery library initiated and subscribed');
     }
 });
 
-app.listen(SERVER_PORT, function () {
-    console.log('> Printers Discovery server running on http://localhost:' + SERVER_PORT);
+app.listen(process.env.PORT || DEFAULT_PORT, function () {
+    console.log('> Printers Discovery server running on http://localhost:' + (process.env.PORT || DEFAULT_PORT));
 });
 
 
