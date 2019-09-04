@@ -69,8 +69,8 @@ mongodb.connect(process.env.DATABASE_URI || DEFAULT_DATABASE_URI, function (err,
     if (err) {
         console.error('- ERROR connecting to database server\n\t' + err.message);
     } else {
-        app.locals.db = client.db(client.databaseName);
-        console.log('> Connected to database "' + client.databaseName + '"');
+        app.locals.db = client.db(DATABASE_NAME);
+        console.log('> Connected to database "' + DATABASE_NAME + '"');
 
         // discovery.init(app.locals);
         // console.log('> Discovery library initiated and subscribed');
