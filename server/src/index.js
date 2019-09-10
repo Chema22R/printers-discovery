@@ -21,10 +21,17 @@ var configAPI = require('./app/configAPI.js');
 var printersAPI = require('./app/printersAPI.js');
 
 
+/* cors configuration
+========================================================================== */
+
+var corsOpts = {
+	origin: process.env.CORS_ORIGIN || DEFAULT_CORS_ORIGIN
+};
+
+
 /* app configuration
 ========================================================================== */
 
-app.use(cors());
 app.use(bodyParser.json());
 
 
@@ -95,8 +102,8 @@ process.on('exit', function(code) { // exit with "process.exit()"
 /* API
 ========================================================================== */
 
-app.get('/config/data', configAPI.getConfigData);
-app.put('/config/update', configAPI.updateConfigData);
-app.get('/printers/list', printersAPI.getPrintersList);
-app.put('/printers/update', printersAPI.updatePrinterMetadata);
-// app.get('/printers/update', discovery.forcePrinterInfoUpdate);
+app.get('/config/data', cors(corsOpts), configAPI.getConfigData);
+app.put('/config/update', cors(corsOpts), configAPI.updateConfigData);
+app.get('/printers/list', cors(corsOpts), printersAPI.getPrintersList);
+app.put('/printers/update', cors(corsOpts), printersAPI.updatePrinterMetadata);
+// app.get('/printers/update', cors(corsOpts), discovery.forcePrinterInfoUpdate);
