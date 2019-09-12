@@ -27,6 +27,8 @@ var printersAPI = require('./app/printersAPI.js');
 var corsOpts = {
 	origin: process.env.CORS_ORIGIN || DEFAULT_CORS_ORIGIN
 };
+app.options("/config/update", cors(corsOpts));		// enable pre-flight request
+app.options("/printers/update", cors(corsOpts));	// enable pre-flight request
 
 
 /* app configuration
