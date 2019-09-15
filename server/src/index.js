@@ -19,6 +19,7 @@ var Console = require('console').Console;
 // var discovery = require('./app/discovery.js');
 var configAPI = require('./app/configAPI.js');
 var printersAPI = require('./app/printersAPI.js');
+var generalAPI = require('./app/generalAPI.js');
 
 
 /* cors configuration
@@ -109,3 +110,5 @@ app.put('/config/update', cors(corsOpts), configAPI.updateConfigData);
 app.get('/printers/list', cors(corsOpts), printersAPI.getPrintersList);
 app.put('/printers/update', cors(corsOpts), printersAPI.updatePrinterMetadata);
 // app.get('/printers/update', cors(corsOpts), discovery.forcePrinterInfoUpdate);
+
+app.get('/general/checkStatus', cors(), generalAPI.checkStatus);
