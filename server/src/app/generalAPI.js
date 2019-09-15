@@ -1,14 +1,14 @@
 'use strict';
 
 exports.checkStatus = function(req, res) {
-    var logEntry = 'Check Database Status (' + new Date() + ', ' + req.ip + '):';
+    var logEntry = 'Check Status (' + new Date() + ', ' + req.ip + '):';
 
     req.app.locals.db.collection('printers').find({}, {}).toArray(function(err, docs) {
         if (err) {
-            closeLog('\tDatabase disconnected: ' + err, 1);
+            closeLog('\tDatabase disconnected or error accessing Printers collection: ' + err, 1);
             res.sendStatus(500);
         } else {
-            closeLog('\tDatabase connected', 3);
+            closeLog('\tDatabase connected and Printers collection accessible', 3);
             res.sendStatus(200);
         }
     });
