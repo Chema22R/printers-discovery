@@ -1,8 +1,6 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/3385f038-9813-4df8-992d-ddc4af8ff42b/deploy-status)](https://app.netlify.com/sites/printersdiscovery/deploys)
-[![dependencies Status](https://david-dm.org/chema22r/printersdiscovery/status.svg)](https://david-dm.org/chema22r/printersdiscovery)
-[![devDependencies Status](https://david-dm.org/chema22r/printersdiscovery/dev-status.svg)](https://david-dm.org/chema22r/printersdiscovery?type=dev)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/Chema22R/printersdiscovery.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Chema22R/printersdiscovery/alerts/)
-[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/Chema22R/printersdiscovery.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Chema22R/printersdiscovery/context:javascript)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/Chema22R/printers-discovery.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Chema22R/printers-discovery/alerts/)
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/Chema22R/printers-discovery.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Chema22R/printers-discovery/context:javascript)
 
 # Printers Discovery
 This application aims to analyze the local network in search of prototypes of printers, capturing and storing their information.
