@@ -47,15 +47,6 @@
     background-color: #EFEFEF;
 }
 
-@media (max-width: 600px) {
-    #menus > div.wrapper > div {
-        min-width: 0;
-        width: 100%;
-    }
-
-    #menus > div.wrapper > div > div.wrapper > textarea {max-width: 90%!important;}
-}
-
 #menus > div.wrapper > div > div.wrapper {margin: 8px 20px;}
 #menus > div.wrapper > div > div.wrapper:first-child {margin-top: 20px;}
 
@@ -238,4 +229,22 @@
 #menus > div.wrapper > div > div.dropdown > div > p.withIndentation {
     padding-left: 25px;
     text-indent: -10px;
+}
+
+
+@media (max-width: 600px), (max-height: 630px) {
+    #menus > div.wrapper > div {
+        height: 100%;
+        min-width: 0;
+        width: 100%;
+
+        border-radius: unset;
+        -moz-border-radius: unset;
+        -webkit-border-radius: unset;
+    }
+
+    #menus > div.wrapper > div > div.wrapper > textarea {max-width: 90%!important;}
+
+    #menus > div.wrapper > div > div.dropdown {position: fixed;}
+    #menus > div.wrapper > div > button.closeButton {position: fixed;}
 }
