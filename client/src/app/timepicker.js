@@ -562,7 +562,7 @@
 								$tp.find('table:visible').each(function () {
 									var $g = $(this),
 										oldWidth = $g.outerWidth(),
-										oldMarginLeft = $g.css(rtl ? 'marginRight' : 'marginLeft').toString().replace('%', ''),
+										oldMarginLeft = $g.css(rtl ? 'marginRight' : 'marginLeft').toString().replace('%', ''),	// lgtm [js/incomplete-sanitization]
 										newWidth = oldWidth - sliderAccessWidth,
 										newMarginLeft = ((oldMarginLeft * newWidth) / oldWidth) + '%',
 										css = { width: newWidth, marginRight: 0, marginLeft: 0 };
@@ -584,14 +584,13 @@
 		* min/max date range
 		*/
 		_limitMinMaxDateTime: function (dp_inst, adjustSliders) {
-			var o = this._defaults,
-				dp_date = new Date(dp_inst.selectedYear, dp_inst.selectedMonth, dp_inst.selectedDay);
+			var o = this._defaults, dp_date = new Date(dp_inst.selectedYear, dp_inst.selectedMonth, dp_inst.selectedDay);
 
 			if (!this._defaults.showTimepicker) {
 				return;
 			} // No time so nothing to check here
 
-			if ($.datepicker._get(dp_inst, 'minDateTime') !== null && $.datepicker._get(dp_inst, 'minDateTime') !== undefined && dp_date) {
+			if ($.datepicker._get(dp_inst, 'minDateTime') !== null && $.datepicker._get(dp_inst, 'minDateTime') !== undefined) {
 				var minDateTime = $.datepicker._get(dp_inst, 'minDateTime'),
 					minDateTimeDate = new Date(minDateTime.getFullYear(), minDateTime.getMonth(), minDateTime.getDate(), 0, 0, 0, 0);
 
@@ -647,7 +646,7 @@
 				}
 			}
 
-			if ($.datepicker._get(dp_inst, 'maxDateTime') !== null && $.datepicker._get(dp_inst, 'maxDateTime') !== undefined && dp_date) {
+			if ($.datepicker._get(dp_inst, 'maxDateTime') !== null && $.datepicker._get(dp_inst, 'maxDateTime') !== undefined) {
 				var maxDateTime = $.datepicker._get(dp_inst, 'maxDateTime'),
 					maxDateTimeDate = new Date(maxDateTime.getFullYear(), maxDateTime.getMonth(), maxDateTime.getDate(), 0, 0, 0, 0);
 
@@ -1181,8 +1180,7 @@
 	* Public utility to parse time
 	*/
 	$.datepicker.parseTime = function (timeFormat, timeString, options) {
-		var o = extendRemove(extendRemove({}, $.timepicker._defaults), options || {}),
-			iso8601 = (timeFormat.replace(/\'.*?\'/g, '').indexOf('Z') !== -1);
+		var o = extendRemove(extendRemove({}, $.timepicker._defaults), options || {});
 
 		// Strict parse requires the timeString to match the timeFormat exactly
 		var strictParse = function (f, s, o) {
@@ -1514,8 +1512,7 @@
 		if (tp_inst) {
 			var altField = tp_inst._defaults.altField;
 			if (altField) { // update alternate field too
-				var altFormat = tp_inst._defaults.altFormat || tp_inst._defaults.dateFormat,
-					date = this._getDate(inst),
+				var date = this._getDate(inst),
 					formatCfg = $.datepicker._getFormatConfig(inst),
 					altFormattedDateTime = '',
 					altSeparator = tp_inst._defaults.altSeparator ? tp_inst._defaults.altSeparator : tp_inst._defaults.separator,
@@ -1707,7 +1704,7 @@
 			if (!tp_inst.support.timezone && tp_inst._defaults.timezone === null) {
 				tp_inst.timezone = tp_date.getTimezoneOffset() * -1;
 			}
-			date = $.timepicker.timezoneAdjust(date, $.timepicker.timezoneOffsetString(-date.getTimezoneOffset()), tp_inst.timezone);
+			date = $.timepicker.timezoneAdjust(date, $.timepicker.timezoneOffsetString(-date.getTimezoneOffset()), tp_inst.timezone);	// lgtm [js/useless-assignment-to-local]
 			tp_date = $.timepicker.timezoneAdjust(tp_date, $.timepicker.timezoneOffsetString(-tp_date.getTimezoneOffset()), tp_inst.timezone);
 		}
 
