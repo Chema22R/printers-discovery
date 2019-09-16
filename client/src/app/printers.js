@@ -295,7 +295,7 @@ $(function() {
             }
 
             iconsViewPrinters += '" title="' + title + '">';
-            listViewPrinters += '">'
+            listViewPrinters += '">';
             columnsViewPrinters += '" title="' + title + '">';
 
             iconsViewPrinters += '<div class="info">';
@@ -1011,7 +1011,7 @@ $(function() {
     function sortPrinters(obj, param1, param2, order) {
         return obj.sort(function(a, b) {
             if (order) {
-                if (param1 && param2) {
+                if (param1 && param2) { // lgtm [js/trivial-conditional]
                     if (!a[param1][param2]) {
                         return true;
                     } else if (!b[param1][param2]) {
@@ -1024,7 +1024,7 @@ $(function() {
                             if (parseInt(ipa[i]) > parseInt(ipb[i])) {
                                 return true;
                             } else if (parseInt(ipa[i]) < parseInt(ipb[i])){
-                                return false
+                                return false;
                             }
                         }
                     } else {
@@ -1048,7 +1048,7 @@ $(function() {
                     }
                 }
             } else {
-                if (param1 && param2) {
+                if (param1 && param2) { // lgtm [js/trivial-conditional]
                     if (!a[param1][param2]) {
                         return false;
                     } else if (!b[param1][param2]) {
@@ -1061,7 +1061,7 @@ $(function() {
                             if (parseInt(ipa[i]) < parseInt(ipb[i])) {
                                 return true;
                             } else if (parseInt(ipa[i]) > parseInt(ipb[i])){
-                                return false
+                                return false;
                             }
                         }
                     } else {

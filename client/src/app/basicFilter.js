@@ -45,19 +45,19 @@ $(function() {
         for (var printer in window.printersPersistent) {
             coincident = false;
 
-            if (!coincident && window.printersPersistent[printer].basicInfo) {
-                if (!coincident && (allFilters || window.basicFilters.hostname) && window.compareValues(window.printersPersistent[printer].basicInfo.hostname, inputSearch)) {coincident = true;}
+            if (window.printersPersistent[printer].basicInfo) {
+                if ((allFilters || window.basicFilters.hostname) && window.compareValues(window.printersPersistent[printer].basicInfo.hostname, inputSearch)) {coincident = true;}
                 if (!coincident && (allFilters || window.basicFilters.ip) && window.compareValues(window.printersPersistent[printer].basicInfo.ip, inputSearch)) {coincident = true;}
                 if (!coincident && (allFilters || window.basicFilters.modelname) && window.compareValues(window.printersPersistent[printer].basicInfo.modelname, inputSearch)) {coincident = true;}
             }
 
             if (!coincident && window.printersPersistent[printer].detailedInfo) {
-                if (!coincident && (allFilters || window.basicFilters.firmware) && window.compareValues(window.printersPersistent[printer].detailedInfo.firmwareVersion, inputSearch)) {coincident = true;}
+                if ((allFilters || window.basicFilters.firmware) && window.compareValues(window.printersPersistent[printer].detailedInfo.firmwareVersion, inputSearch)) {coincident = true;}
                 if (!coincident && (allFilters || window.basicFilters.status) && window.compareValues(window.printersPersistent[printer].detailedInfo.status, inputSearch)) {coincident = true;}
             }
 
             if (!coincident && window.printersPersistent[printer].metadata) {
-                if (!coincident && (allFilters || window.basicFilters.alias) && window.compareValues(window.printersPersistent[printer].metadata.alias, inputSearch)) {coincident = true;}
+                if ((allFilters || window.basicFilters.alias) && window.compareValues(window.printersPersistent[printer].metadata.alias, inputSearch)) {coincident = true;}
                 if (!coincident && (allFilters || window.basicFilters.location) && window.compareValues(window.printersPersistent[printer].metadata.location, inputSearch)) {coincident = true;}
                 if (!coincident && (allFilters || window.basicFilters.workteam) && window.compareValues(window.printersPersistent[printer].metadata.workteam, inputSearch)) {coincident = true;}
                 if (!coincident && (allFilters || window.basicFilters.reservedBy) && window.compareValues(window.printersPersistent[printer].metadata.reservedBy, inputSearch)) {coincident = true;}

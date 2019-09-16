@@ -152,7 +152,7 @@ $(function() {
             };
 
             for (var key in data) {
-                if (data[key] == '') {data[key] = null}
+                if (data[key] == '') {data[key] = null;}
             }
 
             $('#headerBarSearchInput').val('');
@@ -193,25 +193,25 @@ $(function() {
         for (var printer in window.printersPersistent) {
             coincident = true;
 
-            if (coincident && window.printersPersistent[printer].basicInfo) {
-                if (coincident && data.hostname && !window.compareValues(window.printersPersistent[printer].basicInfo.hostname, data.hostname)) {coincident = false;}
+            if (window.printersPersistent[printer].basicInfo) {
+                if (data.hostname && !window.compareValues(window.printersPersistent[printer].basicInfo.hostname, data.hostname)) {coincident = false;}
                 if (coincident && data.ip && !window.compareValues(window.printersPersistent[printer].basicInfo.ip, data.ip)) {coincident = false;}
                 if (coincident && data.modelname && !window.compareValues(window.printersPersistent[printer].basicInfo.modelname, data.modelname)) {coincident = false;}
             }
 
             if (coincident && window.printersPersistent[printer].detailedInfo) {
-                if (coincident && data.firmware && !window.compareValues(window.printersPersistent[printer].detailedInfo.firmwareVersion, data.firmware)) {coincident = false;}
+                if (data.firmware && !window.compareValues(window.printersPersistent[printer].detailedInfo.firmwareVersion, data.firmware)) {coincident = false;}
                 if (coincident && data.status && !window.compareValues(window.printersPersistent[printer].detailedInfo.status, data.status)) {coincident = false;}
             }
 
             if (coincident && data.creationDate && !window.compareValues(window.printersPersistent[printer].creationDate, data.creationDate)) {coincident = false;}
 
             if (coincident && window.printersPersistent[printer].lastUpdate) {
-                if (coincident && data.lastUpdateStatus && !window.compareValues(window.printersPersistent[printer].lastUpdate.status, data.lastUpdateStatus)) {coincident = false;}
+                if (data.lastUpdateStatus && !window.compareValues(window.printersPersistent[printer].lastUpdate.status, data.lastUpdateStatus)) {coincident = false;}
             }
 
             if (coincident && window.printersPersistent[printer].metadata) {
-                if (coincident && data.alias && !window.compareValues(window.printersPersistent[printer].metadata.alias, data.alias)) {coincident = false;}
+                if (data.alias && !window.compareValues(window.printersPersistent[printer].metadata.alias, data.alias)) {coincident = false;}
                 if (coincident && data.location && !window.compareValues(window.printersPersistent[printer].metadata.location, data.location)) {coincident = false;}
                 if (coincident && data.workteam && !window.compareValues(window.printersPersistent[printer].metadata.workteam, data.workteam)) {coincident = false;}
                 if (coincident && data.reservedBy && !window.compareValues(window.printersPersistent[printer].metadata.reservedBy, data.reservedBy)) {coincident = false;}
