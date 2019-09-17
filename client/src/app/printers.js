@@ -64,17 +64,17 @@ $(function() {
         timeFormat: 'H:mm',
         timezone: 'local',
         views: {
-            month: {
+            month: {
                 titleFormat: 'MMMM YYYY'
             },
-            agendaWeek: {
+            agendaWeek: {
                 columnHeaderFormat: 'ddd D',
                 titleFormat: 'D MMMM YYYY'
             },
-            agendaDay: {
+            agendaDay: {
                 titleFormat: 'D MMMM YYYY'
             },
-            listWeek: {
+            listWeek: {
                 titleFormat: 'D MMMM YYYY'
             }
         },
@@ -109,11 +109,11 @@ $(function() {
                 var now, param1, param2;
 
                 for (var i=0; i<res.length; i++) {
-                    if (!res[i].basicInfo) {res[i].basicInfo = {};}
-                    if (!res[i].detailedInfo) {res[i].detailedInfo = {};}
-                    if (!res[i].metadata) {res[i].metadata = {calendar: []};}
-                    if (!res[i].metadata.calendar) {res[i].metadata.calendar = [];}
-                    if (!res[i].lastUpdate) {res[i].lastUpdate = {};}
+                    if (!res[i].basicInfo) {res[i].basicInfo = {};}
+                    if (!res[i].detailedInfo) {res[i].detailedInfo = {};}
+                    if (!res[i].metadata) {res[i].metadata = {calendar: []};}
+                    if (!res[i].metadata.calendar) {res[i].metadata.calendar = [];}
+                    if (!res[i].lastUpdate) {res[i].lastUpdate = {};}
 
                     res[i].metadata.reservedBy = null;
                     res[i].metadata.reservedUntil = null;
