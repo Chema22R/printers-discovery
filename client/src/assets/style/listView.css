@@ -4,6 +4,7 @@
     display: none;
     position: relative;
     overflow: auto;
+    -webkit-overflow-scrolling: auto;
 }
 
 #listView > p.noPrinters {
