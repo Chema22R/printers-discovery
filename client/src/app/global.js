@@ -73,7 +73,7 @@ window.showMessage = (msj, color) => {
     });
 
     $('#fixedLog').fadeIn('slow', function() {
-        setTimeout(function() {
+        setTimeout(function() {
             $('#fixedLog').fadeOut('slow');
         }, 2000);
     });
