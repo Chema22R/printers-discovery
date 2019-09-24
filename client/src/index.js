@@ -25,3 +25,5 @@ import "./app/config.js";
 
 window.projectIntro = projectIntro;
 projectIntro.init();
+
+document.body.style.opacity = "1";
