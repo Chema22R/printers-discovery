@@ -19,45 +19,48 @@
         <meta name="theme-color" content="#ffffff">
     </head>
     <body style="opacity: 0;">
-        <div id='fixedLog'><p></p></div>
+        <div id='fixedLog' class="printersDiscoveryContainer"><p></p></div>
 
-        <div id="projectIntroContainer">
-            <div id="projectIntroBack" onclick="projectIntro.fadeOut()"></div>
-            <div id="projectIntroContent">
-                <img id="projectIntroImg" src="./images/projectIntro.png" alt="Project Introduction Image">
-                <p id="projectIntroText">
-                    This application aims to analyze the local network in search of prototypes of printers,
-                    capturing and storing their information.<br>The interface allows users to view the
-                    information collected in three different ways, these being the icon view, the list view
-                    and the columns view (accessible from the upper left buttons).<br>In the upper central part of
-                    the interface is the search field, which allows a basic filtering of the information displayed.
-                    If a more advanced filtering is needed, users can create custom filters (second upper
-                    right button).<br>Regarding the interaction with the information shown, users can click
-                    on one of the printers to view detailed information or edit it. In addition, through the
-                    context menu (right mouse button), users can access extra features, such as the reservation
-                    calendar.<br> Due to the private nature of the project, the information shown is simulated.
-                </p>
-                <span id="projectIntroExit" onclick="projectIntro.fadeOut()">&times;</span>
+        <div id="projectIntroContainer" class="projectIntroContainer">
+            <div class="projectIntroBack" onclick="projectIntro.fadeOut()"></div>
+            <div id="projectIntroContent" class="projectIntroContent">
+                <img id="projectIntroImg" src="./images/projectIntro.png">
+                <div id="projectIntroText">
+                    <h2>Printers Discovery</h2>
+                    <p>
+                        This application aims to analyze the local network in search of prototypes of printers,
+                        capturing and storing their information.<br>The interface allows users to view the
+                        information collected in three different ways, these being the icon view, the list view
+                        and the columns view (accessible from the upper left buttons).<br>In the upper central part of
+                        the interface is the search field, which allows a basic filtering of the information displayed.
+                        If a more advanced filtering is needed, users can create custom filters (second upper
+                        right button).<br>Regarding the interaction with the information shown, users can click
+                        on one of the printers to view detailed information or edit it. In addition, through the
+                        context menu (right mouse button), users can access extra features, such as the reservation
+                        calendar.<br> Due to the private nature of the project, the information shown is simulated.
+                    </p>
+                </div>
+                <span onclick="projectIntro.fadeOut()">&times;</span>
             </div>
         </div>
 
-        <div id='loadingBar'>
+        <div id='loadingBar' class="printersDiscoveryContainer">
 			<div class='leftover'></div>
 			<div class='loader'></div>
         </div>
         
-        <div id='contextMenuPrinters'>
+        <div id='contextMenuPrinters' class="printersDiscoveryContainer">
             <button name='calendar' type='button'>Calendar</button>
             <button name='removeRes' type='button'>Remove Reservation</button>
             <!--<button name='forceUpdate' type='button'>Force Update</button>-->
         </div>
 
-        <div id='contextMenuHeaders'>
+        <div id='contextMenuHeaders' class="printersDiscoveryContainer">
             <button name='configCols' type='button'>Configure Columns</button>
         </div>
 
 
-        <header id='headerBar'>
+        <header id='headerBar' class="printersDiscoveryContainer">
             <div>
                 <button id='iconsViewTrigger' class='marked borderRight icon-iconsView icon' type='button' title='Icons View' tabindex='1' accesskey='i'></button>
                 <button id='listViewTrigger' class='marked borderRight icon-listView icon' type='button' title='List View' tabindex='2' accesskey='l'></button>
@@ -88,7 +91,7 @@
             </div>
         </header>
 
-        <div id='mainContent'>
+        <div id='mainContent' class="printersDiscoveryContainer">
             <div id='iconsView'></div>
 
             <div id='listView'>
@@ -171,7 +174,7 @@
             </div>
         </div>
 
-        <div id='menus'>
+        <div id='menus' class="printersDiscoveryContainer">
             <div id='menusLeftover'></div>
             <div id='menusWrapper' class='wrapper'>
                 <div id='infoMenu'>
@@ -409,7 +412,7 @@
             </div>
         </div>
 
-        <div id='calendarMenu'>
+        <div id='calendarMenu' class="printersDiscoveryContainer">
             <div id='calendarView'></div>
         </div>
     </body>
