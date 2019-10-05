@@ -12,7 +12,7 @@ button, input {
 button {cursor: pointer;}
 input {cursor: text;}
 
-p {
+.printersDiscoveryContainer p {
     margin: 0;
     text-overflow: ellipsis;
     overflow: hidden;
