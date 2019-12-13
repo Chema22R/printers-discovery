@@ -45,7 +45,7 @@ exports.updatePrinterMetadata = function(req, res) {
             'metadata': 1
         }).toArray(function(err, docs) {
             if (err) {
-                closeLog('Error searching the given combination ip+hostname: ', err, 1);
+                closeLog('Error searching the given combination ip+hostname', err, 1);
                 res.sendStatus(500);
             } else if (docs.length == 0) {
                 closeLog('Warning (404): not found, given combination ip+hostname does not exist', null, 2);
