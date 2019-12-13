@@ -13,7 +13,8 @@ module.exports = merge(common, {
             DEFAULT_CORS_ORIGIN: /localhost:8080$/,
             DEFAULT_PORT: 8000,
             DATABASE_NAME: JSON.stringify("printersdiscovery"),
-            DEFAULT_DATABASE_URI: JSON.stringify("mongodb://localhost/printersdiscovery")
+            DEFAULT_DATABASE_URI: JSON.stringify("mongodb://localhost/printersdiscovery"),
+            DEFAULT_LOGDNA_KEY: JSON.stringify("9968ae38e2a40b5292178548319ba87c")
         }),
         new NodemonPlugin()
     ]
