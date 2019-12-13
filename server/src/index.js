@@ -44,7 +44,8 @@ app.use(bodyParser.json());
 app.locals.logger = Logger.createLogger(process.env.LOGDNA_KEY || DEFAULT_LOGDNA_KEY, {
     app: "Printers Discovery",
     env: "Node.js",
-    index_meta: true
+    index_meta: true,
+    tags: ['printers-discovery', 'node']
 });
 
 
