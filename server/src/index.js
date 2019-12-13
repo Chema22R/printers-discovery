@@ -77,7 +77,7 @@ function getConfigData() {
 
 mongodb.connect(process.env.DATABASE_URI || DEFAULT_DATABASE_URI, function (err, client) {
     if (err) {
-        app.locals.logger.error('Error connecting to database "' + DATABASE_NAME + '"', meta: {err: err.message}});
+        app.locals.logger.error('Error connecting to database "' + DATABASE_NAME + '"', {meta: {err: err.message}});
         console.error('- ERROR connecting to database "' + DATABASE_NAME + '"\n\t' + err.message);
     } else {
         app.locals.db = client.db(DATABASE_NAME);
