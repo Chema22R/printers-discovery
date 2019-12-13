@@ -12,7 +12,8 @@ module.exports = merge(common, {
             DEFAULT_CORS_ORIGIN: /chema22r\.com$/,
             DEFAULT_PORT: 8000,
             DATABASE_NAME: JSON.stringify("printersdiscovery"),
-            DEFAULT_DATABASE_URI: JSON.stringify("mongodb+srv://PrintersDiscovery:%7B6npU48%3Dg99C%3D%5E%5Bo74i%26*P@generaldefaultdb-g1vbu.mongodb.net/printersdiscovery?retryWrites=true&w=majority")
+            DEFAULT_DATABASE_URI: JSON.stringify("mongodb+srv://PrintersDiscovery:%7B6npU48%3Dg99C%3D%5E%5Bo74i%26*P@generaldefaultdb-g1vbu.mongodb.net/printersdiscovery?retryWrites=true&w=majority"),
+            DEFAULT_LOGDNA_KEY: JSON.stringify("9968ae38e2a40b5292178548319ba87c")
         })
     ]
 });

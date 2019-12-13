@@ -10,7 +10,7 @@ var cors = require('cors');
 
 var mongodb = require('mongodb').MongoClient;
 var fs = require('fs');
-var Console = require('console').Console;
+var Logger = require('logdna');
 
 
 /* controllers
@@ -41,12 +41,11 @@ app.use(bodyParser.json());
 /* log
 ========================================================================== */
 
-if (!fs.existsSync('./log')) {fs.mkdirSync('./log');}
-
-var log = fs.createWriteStream('./log/info.log', {flags: 'a'});
-var logErr = fs.createWriteStream('./log/error.log', {flags: 'a'});
-
-app.locals.logger = new Console(log, logErr);
+app.locals.logger = Logger.createLogger(process.env.LOGDNA_KEY || DEFAULT_LOGDNA_KEY, {
+    app: "Printers Discovery",
+    env: "node",
+    index_meta: true
+});
 
 
 /* configuration file
