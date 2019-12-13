@@ -17,8 +17,10 @@ exports.getPrintersList = function(req, res) {
         if (level <= req.app.locals.configData.logLevel) {
             if (level >= req.app.locals.configData.logSeparator) {
                 req.app.locals.logger.log(logEntry + msj);
+                console.log(logEntry + msj);
             } else {
                 req.app.locals.logger.error(logEntry + msj);
+                console.error(logEntry + msj);
             }
         }
     }
@@ -85,8 +87,10 @@ exports.updatePrinterMetadata = function(req, res) {
         if (level <= req.app.locals.configData.logLevel) {
             if (level >= req.app.locals.configData.logSeparator) {
                 req.app.locals.logger.log(logEntry + msj);
+                console.log(logEntry + msj);
             } else {
                 req.app.locals.logger.error(logEntry + msj);
+                console.error(logEntry + msj);
             }
         }
     }
