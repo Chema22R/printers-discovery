@@ -76,11 +76,11 @@ function getConfigData() {
 
 mongodb.connect(process.env.DATABASE_URI || DEFAULT_DATABASE_URI, function (err, client) {
     if (err) {
-        app.locals.logger.fatal('Error connecting to database "' + DATABASE_NAME + '"', {tags: ['init'], meta: {err: err.message}});
+        app.locals.logger.error('Error connecting to database "' + DATABASE_NAME + '"', meta: {err: err.message}});
         console.error('- ERROR connecting to database "' + DATABASE_NAME + '"\n\t' + err.message);
     } else {
         app.locals.db = client.db(DATABASE_NAME);
-        app.locals.logger.log('Connected to database "' + DATABASE_NAME + '"', {tags: ['init']});
+        app.locals.logger.log('Connected to database "' + DATABASE_NAME + '"');
         console.log('> Connected to database "' + DATABASE_NAME + '"');
 
         // discovery.init(app.locals);
@@ -89,7 +89,7 @@ mongodb.connect(process.env.DATABASE_URI || DEFAULT_DATABASE_URI, function (err,
 });
 
 app.listen(process.env.PORT || DEFAULT_PORT, function () {
-    app.locals.logger.log('Printers Discovery server running on http://localhost:' + (process.env.PORT || DEFAULT_PORT), {tags: ['init']});
+    app.locals.logger.log('Printers Discovery server running on http://localhost:' + (process.env.PORT || DEFAULT_PORT));
     console.log('> Printers Discovery server running on http://localhost:' + (process.env.PORT || DEFAULT_PORT));
 });
 
