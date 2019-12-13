@@ -335,10 +335,8 @@ function closeLog(entry, level) {
     if (level <= configData.logLevel) {
         if (level >= configData.logSeparator) {
             logger.log(entry);
-            console.log(entry);
         } else {
             logger.error(entry);
-            console.error(entry);
         }
     }
 }
