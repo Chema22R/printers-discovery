@@ -1,24 +1,24 @@
 'use strict';
 
 exports.getPrintersList = function(req, res) {
-    var logEntry = 'Get Printers List (' + new Date() + ', ' + req.ip + '):';
+    var logEntry = 'Get Printers List: ';
 
     req.app.locals.db.collection('printers').find({}, {}).toArray(function(err, docs) {
         if (err) {
-            closeLog('\tError retrieving the list of printers: ' + err, 1);
+            closeLog('Error retrieving the list of printers', err, 1);
             res.sendStatus(500);
         } else {
-            closeLog('\tPrinters list successfully retrieved', 3);
+            closeLog('Printers list successfully retrieved', null, 3);
             res.status(200).json(docs);
         }
     });
 
-    function closeLog(msj, level) {
+    function closeLog(msj, err, level) {
         if (level <= req.app.locals.configData.logLevel) {
             if (level >= req.app.locals.configData.logSeparator) {
-                req.app.locals.logger.log(logEntry + msj);
+                req.app.locals.logger.log(logEntry + msj, {meta: {origin: req.ip}});
             } else {
-                req.app.locals.logger.error(logEntry + msj);
+                req.app.locals.logger.error(logEntry + msj, {meta: {origin: req.ip, err: err}});
             }
         }
     }
@@ -26,13 +26,13 @@ exports.getPrintersList = function(req, res) {
 
 
 exports.updatePrinterMetadata = function(req, res) {
-    var logEntry = 'Update Printer Metadata (' + new Date() + ', ' + req.ip + ', ' + req.query.ip + ', ' + req.query.hostname + '):';
+    var logEntry = 'Update Printer Metadata: ';
     var db = req.app.locals.db;
 
     if (req.query.ip && req.query.hostname) {
         check();
     } else {
-        closeLog('\tWarning (400): bad request, param "ip" and/or "hostname" not found', 2);
+        closeLog('Warning (400): bad request, param "ip" and/or "hostname" not found', null, 2);
         res.sendStatus(400);
     }
 
@@ -45,16 +45,16 @@ exports.updatePrinterMetadata = function(req, res) {
             'metadata': 1
         }).toArray(function(err, docs) {
             if (err) {
-                closeLog('\tError searching the given combination ip+hostname: ' + err, 1);
+                closeLog('Error searching the given combination ip+hostname: ', err, 1);
                 res.sendStatus(500);
             } else if (docs.length == 0) {
-                closeLog('\tWarning (404): not found, given combination ip+hostname does not exist', 2);
+                closeLog('Warning (404): not found, given combination ip+hostname does not exist', null, 2);
                 res.sendStatus(404);
             } else if (docs.length > 1) {
-                closeLog('\tError into database, given combination ip+hostname is duplicated', 1);
+                closeLog('Error into database, given combination ip+hostname is duplicated', null, 1);
                 res.sendStatus(500);
             } else if (JSON.stringify(docs[0].metadata) === JSON.stringify(req.body)) {
-                closeLog('\tPrinter metadata is already up to date', 3);
+                closeLog('Printer metadata is already up to date', null, 3);
                 res.sendStatus(200);
             } else {
                 updatePrinter(docs[0]._id);
@@ -69,24 +69,24 @@ exports.updatePrinterMetadata = function(req, res) {
             $set: {'metadata': req.body, 'lastUpdate.metadata': new Date().getTime()}
         }, function (err, result) {
             if (err) {
-                closeLog('\tError updating the printer metadata: ' + err, 1);
+                closeLog('Error updating the printer metadata', err, 1);
                 res.sendStatus(500);
             } else if (result.matchedCount != 1 || result.modifiedCount != 1) {
-                closeLog('\tError into database, the printer metadata could not be updated: matched count: ' + result.matchedCount + ', modified count: ' + result.modifiedCount, 1);
+                closeLog('Error into database, the printer metadata could not be updated', 'matched count: ' + result.matchedCount + ', modified count: ' + result.modifiedCount, 1);
                 res.sendStatus(500);
             } else {
-                closeLog('\tPrinter metadata successfully updated', 3);
+                closeLog('Printer metadata successfully updated', null, 3);
                 res.sendStatus(200);
             }
         });
     }
 
-    function closeLog(msj, level) {
+    function closeLog(msj, err, level) {
         if (level <= req.app.locals.configData.logLevel) {
             if (level >= req.app.locals.configData.logSeparator) {
-                req.app.locals.logger.log(logEntry + msj);
+                req.app.locals.logger.log(logEntry + msj, {meta: {origin: req.ip, request: {ip: req.query.ip, hostname: req.query.hostname}}});
             } else {
-                req.app.locals.logger.error(logEntry + msj);
+                req.app.locals.logger.error(logEntry + msj, {meta: {origin: req.ip, request: {ip: req.query.ip, hostname: req.query.hostname}, err: err}});
             }
         }
     }
