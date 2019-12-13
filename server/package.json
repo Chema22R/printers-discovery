@@ -23,6 +23,7 @@
     "dependencies": {
         "cors": "2.8.4",
         "express": "4.16.3",
+        "logdna": "^3.4.0",
         "mongodb": "2.2",
         "xml-js": "1.6.7"
     },
