@@ -11,6 +11,14 @@ var cors = require('cors');
 var mongodb = require('mongodb').MongoClient;
 var fs = require('fs');
 var Logger = require('logdna');
+var Sentry = require('@sentry/node');
+
+
+/* sentry
+========================================================================== */
+
+Sentry.init({ dsn: process.env.SENTRY_DSN || DEFAULT_SENTRY_DSN });
+app.use(Sentry.Handlers.requestHandler());
 
 
 /* controllers
@@ -72,7 +80,7 @@ function getConfigData() {
 }
 
 
-/* connections
+/* database connection
 ========================================================================== */
 
 mongodb.connect(process.env.DATABASE_URI || DEFAULT_DATABASE_URI, function (err, client) {
@@ -87,11 +95,6 @@ mongodb.connect(process.env.DATABASE_URI || DEFAULT_DATABASE_URI, function (err,
         // discovery.init(app.locals);
         // console.log('> Discovery library initiated and subscribed');
     }
-});
-
-app.listen(process.env.PORT || DEFAULT_PORT, function () {
-    app.locals.logger.log('Initialization: Printers Discovery server running on http://localhost:' + (process.env.PORT || DEFAULT_PORT));
-    console.log('> Printers Discovery server running on http://localhost:' + (process.env.PORT || DEFAULT_PORT));
 });
 
 
@@ -116,3 +119,15 @@ app.put('/printers/update', cors(corsOpts), printersAPI.updatePrinterMetadata);
 // app.get('/printers/update', cors(corsOpts), discovery.forcePrinterInfoUpdate);
 
 app.get('/general/checkStatus', cors(), generalAPI.checkStatus);
+
+
+/* app connection
+========================================================================== */
+
+app.use(Sentry.Handlers.errorHandler());
+app.use((err, req, res, next) => { res.sendStatus(500); });
+
+app.listen(process.env.PORT || DEFAULT_PORT, function () {
+    app.locals.logger.log('Initialization: Printers Discovery server running on http://localhost:' + (process.env.PORT || DEFAULT_PORT));
+    console.log('> Printers Discovery server running on http://localhost:' + (process.env.PORT || DEFAULT_PORT));
+});
