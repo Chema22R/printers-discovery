@@ -83,7 +83,9 @@ function getConfigData() {
 /* database connection
 ========================================================================== */
 
-mongodb.connect(process.env.DATABASE_URI || DEFAULT_DATABASE_URI, function (err, client) {
+mongodb.connect(process.env.DATABASE_URI || DEFAULT_DATABASE_URI, {
+    useUnifiedTopology: true
+}, function (err, client) {
     if (err) {
         app.locals.logger.error('Initialization: Error connecting to database "' + DATABASE_NAME + '"', {meta: {err: err.message}});
         console.error('- ERROR connecting to database "' + DATABASE_NAME + '"\n\t' + err.message);
