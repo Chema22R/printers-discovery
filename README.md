@@ -23,6 +23,8 @@ Check out a real example of the application from [here](https://printersdiscover
 
 ## Directory Structure
 ```
+|- /.github
+    |- ...
 |- /client
     |- /src
         |- /app
@@ -38,6 +40,7 @@ Check out a real example of the application from [here](https://printersdiscover
                 |- ...
         |- index.html
         |- index.js
+    |- package-lock.json
     |- package.json
     |- webpack.config.js
     |- webpack.dev.js
@@ -47,13 +50,17 @@ Check out a real example of the application from [here](https://printersdiscover
         |- /app
             |- ...
         |- HPDiscovery
+            |- ...
         |- index.js
+    |- package-lock.json
     |- package.json
     |- webpack.config.js
     |- webpack.dev.js
     |- webpack.prod.js
+|- _config.yml
 |- .gitignore
 |- LICENSE
+|- package-lock.json
 |- package.json
 |- Procfile
 |- README.md
