@@ -1,8 +1,6 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/3385f038-9813-4df8-992d-ddc4af8ff42b/deploy-status)](https://app.netlify.com/sites/printersdiscovery/deploys)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/Chema22R/printers-discovery.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Chema22R/printers-discovery/alerts/)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/Chema22R/printers-discovery.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Chema22R/printers-discovery/context:javascript)
-[![dependencies Status](https://david-dm.org/chema22r/printers-discovery/status.svg)](https://david-dm.org/chema22r/printers-discovery)
-[![devDependencies Status](https://david-dm.org/chema22r/printers-discovery/dev-status.svg)](https://david-dm.org/chema22r/printers-discovery?type=dev)
 [![MIT License](https://camo.githubusercontent.com/d59450139b6d354f15a2252a47b457bb2cc43828/68747470733a2f2f696d672e736869656c64732e696f2f6e706d2f6c2f7365727665726c6573732e737667)](LICENSE)
 
 # Printers Discovery
