@@ -24,6 +24,8 @@ Check out a real example of the application from [here](https://printersdiscover
 
 ## Directory Structure
 ```
+|- /.dependabot
+    |- ...
 |- /.github
     |- ...
 |- /client
