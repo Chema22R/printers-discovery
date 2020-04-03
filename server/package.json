@@ -21,19 +21,19 @@
     },
     "homepage": "https://github.com/Chema22R/printers-discovery#readme",
     "dependencies": {
-        "@sentry/node": "^5.13.1",
+        "@sentry/node": "^5.15.4",
         "cors": "^2.8.5",
         "express": "^4.17.1",
         "logdna": "^3.5.0",
-        "mongodb": "^3.5",
+        "mongodb": "^3.5.5",
         "xml-js": "^1.6.11"
     },
     "devDependencies": {
         "clean-webpack-plugin": "^3.0.0",
-        "copy-webpack-plugin": "^5.0.3",
+        "copy-webpack-plugin": "^5.1.1",
         "nodemon-webpack-plugin": "^4.3.1",
-        "webpack": "^4.41.6",
+        "webpack": "^4.42.1",
         "webpack-cli": "^3.3.11",
-        "webpack-merge": "^4.2.1"
+        "webpack-merge": "^4.2.2"
     }
 }
