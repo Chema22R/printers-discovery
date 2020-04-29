@@ -93,8 +93,7 @@
     line-height: 30px;
 }
 
-#menus > div.wrapper > div > div.wrapper > form.wrapper > input[type='text'],
-#menus > div.wrapper > div > div.wrapper > form.wrapper > input[type='number'] {
+#menus > div.wrapper > div > div.wrapper > form.wrapper > input {
     max-width: calc(50% - 16px);
     max-width: -moz-calc(50% - 16px);
     max-width: -webkit-calc(50% - 16px);
