@@ -17,7 +17,7 @@ var Sentry = require('@sentry/node');
 /* sentry
 ========================================================================== */
 
-Sentry.init({ dsn: process.env.SENTRY_DSN || DEFAULT_SENTRY_DSN });
+Sentry.init({ dsn: process.env.SENTRY_DSN || DEFAULT_SENTRY_DSN, environment: process.env.ENV || DEFAULT_ENV });
 app.use(Sentry.Handlers.requestHandler());
 
 
@@ -51,9 +51,9 @@ app.use(bodyParser.json());
 
 app.locals.logger = Logger.createLogger(process.env.LOGDNA_KEY || DEFAULT_LOGDNA_KEY, {
     app: "Printers Discovery",
-    env: "Node.js",
+    env: process.env.ENV || DEFAULT_ENV,
     index_meta: true,
-    tags: ['printers-discovery', 'node']
+    tags: ['printers-discovery', process.env.ENV || DEFAULT_ENV]
 });
 
 
