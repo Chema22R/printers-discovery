@@ -91,7 +91,6 @@ mongodb.connect(process.env.DATABASE_URI || DEFAULT_DATABASE_URI, {
         console.error('- ERROR connecting to database "' + DATABASE_NAME + '"\n\t' + err.message);
     } else {
         app.locals.db = client.db(DATABASE_NAME);
-        app.locals.logger.log('Initialization: Connected to database "' + DATABASE_NAME + '"');
         console.log('> Connected to database "' + DATABASE_NAME + '"');
 
         // discovery.init(app.locals);
@@ -130,6 +129,5 @@ app.use(Sentry.Handlers.errorHandler());
 app.use((err, req, res, next) => { res.sendStatus(500); });
 
 app.listen(process.env.PORT || DEFAULT_PORT, function () {
-    app.locals.logger.log('Initialization: Printers Discovery server running on http://localhost:' + (process.env.PORT || DEFAULT_PORT));
     console.log('> Printers Discovery server running on http://localhost:' + (process.env.PORT || DEFAULT_PORT));
 });
