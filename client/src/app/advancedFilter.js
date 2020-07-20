@@ -161,8 +161,8 @@ $(function() {
 
             $(`#headerBarAdvancedFilters button[name="${filterName}"]`).remove();
             $(`#columnsViewFiltersWrapper div[name="${filterName}"]`).remove();
-            $(`<button class="current" name="${filterName}" title="${generateTitle(data)}">${filterName}</button>`).insertAfter('#headerBarAdvancedFilters span.separator'); // lgtm [js/xss-through-dom]
-            $(`<div class="filter current" name="${filterName}" title="${generateTitle(data)}"><p>${filterName}</p><button class="delete icon-delete icon" title="remove filter"></button></div>`).insertAfter('#columnsViewFiltersWrapper span.separator'); // lgtm [js/xss-through-dom]
+            $(`<button class="current" name="${filterName}" title="${generateTitle(data)}">${filterName}</button>`).insertAfter('#headerBarAdvancedFilters span.separator');
+            $(`<div class="filter current" name="${filterName}" title="${generateTitle(data)}"><p>${filterName}</p><button class="delete icon-delete icon" title="remove filter"></button></div>`).insertAfter('#columnsViewFiltersWrapper span.separator');
 
             $('#headerBarAdvancedFilters').show().scrollTop(0);
             $('#headerBarAdvancedFilters').hide();
