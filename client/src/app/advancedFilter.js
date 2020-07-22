@@ -53,7 +53,7 @@ $(function() {
                     $(this).remove();
                     $('#headerBarAdvancedFilters button[name="' + $(this).attr('name') + '"]').remove();
 
-                    document.cookie = $(this).attr('name') + '=;max-age=0';
+                    document.cookie = $(this).attr('name') + '=;SameSite=Strict;max-age=0';
 
                     $('#headerBarAdvancedFilters').show().scrollTop(0);
                     $('#headerBarAdvancedFilters').hide();
@@ -86,7 +86,7 @@ $(function() {
                 $(this).remove();
                 $('#columnsViewFiltersWrapper div[name="' + $(this).attr('name') + '"]').remove();
 
-                document.cookie = $(this).attr('name') + '=;max-age=0';
+                document.cookie = $(this).attr('name') + '=;SameSite=Strict;max-age=0';
 
                 $('#headerBarAdvancedFilters').show().scrollTop(0);
                 $('#headerBarAdvancedFilters').hide();
@@ -170,7 +170,7 @@ $(function() {
             $('#columnsViewFiltersWrapper').scrollTop(0);
 
             window.advancedFilters[filterName] = data;
-            document.cookie = filterName + '=' + JSON.stringify(data) + ';max-age=315360000';   // 315360000s are 10 years
+            document.cookie = filterName + '=' + JSON.stringify(data) + ';SameSite=Strict;max-age=315360000';   // 315360000s are 10 years
 
             activateFiltersTriggers();
 

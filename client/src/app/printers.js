@@ -791,7 +791,7 @@ $(function() {
             $('#listViewHeaders th[name=' + window.sortingConfig.param + '] span').addClass('icon-arrowUp').show();
         }
 
-        document.cookie = 'sortingConfig=' + JSON.stringify(window.sortingConfig) + ';max-age=315360000';   // 315360000s are 10 years
+        document.cookie = 'sortingConfig=' + JSON.stringify(window.sortingConfig) + ';SameSite=Strict;max-age=315360000';   // 315360000s are 10 years
 
         updatePrinters();
     });
@@ -845,7 +845,7 @@ $(function() {
         }
 
         window.listViewHeaders[idCol] = !window.listViewHeaders[idCol];
-        document.cookie = 'listViewHeaders=' + JSON.stringify(window.listViewHeaders) + ';max-age=315360000';   // 315360000s are 10 years
+        document.cookie = 'listViewHeaders=' + JSON.stringify(window.listViewHeaders) + ';SameSite=Strict;max-age=315360000';   // 315360000s are 10 years
     });
 
     
