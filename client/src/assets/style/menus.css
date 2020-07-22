@@ -243,7 +243,4 @@
     }
 
     #menus > div.wrapper > div > div.wrapper > textarea {max-width: 90%!important;}
-
-    #menus > div.wrapper > div > div.dropdown {position: fixed;}
-    #menus > div.wrapper > div > button.closeButton {position: fixed;}
 }
