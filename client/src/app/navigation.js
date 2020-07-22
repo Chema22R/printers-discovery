@@ -16,7 +16,7 @@ $(function() {
 
     function fadeInIconsView() {
         if ($('#iconsView').is(':hidden')) {
-            document.cookie = 'defaultView=iconsView;max-age=315360000';   // 315360000s are 10 years
+            document.cookie = 'defaultView=iconsView;SameSite=Strict;max-age=315360000';   // 315360000s are 10 years
 
             $('#listView, #columnsView').hide();
             $('#iconsView').show();
@@ -30,7 +30,7 @@ $(function() {
 
     function fadeInListView() {
         if ($('#listView').is(':hidden')) {
-            document.cookie = 'defaultView=listView;max-age=315360000';   // 315360000s are 10 years
+            document.cookie = 'defaultView=listView;SameSite=Strict;max-age=315360000';   // 315360000s are 10 years
 
             $('#iconsView, #columnsView').hide();
             $('#listView').show();
@@ -44,7 +44,7 @@ $(function() {
 
     function fadeInColumnsView() {
         if ($('#columnsView').is(':hidden')) {
-            document.cookie = 'defaultView=columnsView;max-age=315360000';   // 315360000s are 10 years
+            document.cookie = 'defaultView=columnsView;SameSite=Strict;max-age=315360000';   // 315360000s are 10 years
 
             $('#iconsView, #listView').hide();
             $('#columnsView').show();
