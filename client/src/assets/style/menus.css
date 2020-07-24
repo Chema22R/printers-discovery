@@ -47,8 +47,8 @@
     background-color: #EFEFEF;
 }
 
-#menus > div.wrapper > div > div.wrapper {margin: 8px 20px;}
-#menus > div.wrapper > div > div.wrapper:first-child {margin-top: 20px;}
+#menus > div.wrapper > div > div.wrapper {padding: 8px 20px;}
+#menus > div.wrapper > div > div.wrapper:first-child {padding-top: 20px;}
 
 #menus > div.wrapper > div > div.wrapper > textarea {
     max-width: 500px;
@@ -98,11 +98,11 @@
 }
 
 #menus > div.wrapper > div > div.wrapper > form.wrapper > input {
+    height: 29px;
     max-width: calc(50% - 16px);
     max-width: -moz-calc(50% - 16px);
     max-width: -webkit-calc(50% - 16px);
-    padding: 4px 8px 0 8px;
-    margin-bottom: 5px;
+    padding: 0 8px 0 8px;
 
     display: block;
     cursor: text;
