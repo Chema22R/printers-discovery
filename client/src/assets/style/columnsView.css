@@ -58,7 +58,7 @@
 
 #columnsView > div.wrapper > div.column p.title {
     cursor: default;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 /* filters & printers */
@@ -84,7 +84,7 @@
 #columnsView > div.wrapper > div.column.small > div.wrapper > div.filter:hover,
 #columnsView > div.wrapper > div.column.small > div.wrapper > div.printer:hover {
     border-left: 3px solid #0099D8;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 #columnsView > div.wrapper > div.column.small > div.wrapper > div.filter.current,
@@ -96,6 +96,7 @@
 #columnsView > div.wrapper > div.column.small > p.title {border-bottom: 1px solid #95989A;}
 
 #columnsView > div.wrapper > div.column.small p {
+    font-size: 16px;
     line-height: 35px;
     padding: 0 8px;
 }
@@ -129,7 +130,7 @@
     padding: 0 0 0 1px;
     
     color: #FFF;
-    font-size: 0.9em;
+    font-size: 15px;
     font-weight: normal;
     line-height: 71px;
 }
@@ -166,8 +167,9 @@
 #columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper {margin: 8px 0;}
 
 #columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > div.wrapper {
-    width: 50%;
     display: inline-block;
+    width: 50%;
+    font-size: 16px;
 }
 
 #columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > div.wrapper.center {
@@ -187,8 +189,8 @@
     cursor: default;
 
     line-height: 36px;
-    font-size: 1.1em;
-    font-weight: bold;
+    font-size: 18px;
+    font-weight: 600;
 }
 
 #columnsView > div.wrapper > div.column.big > div.wrapper > div.wrapper > div.wrapper > p  {
@@ -207,6 +209,7 @@
     padding: 10px 60px;
     
     border: 1px solid #95989A;
+    font-size: 16px;
 
     border-radius: 10px 10px 10px 10px;
     -moz-border-radius: 10px 10px 10px 10px;
@@ -252,8 +255,8 @@
     cursor: default;
 
     text-align: justify;
-    font-size: .9em;
-    line-height: 1.3em;
+    font-size: 14px;
+    line-height: 22px;
     background-color: #FFF;
 }
 

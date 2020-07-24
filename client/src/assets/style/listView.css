@@ -40,7 +40,7 @@
 
     cursor: pointer;
 
-    font-weight: bold;
+    font-weight: 600;
     background-color: #EFEFEF;
 }
 
@@ -56,6 +56,7 @@
     padding: 8px;
     border-bottom: 1px solid #95989A;
 
+    font-size: 16px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -67,7 +68,7 @@
     border-bottom: 2px solid #0099D8;
 }
 
-#listView > table.wrapper > tbody > tr.printer:hover > td {font-weight: bold;}
+#listView > table.wrapper > tbody > tr.printer:hover > td {font-weight: 600;}
 #listView > table.wrapper > tbody > tr.printer:hover > td:first-child {border-left: 3px solid #0099D8;}
 
 #listView > table.wrapper > tbody > tr.printer.connected > td.status {color: #1DBE00;}

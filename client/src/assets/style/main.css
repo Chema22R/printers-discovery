@@ -1,5 +1,6 @@
 body {
-    font-family: sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     background-color: #EFEFEF;
 }
 
@@ -42,7 +43,10 @@ input {cursor: text;}
     text-align: center;
 }
 
-#fixedLog p {line-height: 50px;}
+#fixedLog p {
+    font-size: 16px;
+    line-height: 50px;
+}
 
 
 /* loadingBar */
@@ -105,7 +109,7 @@ input {cursor: text;}
     display: block;
     
     text-align: left;
-    font-size: .9em;
+    font-size: 15px;
 }
 
 #contextMenuPrinters button:hover,

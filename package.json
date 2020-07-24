@@ -22,6 +22,6 @@
     },
     "homepage": "https://github.com/Chema22R/printers-discovery#readme",
     "dependencies": {
-        "concurrently": "^5.1.0"
+        "concurrently": "^5.2.0"
     }
 }

@@ -57,6 +57,7 @@
     padding: 0 40px 0 20px;
     border-bottom: 2px solid #95989A;
 
+    font-size: 16px;
     text-align: center;
 }
 
@@ -128,6 +129,7 @@
     padding: 6px 10px;
     display: block;
 
+    font-size: 16px;
     text-overflow: ellipsis;
     overflow: hidden;
 }
@@ -144,6 +146,6 @@
     padding-left: 8px;
     border-left: 2px solid #0099D8;
 
-    font-weight: bold;
+    font-weight: 600;
     background-color: #EFEFEF;
 }

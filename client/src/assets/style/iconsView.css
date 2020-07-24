@@ -22,6 +22,7 @@
 
 #iconsView > div.wrapper > p.noPrinters {
     display: none;
+    font-size: 16px;
     text-align: center;
     white-space: initial;
 }
@@ -64,7 +65,8 @@
 #iconsView > div.wrapper > div.printer > div.info > p {
     height: 30px;
     padding: 0 15px;
-    
+
+    font-size: 16px;
     line-height: 30px;
 }
 
@@ -94,7 +96,7 @@
     transform-origin: top right;
 
     color: #FFF;
-    font-size: 0.7em;
+    font-size: 11px;
     font-weight: lighter;
     line-height: 30px;
     letter-spacing: 2px;

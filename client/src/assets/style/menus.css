@@ -53,11 +53,13 @@
 #menus > div.wrapper > div > div.wrapper > textarea {
     max-width: 500px;
     padding: 8px;
+    font-size: 16px;
 }
 
 #menus > div.wrapper > div > div.wrapper > div.wrapper {
-    width: 50%;
     display: inline-block;
+    width: 50%;
+    font-size: 16px;
 }
 
 #menus > div.wrapper > div > div.wrapper > div.wrapper.center {
@@ -76,13 +78,14 @@
 #menus > div.wrapper > div > div.wrapper > p.title {
     cursor: default;
 
+    font-size: 18px;
     line-height: 36px;
-    font-size: 1.1em;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 #menus > div.wrapper > div > div.wrapper > p.importantMsj {
     margin-top: 4px;
+    font-size: 16px;
     cursor: default;
     color: #F00;
 }
@@ -90,6 +93,7 @@
 #menus > div.wrapper > div > div.wrapper > div.wrapper > p,
 #menus > div.wrapper > div > div.wrapper > form.wrapper > p {
     cursor: default;
+    font-size: 16px;
     line-height: 30px;
 }
 
@@ -97,7 +101,7 @@
     max-width: calc(50% - 16px);
     max-width: -moz-calc(50% - 16px);
     max-width: -webkit-calc(50% - 16px);
-    padding: 6px 8px 0 8px;
+    padding: 4px 8px 0 8px;
     margin-bottom: 5px;
 
     display: block;
@@ -105,6 +109,7 @@
 
     border-bottom: 1px solid #A8A8A8;
 
+    font-size: 16px;
     line-height: 18px;
 }
 
@@ -154,6 +159,7 @@
     padding: 10px 0;
     
     border: 1px solid #95989A;
+    font-size: 16px;
 
     border-radius: 10px 10px 10px 10px;
     -moz-border-radius: 10px 10px 10px 10px;
@@ -213,8 +219,8 @@
     cursor: default;
 
     text-align: justify;
-    font-size: .9em;
-    line-height: 1.3em;
+    font-size: 14px;
+    line-height: 22px;
     background-color: #FFF;
 }
 
