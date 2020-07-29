@@ -1,8 +1,10 @@
 #listView {
-    height: calc(100vh - 86px);
-    margin-top: 36px;
     display: none;
     position: relative;
+
+    height: calc(100% - 36px);
+    margin-top: 36px;
+
     overflow: auto;
     -webkit-overflow-scrolling: auto;
 }

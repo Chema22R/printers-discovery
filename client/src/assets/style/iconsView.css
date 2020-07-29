@@ -1,7 +1,9 @@
 #iconsView {
-    height: calc(100vh - 50px);
     display: none;
     position: relative;
+
+    height: 100%;
+
     overflow: auto;
     -webkit-overflow-scrolling: touch;
 }
