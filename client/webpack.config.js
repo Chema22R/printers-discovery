@@ -26,11 +26,13 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: "./src/index.html"
         }),
-        new CopyWebpackPlugin([
-            {from: "./src/assets/favicons", to: "favicons"},
-            {from: "./src/assets/icons", to: "icons"},
-            {from: "./src/assets/images", to: "images"}
-        ]),
+        new CopyWebpackPlugin({
+            patterns: [
+                {from: "./src/assets/favicons", to: "favicons"},
+                {from: "./src/assets/icons", to: "icons"},
+                {from: "./src/assets/images", to: "images"}
+            ]
+        }),
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery"

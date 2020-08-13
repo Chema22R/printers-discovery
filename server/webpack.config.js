@@ -11,8 +11,8 @@ module.exports = {
         path: path.resolve(__dirname, "dist")
     },
     plugins: [
-        new CopyWebpackPlugin([
-            {from: "./src/HPDiscovery", to: "HPDiscovery"}
-        ])
+        new CopyWebpackPlugin({
+            patterns: [{from: "./src/HPDiscovery", to: "HPDiscovery"}]
+        })
     ]
 };
