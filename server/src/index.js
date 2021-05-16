@@ -17,7 +17,7 @@ var Sentry = require('@sentry/node');
 /* sentry
 ========================================================================== */
 
-Sentry.init({ dsn: process.env.SENTRY_DSN || DEFAULT_SENTRY_DSN, environment: process.env.ENV || DEFAULT_ENV });
+Sentry.init({ dsn: DEFAULT_SENTRY_DSN, environment: DEFAULT_ENV });
 app.use(Sentry.Handlers.requestHandler());
 
 
@@ -34,7 +34,7 @@ var generalAPI = require('./app/generalAPI.js');
 ========================================================================== */
 
 var corsOpts = {
-	origin: process.env.CORS_ORIGIN || DEFAULT_CORS_ORIGIN
+	origin: DEFAULT_CORS_ORIGIN
 };
 app.options("/config/update", cors(corsOpts));		// enable pre-flight request
 app.options("/printers/update", cors(corsOpts));	// enable pre-flight request
@@ -49,11 +49,11 @@ app.use(bodyParser.json());
 /* log
 ========================================================================== */
 
-app.locals.logger = Logger.createLogger(process.env.LOGDNA_KEY || DEFAULT_LOGDNA_KEY, {
+app.locals.logger = Logger.createLogger(DEFAULT_LOGDNA_KEY, {
     app: "Printers Discovery",
-    env: process.env.ENV || DEFAULT_ENV,
+    env: DEFAULT_ENV,
     index_meta: true,
-    tags: ['printers-discovery', process.env.ENV || DEFAULT_ENV]
+    tags: ['printers-discovery', DEFAULT_ENV]
 });
 
 
@@ -83,7 +83,7 @@ function getConfigData() {
 /* database connection
 ========================================================================== */
 
-mongodb.connect(process.env.DATABASE_URI || DEFAULT_DATABASE_URI, {
+mongodb.connect(DEFAULT_DATABASE_URI, {
     useUnifiedTopology: true
 }, function (err, client) {
     if (err) {
