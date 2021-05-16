@@ -16,8 +16,8 @@ module.exports = merge(common, {
             DEFAULT_PORT: 8000,
             DATABASE_NAME: JSON.stringify("printersdiscovery"),
             DEFAULT_DATABASE_URI: JSON.stringify("mongodb://localhost/printersdiscovery"),
-            DEFAULT_LOGDNA_KEY: JSON.stringify(dotenv.DEFAULT_LOGDNA_KEY),
-            DEFAULT_SENTRY_DSN: JSON.stringify(dotenv.DEFAULT_SENTRY_DSN)
+            DEFAULT_LOGDNA_KEY: JSON.stringify(dotenv.PRINTERS_DISCOVERY_LOGDNA_KEY),
+            DEFAULT_SENTRY_DSN: JSON.stringify(dotenv.PRINTERS_DISCOVERY_SENTRY_DSN)
         }),
         new NodemonPlugin()
     ]
