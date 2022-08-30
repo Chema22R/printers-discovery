@@ -15,7 +15,7 @@ module.exports = merge(common, {
             DEFAULT_ENV: JSON.stringify("development"),
             DEFAULT_PORT: 8000,
             DATABASE_NAME: JSON.stringify("printersdiscovery"),
-            DEFAULT_DATABASE_URI: JSON.stringify("mongodb://localhost/printersdiscovery"),
+            DEFAULT_DATABASE_URI: JSON.stringify("mongodb://127.0.0.1/printersdiscovery"),
             DEFAULT_LOGDNA_KEY: JSON.stringify(dotenv.PRINTERS_DISCOVERY_LOGDNA_KEY),
             DEFAULT_SENTRY_DSN: JSON.stringify(dotenv.PRINTERS_DISCOVERY_SENTRY_DSN)
         }),
