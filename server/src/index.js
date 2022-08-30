@@ -119,7 +119,7 @@ app.get('/printers/list', cors(corsOpts), printersAPI.getPrintersList);
 app.put('/printers/update', cors(corsOpts), printersAPI.updatePrinterMetadata);
 // app.get('/printers/update', cors(corsOpts), discovery.forcePrinterInfoUpdate);
 
-app.get('/general/checkStatus', cors(), generalAPI.checkStatus);
+app.get('/health', cors(), generalAPI.checkStatus);
 
 
 /* app connection
