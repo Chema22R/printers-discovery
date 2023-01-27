@@ -6,6 +6,7 @@
         "build": "npm run build --prefix client && npm run build --prefix server",
         "build-dev": "npm run build-dev --prefix client && npm run build-dev --prefix server",
         "clean": "rm -r client/dist server/dist server/log server/config.json",
+        "heroku-prebuild": "rm -r client package.json && mv server/* . && rm -r server",
         "i": "npm i && npm i --prefix client && npm i --prefix server",
         "start": "concurrently 'npm start --prefix client' 'npm start --prefix server'",
         "test": "echo \"Error: no test specified\" && exit 1"
