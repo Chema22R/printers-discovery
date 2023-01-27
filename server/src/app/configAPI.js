@@ -14,7 +14,7 @@ exports.getConfigData = function(req, res) {
     function closeLog(msj, level) {
         if (level <= req.app.locals.configData.logLevel) {
             if (level >= req.app.locals.configData.logSeparator) {
-                req.app.locals.logger.log(logEntry + msj, {meta: {origin: req.ip}});
+                req.app.locals.logger.info(logEntry + msj, {meta: {origin: req.ip}});
             } else {
                 req.app.locals.logger.error(logEntry + msj, {meta: {origin: req.ip}});
             }
@@ -34,7 +34,7 @@ exports.updateConfigData = function(req, res) {
     function closeLog(msj, level) {
         if (level <= req.app.locals.configData.logLevel) {
             if (level >= req.app.locals.configData.logSeparator) {
-                req.app.locals.logger.log(logEntry + msj, {meta: {origin: req.ip}});
+                req.app.locals.logger.info(logEntry + msj, {meta: {origin: req.ip}});
             } else {
                 req.app.locals.logger.error(logEntry + msj, {meta: {origin: req.ip}});
             }

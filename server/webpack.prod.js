@@ -12,7 +12,7 @@ module.exports = merge(common, {
             DEFAULT_PORT: 8000,
             DATABASE_NAME: JSON.stringify("printersdiscovery"),
             DEFAULT_DATABASE_URI: JSON.stringify(process.env.PRINTERS_DISCOVERY_DATABASE_URI),
-            DEFAULT_LOGDNA_KEY: JSON.stringify(process.env.PRINTERS_DISCOVERY_LOGDNA_KEY),
+            DEFAULT_LOGGER_KEY: JSON.stringify(process.env.PRINTERS_DISCOVERY_LOGGER_KEY),
             DEFAULT_SENTRY_DSN: JSON.stringify(process.env.PRINTERS_DISCOVERY_SENTRY_DSN)
         })
     ]

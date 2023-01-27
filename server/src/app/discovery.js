@@ -334,7 +334,7 @@ function removeReservation(printerIP, printerHostname, id) {
 function closeLog(entry, level) {
     if (level <= configData.logLevel) {
         if (level >= configData.logSeparator) {
-            logger.log(entry);
+            logger.info(entry);
         } else {
             logger.error(entry);
         }

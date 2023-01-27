@@ -16,7 +16,7 @@ exports.getPrintersList = function(req, res) {
     function closeLog(msj, err, level) {
         if (level <= req.app.locals.configData.logLevel) {
             if (level >= req.app.locals.configData.logSeparator) {
-                req.app.locals.logger.log(logEntry + msj, {meta: {origin: req.ip}});
+                req.app.locals.logger.info(logEntry + msj, {meta: {origin: req.ip}});
             } else {
                 req.app.locals.logger.error(logEntry + msj, {meta: {origin: req.ip, err: err}});
             }
@@ -84,7 +84,7 @@ exports.updatePrinterMetadata = function(req, res) {
     function closeLog(msj, err, level) {
         if (level <= req.app.locals.configData.logLevel) {
             if (level >= req.app.locals.configData.logSeparator) {
-                req.app.locals.logger.log(logEntry + msj, {meta: {origin: req.ip, request: {ip: req.query.ip, hostname: req.query.hostname}}});
+                req.app.locals.logger.info(logEntry + msj, {meta: {origin: req.ip, request: {ip: req.query.ip, hostname: req.query.hostname}}});
             } else {
                 req.app.locals.logger.error(logEntry + msj, {meta: {origin: req.ip, request: {ip: req.query.ip, hostname: req.query.hostname}, err: err}});
             }

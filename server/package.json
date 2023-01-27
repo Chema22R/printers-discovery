@@ -21,10 +21,10 @@
     },
     "homepage": "https://github.com/Chema22R/printers-discovery#readme",
     "dependencies": {
+        "@logtail/node": "^0.1.15",
         "@sentry/node": "^5.30.0",
         "cors": "^2.8.5",
         "express": "^4.18.1",
-        "logdna": "^3.5.3",
         "mongodb": "^3.7.3",
         "xml-js": "^1.6.11"
     },

@@ -10,7 +10,7 @@ var cors = require('cors');
 
 var mongodb = require('mongodb').MongoClient;
 var fs = require('fs');
-var Logger = require('logdna');
+const { Logtail } = require("@logtail/node");
 var Sentry = require('@sentry/node');
 
 
@@ -49,12 +49,7 @@ app.use(bodyParser.json());
 /* log
 ========================================================================== */
 
-app.locals.logger = Logger.createLogger(DEFAULT_LOGDNA_KEY, {
-    app: "Printers Discovery",
-    env: DEFAULT_ENV,
-    index_meta: true,
-    tags: ['printers-discovery', DEFAULT_ENV]
-});
+app.locals.logger = Logger.Logtail(DEFAULT_LOGGER_KEY);
 
 
 /* configuration file
