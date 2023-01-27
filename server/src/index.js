@@ -49,7 +49,7 @@ app.use(bodyParser.json());
 /* log
 ========================================================================== */
 
-app.locals.logger = Logger.Logtail(DEFAULT_LOGGER_KEY);
+app.locals.logger = Logtail(DEFAULT_LOGGER_KEY);
 
 
 /* configuration file
